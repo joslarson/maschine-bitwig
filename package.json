@@ -7,7 +7,7 @@
   },
   "scripts": {},
   "author": "Joseph Larson",
-  "license": "ISC",
+  "license": "BSD-3-Clause",
   "taktil": {
     "entries": "src/*.control.@(js|ts)",
     "copy": [
@@ -15,7 +15,7 @@
     ]
   },
   "devDependencies": {
-    "bitwig-api-ts-stubs": "^2.0.0",
-    "typescript": "^2.3.0-dev.20170405"
+    "typed-bitwig-api": "^2.0.0",
+    "typescript": "^2.3.0"
   }
 }
