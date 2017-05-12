@@ -1,8 +1,7 @@
-import { AbstractSimpleControl } from 'taktil';
+import { SimpleControl } from 'taktil';
 
 
-export default class MaschineButton extends AbstractSimpleControl {
-    state = { value: 0 };
-
+export default class MaschineButton extends SimpleControl {
     cacheOnMidiIn = false;
+    state = { value: 0 };
 }

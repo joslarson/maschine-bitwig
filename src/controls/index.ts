@@ -1,6 +1,7 @@
+import { SimpleControl } from 'taktil';
+
 import MaschineButton from './MaschineButton';
 import MaschineColorButton from './MaschineColorButton';
-import MaschineKnob from './MaschineKnob';
 import MaschinePanKnob from './MaschinePanKnob';
 
 
@@ -26,7 +27,7 @@ export default {
     GRP:  new MaschineButton({ status: 0xB1, data1: 0x1A }),
     SND:  new MaschineButton({ status: 0xB1, data1: 0x1B }),
     CUE:  new MaschineButton({ status: 0xB1, data1: 0x1C }),
-    KNOB: new MaschineKnob({ status: 0xB1, data1: 0x1D }),
+    KNOB: new SimpleControl({ status: 0xB1, data1: 0x1D }),
 
     // PERFORMANCE
     TAP:         new MaschineButton({ status: 0xB2, data1: 0x15 }),
@@ -123,14 +124,14 @@ export default {
     VOL_TOUCH_G: new MaschineButton({ status: 0xB7, data1: 0x72 }),
     VOL_TOUCH_H: new MaschineButton({ status: 0xB7, data1: 0x74 }),
 
-    VOL_A: new MaschineKnob({ status: 0xB7, data1: 0x67 }),
-    VOL_B: new MaschineKnob({ status: 0xB7, data1: 0x69 }),
-    VOL_C: new MaschineKnob({ status: 0xB7, data1: 0x6B }),
-    VOL_D: new MaschineKnob({ status: 0xB7, data1: 0x6D }),
-    VOL_E: new MaschineKnob({ status: 0xB7, data1: 0x6F }),
-    VOL_F: new MaschineKnob({ status: 0xB7, data1: 0x71 }),
-    VOL_G: new MaschineKnob({ status: 0xB7, data1: 0x73 }),
-    VOL_H: new MaschineKnob({ status: 0xB7, data1: 0x75 }),
+    VOL_A: new SimpleControl({ status: 0xB7, data1: 0x67 }),
+    VOL_B: new SimpleControl({ status: 0xB7, data1: 0x69 }),
+    VOL_C: new SimpleControl({ status: 0xB7, data1: 0x6B }),
+    VOL_D: new SimpleControl({ status: 0xB7, data1: 0x6D }),
+    VOL_E: new SimpleControl({ status: 0xB7, data1: 0x6F }),
+    VOL_F: new SimpleControl({ status: 0xB7, data1: 0x71 }),
+    VOL_G: new SimpleControl({ status: 0xB7, data1: 0x73 }),
+    VOL_H: new SimpleControl({ status: 0xB7, data1: 0x75 }),
 
     PAN_TOUCH_A: new MaschineButton({ status: 0xB8, data1: 0x66 }),
     PAN_TOUCH_B: new MaschineButton({ status: 0xB8, data1: 0x68 }),

@@ -1,5 +1,6 @@
-import { AbstractSimpleControl, MidiMessage, SysexMessage, MidiPattern, Color, utils } from 'taktil';
+import { SimpleControl, MidiMessage, SysexMessage, MessagePattern, Color } from 'taktil';
 import { rgb2hsv, SyncedInterval } from '../utils';
+import isEqual from 'lodash-es/isEqual';
 
 
 const colors = {
@@ -16,9 +17,9 @@ interface MaschineColorButtonState {
     accent: boolean;
 }
 
-export default class MaschineColorButton extends AbstractSimpleControl<MaschineColorButtonState> {
-    // set the default state
-    state: MaschineColorButtonState = { value: 0, color: colors.offWhite, accent: false, disabled: false, flashing: false, flashOn: true };
+export default class MaschineColorButton extends SimpleControl<MaschineColorButtonState> {
+    state = { value: 0, color: colors.offWhite, accent: false, disabled: false, flashing: false, flashOn: true };
+
     flashInterval: SyncedInterval;
 
     constructor({ port, inPort, outPort, status, data1 }: {
@@ -27,9 +28,9 @@ export default class MaschineColorButton extends AbstractSimpleControl<MaschineC
         super({ port, inPort, outPort, status, data1 });
         this.patterns = [
             ...this.patterns,
-            new MidiPattern({ status: this.hueStatus, data1 }),
-            new MidiPattern({ status: this.saturationStatus, data1 }),
-            new MidiPattern({ status: this.brightnessStatus, data1 }),
+            new MessagePattern({ status: this.hueStatus, data1 }),
+            new MessagePattern({ status: this.saturationStatus, data1 }),
+            new MessagePattern({ status: this.brightnessStatus, data1 }),
         ];
     }
 
@@ -45,17 +46,18 @@ export default class MaschineColorButton extends AbstractSimpleControl<MaschineC
         return this.hueStatus + 2;
     }
 
-    getOutput(): (MidiMessage | SysexMessage)[] {
-        const doNotSaturate = utils.areDeepEqual(this.state.color, colors.offWhite);
-        const hsb = rgb2hsv(this.state.color);
+
+    getMidiOutput(state): (MidiMessage | SysexMessage)[] {
+        const doNotSaturate = isEqual(state.color, colors.offWhite);
+        const hsb = rgb2hsv(state.color);
         const { status, data1 } = this;
-        let brightnessData2 = !this.activeComponent || this.state.disabled ? 0 : (this.state.value === 0 ? 20 : 127);
-        if (brightnessData2 === 127 && this.state.flashing) brightnessData2 = this.state.flashOn ? 127 : 20;
-        if (this.state.accent)  brightnessData2 = brightnessData2 === 127 ? 127 : Math.min(brightnessData2 + 15, 127);
+        let brightnessData2 = !this.activeComponent || state.disabled ? 0 : (state.value === 0 ? 20 : 127);
+        if (brightnessData2 === 127 && state.flashing) brightnessData2 = state.flashOn ? 127 : 20;
+        if (state.accent)  brightnessData2 = brightnessData2 === 127 ? 127 : Math.min(brightnessData2 + 15, 127);
         let saturationData2 =  doNotSaturate ? hsb.s : (hsb.s === 0 ? 0 : 100 + Math.round((hsb.s / 127) * 27));
-        if (this.state.accent) saturationData2 = Math.max(saturationData2 - 20, 0);
+        if (state.accent) saturationData2 = Math.max(saturationData2 - 20, 0);
         return [
-            ...super.getOutput(),
+            ...super.getMidiOutput(state),
             new MidiMessage({ status: this.hueStatus, data1, data2: hsb.h }),
             new MidiMessage({
                 status: this.saturationStatus, data1,

@@ -4,50 +4,22 @@ import * as components from 'taktil/contrib/components';
 import store from 'store';
 
 
-export class PlayToggle extends components.AbstractPlayToggle {
-    transport = store.transport;
-}
-
-export class MetronomeToggle extends components.AbstractMetronomeToggle {
-    transport = store.transport;
-}
-
-export class PreRollToggle extends components.AbstractPreRollToggle {
-    transport = store.transport;
-}
-
-export class RestartButton extends components.AbstractRestartButton {
-    transport = store.transport;
-}
-
-export class OverwriteToggle extends components.AbstractOverwriteToggle {
-    transport = store.transport;
-}
-
-export class ArmToggle extends AbstractButton {
-    track = store.cursorTrack;
-
+export class ArmToggle extends AbstractButton<{ track: API.Track }> {
     onInit() {
-        this.track.getArm().addValueObserver(isArmed => {
+        this.props.track.getArm().addValueObserver(isArmed => {
             this.setState({ ...this.state, on: isArmed });
         });
     }
 
     onPress() {
-        this.track.getArm().set(!this.track.getArm().get());
+        this.props.track.getArm().set(!this.props.track.getArm().get());
     }
 }
 
-export class LoopToggle extends components.AbstractLoopToggle {
-    transport = store.transport;
-}
-
-export class TempoButton extends AbstractButton {
-    transport = store.transport;
-
+export class TempoButton extends AbstractButton<{ transport: API.Transport }> {
     onPress() {
         this.setState({ ...this.state, on: true });
-        this.transport.tapTempo();
+        this.props.transport.tapTempo();
         session.activateMode('TEMPO');
     }
 
@@ -58,8 +30,6 @@ export class TempoButton extends AbstractButton {
 }
 
 export class TempoRing extends AbstractButton {
-    transport = store.transport;
-
     onInit() {
         session.on('activateMode', mode => {
             if (mode === 'TEMPO') this.setState({ ...this.state, on: true });

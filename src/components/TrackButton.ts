@@ -1,4 +1,4 @@
-import { AbstractButton, AbstractSimpleControl, Color } from 'taktil';
+import { AbstractButton, SimpleControl, Color } from 'taktil';
 
 import store from 'store';
 
@@ -21,7 +21,7 @@ export default class TrackButton extends AbstractButton<{ index: number }, Track
         return { on: false, disabled: false, exists: false, noteOn: false };
     }
 
-    getControlOutput(control: AbstractSimpleControl) {
+    getOutput(control: SimpleControl) {
         const { on, exists, color, noteOn } = this.state;
         return {
             value: on ? 1 : 0,
@@ -32,7 +32,7 @@ export default class TrackButton extends AbstractButton<{ index: number }, Track
     }
 
     onInit() {
-        this.track = store.trackBank.getChannel(this.options.index) as API.Track;
+        this.track = store.trackBank.getChannel(this.props.index) as API.Track;
         this.track.isGroup().markInterested();
 
         this.track.color().addValueObserver((r, g, b) => {
@@ -72,8 +72,8 @@ export default class TrackButton extends AbstractButton<{ index: number }, Track
     }
 
     onPress() {
-        if (this.options.index === store.trackBank.channelCount().get()) {
-            store.application.createInstrumentTrack(this.options.index);
+        if (this.props.index === store.trackBank.channelCount().get()) {
+            store.application.createInstrumentTrack(this.props.index);
             this.track.browseToInsertAtStartOfChain();
         }
         this.track.selectInEditor();

@@ -1,4 +1,4 @@
-import { AbstractRange, AbstractSimpleControl } from 'taktil';
+import { AbstractRange, SimpleControl } from 'taktil';
 import store from '../store';
 
 interface VolumeRangeState {
@@ -9,27 +9,25 @@ interface VolumeRangeState {
 
 
 export default class VolumeRange extends AbstractRange<{ track: API.Track }, VolumeRangeState> {
-    getInitialState() {
-        return { value: 0, meter: 0, isPlaying: false };
-    }
+    state = { value: 0, meter: 0, isPlaying: false };
 
-    getControlOutput(control: AbstractSimpleControl) {
+    getOutput(control: SimpleControl) {
         const { value, meter, isPlaying } = this.state;
         return { value: isPlaying && !this.memory.input && meter ? meter : value };
     }
 
     onInit() {
-        this.options.track.getVolume().addValueObserver((value: number) => this.setState({ value }));
-        this.options.track.addVuMeterObserver(128, -1, false, meter => {
-            if (this.state.isPlaying) this.setState({ meter: meter/127 });
+        this.props.track.getVolume().addValueObserver((value: number) => this.setState({ value }));
+        this.props.track.addVuMeterObserver(128, -1, false, meter => {
+            if (this.state.isPlaying) this.setState({ meter: Math.min(meter/127, 1) });
         });
         store.transport.isPlaying().addValueObserver((isPlaying: boolean) => {
             this.setState({ isPlaying });
         });
     }
 
-    onControlInput(control: AbstractSimpleControl, { value }) {
-        if (!this.options.track.exists().get()) return control.render();
+    onInput(control: SimpleControl, { value }) {
+        if (!this.props.track.exists().get()) return control.render();
 
         if (Math.abs(this.state.value - value) < 0.1) this.memory.ready = true;
         if (this.memory.input) clearTimeout(this.memory.input);
@@ -38,6 +36,6 @@ export default class VolumeRange extends AbstractRange<{ track: API.Track }, Vol
             delete this.memory.input;
         }, this.INPUT_DELAY);
 
-        if (this.memory.ready || !this.state.isPlaying) this.options.track.getVolume().set(value);
+        if (this.memory.ready || !this.state.isPlaying) this.props.track.getVolume().set(value);
     }
 }

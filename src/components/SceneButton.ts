@@ -1,4 +1,4 @@
-import { AbstractButton, AbstractSimpleControl, Color, session } from 'taktil';
+import { AbstractButton, SimpleControl, Color, session } from 'taktil';
 
 import store from 'store';
 
@@ -12,18 +12,16 @@ interface SceneButtonState {
 
 export default class SceneButton extends AbstractButton<{ index: number }, SceneButtonState> {
     scene: API.Scene;
-    
-    getInitialState() {
-        return { on: false, exists: false, empty: true, color: { r: .5, g: 0, b: 1 } };
-    }
 
-    getControlOutput(control: AbstractSimpleControl) {
+    state = { on: false, exists: false, empty: true, color: { r: .5, g: 0, b: 1 } };
+
+    getOutput(control: SimpleControl) {
         const { on, empty, color } = this.state;
         return { value: on ? 1 : 0, disabled: empty, color: color };
     }
 
     onInit() {
-        this.scene = store.sceneBank.getScene(this.options.index);
+        this.scene = store.sceneBank.getScene(this.props.index);
 
         this.scene.addIsSelectedInEditorObserver(isSelected => {
             this.setState({ on: isSelected })
@@ -41,7 +39,7 @@ export default class SceneButton extends AbstractButton<{ index: number }, Scene
     onPress() {
         if (!session.modeIsActive('SELECT')) {
             if (!this.scene.exists().get()) {
-                for (let i = 0; i <= this.options.index; i++) {
+                for (let i = 0; i <= this.props.index; i++) {
                     if (!store.sceneBank.getScene(i).exists().get()) store.createScene.invoke();
                 }
             } else {

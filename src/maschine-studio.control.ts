@@ -1,4 +1,4 @@
-import 'taktil/env'; // must be first in entry file (sets polyfills + globals)
+import 'taktil/env'; // must be first in entry file (sets polyfills)
 import { session } from 'taktil';
 
 import store from './store';
@@ -8,8 +8,8 @@ import { BaseView, SceneView, PatternView, PadMidiView, NavigateView } from './v
 
 // define controller script
 host.defineController(
-    'Taktil Examples',  // vendor
-    'Test Project',  // name
+    'Native Instruments',  // vendor
+    'Maschine Studio',  // name
     '1.0.0',  // version
     '2e6cf580-327b-409b-b87a-19f18643c43b',  // uuid
     'Joseph Larson'  // author
