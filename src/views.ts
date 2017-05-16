@@ -3,81 +3,81 @@ import {
     ModeGate, ViewToggle, RestartButton, LoopToggle,
     MetronomeToggle, PlayToggle, PreRollToggle,
 } from 'taktil/contrib/components';
-import ctrls from './controls';
+import controls from './controls';
 import * as comps from './components';
 import store from './store';
 
 
 export class BaseView extends AbstractView {
     // Top Left
-    arrangeLayoutButton = new comps.LayoutButton(ctrls.ARRANGE, { layout: 'ARRANGE'});
-    mixLayoutButton = new comps.LayoutButton(ctrls.MIX, { layout: 'MIX'});
-    editLayoutButton = new comps.LayoutButton(ctrls.SAMPLING, { layout: 'EDIT'});
-    toggleBrowserButton = new comps.BrowserToggle(ctrls.BROWSE, {});
+    arrangeLayoutButton = new comps.LayoutButton(controls.ARRANGE, { layout: 'ARRANGE'});
+    mixLayoutButton = new comps.LayoutButton(controls.MIX, { layout: 'MIX'});
+    editLayoutButton = new comps.LayoutButton(controls.SAMPLING, { layout: 'EDIT'});
+    toggleBrowserButton = new comps.BrowserToggle(controls.BROWSE, {});
 
     // Performance
-    tempoButton = new comps.TempoButton(ctrls.TAP, { transport: store.transport });
+    tempoButton = new comps.TempoButton(controls.TAP, { transport: store.transport });
 
     // Groups
     trackButtons = [
-        ctrls.GROUP_A, ctrls.GROUP_B, ctrls.GROUP_C, ctrls.GROUP_D,
-        ctrls.GROUP_E, ctrls.GROUP_F, ctrls.GROUP_G, ctrls.GROUP_H,
+        controls.GROUP_A, controls.GROUP_B, controls.GROUP_C, controls.GROUP_D,
+        controls.GROUP_E, controls.GROUP_F, controls.GROUP_G, controls.GROUP_H,
     ].map((control, index) => new comps.TrackButton(control, { index }));
 
     trackNavButtons = [
-        ctrls.GROUP_A, ctrls.GROUP_B, ctrls.GROUP_C, ctrls.GROUP_D,
-        ctrls.GROUP_E, ctrls.GROUP_F, ctrls.GROUP_G, ctrls.GROUP_H,
+        controls.GROUP_A, controls.GROUP_B, controls.GROUP_C, controls.GROUP_D,
+        controls.GROUP_E, controls.GROUP_F, controls.GROUP_G, controls.GROUP_H,
     ].map((control, index) => new comps.TrackBankNavigationButton(control, 'SHIFT', { index }));
 
     volumeKnobs = [
-        ctrls.VOL_A, ctrls.VOL_B, ctrls.VOL_C, ctrls.VOL_D,
-        ctrls.VOL_E, ctrls.VOL_F, ctrls.VOL_G, ctrls.VOL_H,
+        controls.VOL_A, controls.VOL_B, controls.VOL_C, controls.VOL_D,
+        controls.VOL_E, controls.VOL_F, controls.VOL_G, controls.VOL_H,
     ].map((control, index) => new comps.VolumeRange(control, { track: store.trackBank.getChannel(index) as API.Track }));
 
     volumeKnobsTouch = [
-        ctrls.VOL_TOUCH_A, ctrls.VOL_TOUCH_B, ctrls.VOL_TOUCH_C, ctrls.VOL_TOUCH_D,
-        ctrls.VOL_TOUCH_E, ctrls.VOL_TOUCH_F, ctrls.VOL_TOUCH_G, ctrls.VOL_TOUCH_H,
+        controls.VOL_TOUCH_A, controls.VOL_TOUCH_B, controls.VOL_TOUCH_C, controls.VOL_TOUCH_D,
+        controls.VOL_TOUCH_E, controls.VOL_TOUCH_F, controls.VOL_TOUCH_G, controls.VOL_TOUCH_H,
     ].map((control, index) => new comps.VolumeKnobTouch(control, { index }));
 
-    masterVolume = new comps.VolumeRange(ctrls.KNOB, { track: store.masterTrack });
+    masterVolume = new comps.VolumeRange(controls.KNOB, { track: store.masterTrack });
 
     // Transport
-    restartButton = new RestartButton(ctrls.RESTART, { transport: store.transport });
-    loopToggle = new LoopToggle(ctrls.RESTART, 'SHIFT', { transport: store.transport });
-    metronomeToggle = new MetronomeToggle(ctrls.METRO, { transport: store.transport });
-    shiftModeGate = new ModeGate(ctrls.GRID, { mode: 'SHIFT' });
-    playToggle = new PlayToggle(ctrls.PLAY, { transport: store.transport });
-    armToggle = new comps.ArmToggle(ctrls.REC, { track: store.cursorTrack });
-    preRollToggle = new PreRollToggle(ctrls.REC, 'SHIFT', { transport: store.transport });
+    restartButton = new RestartButton(controls.RESTART, { transport: store.transport });
+    loopToggle = new LoopToggle(controls.RESTART, 'SHIFT', { transport: store.transport });
+    metronomeToggle = new MetronomeToggle(controls.METRO, { transport: store.transport });
+    shiftModeGate = new ModeGate(controls.GRID, { mode: 'SHIFT' });
+    playToggle = new PlayToggle(controls.PLAY, { transport: store.transport });
+    armToggle = new comps.ArmToggle(controls.REC, { track: store.cursorTrack });
+    preRollToggle = new PreRollToggle(controls.REC, 'SHIFT', { transport: store.transport });
 
     // Pads
-    sceneViewButton = new ViewToggle(ctrls.SCENE, { view: SceneView });
-    patternViewButton = new ViewToggle(ctrls.PATTERN, { view: PatternView });
-    padMidiViewButton = new ViewToggle(ctrls.PAD_MODE, { view: PadMidiView });
-    navigateViewButton = new ViewToggle(ctrls.NAVIGATE, { view: NavigateView });
-    duplicateModeGate = new ModeGate(ctrls.DUPLICATE, { mode: 'DUPLICATE' });
-    selectModeGate = new ModeGate(ctrls.SELECT, { mode: 'SELECT' });
-    soloModeGate = new ModeGate(ctrls.SOLO, { mode: 'SOLO' });
-    muteModeGate = new ModeGate(ctrls.MUTE, { mode: 'MUTE' });
+    sceneViewButton = new ViewToggle(controls.SCENE, { view: SceneView });
+    patternViewButton = new ViewToggle(controls.PATTERN, { view: PatternView });
+    padMidiViewButton = new ViewToggle(controls.PAD_MODE, { view: PadMidiView });
+    navigateViewButton = new ViewToggle(controls.NAVIGATE, { view: NavigateView });
+    duplicateModeGate = new ModeGate(controls.DUPLICATE, { mode: 'DUPLICATE' });
+    selectModeGate = new ModeGate(controls.SELECT, { mode: 'SELECT' });
+    soloModeGate = new ModeGate(controls.SOLO, { mode: 'SOLO' });
+    muteModeGate = new ModeGate(controls.MUTE, { mode: 'MUTE' });
 
     // Edit
-    undoButton = new comps.ActionButton(ctrls.UNDO, { action: 'undo' });
-    redoButton = new comps.ActionButton(ctrls.REDO, { action: 'redo' });
-    copyButton = new comps.ActionButton(ctrls.COPY, { action: 'copy' });
-    pasteButton = new comps.ActionButton(ctrls.PASTE, { action: 'paste' });
-    deleteButton = new comps.ActionButton(ctrls.CLEAR, { action: 'delete' });
-    toggleBrowserRing = new comps.BrowserToggle(ctrls.JOG_RING, {});
-    tempoRing = new comps.TempoRing(ctrls.JOG_RING, 'TEMPO', {});
-    browserExitButton = new comps.BrowserExitButton(ctrls.BACK, {});
+    undoButton = new comps.ActionButton(controls.UNDO, { action: 'undo' });
+    redoButton = new comps.ActionButton(controls.REDO, { action: 'redo' });
+    copyButton = new comps.ActionButton(controls.COPY, { action: 'copy' });
+    pasteButton = new comps.ActionButton(controls.PASTE, { action: 'paste' });
+    deleteButton = new comps.ActionButton(controls.CLEAR, { action: 'delete' });
+    toggleBrowserRing = new comps.BrowserToggle(controls.JOG_RING, {});
+    tempoRing = new comps.TempoRing(controls.JOG_RING, 'TEMPO', {});
+    browserExitButton = new comps.BrowserExitButton(controls.BACK, {});
 }
 
 export class SceneView extends AbstractView {
     static parent = BaseView;
     sceneButtons = [
-        ctrls.PAD_1,  ctrls.PAD_2,  ctrls.PAD_3,  ctrls.PAD_4,
-        ctrls.PAD_5,  ctrls.PAD_6,  ctrls.PAD_7,  ctrls.PAD_8,
-        ctrls.PAD_9,  ctrls.PAD_10, ctrls.PAD_11, ctrls.PAD_12,
-        ctrls.PAD_13, ctrls.PAD_14, ctrls.PAD_15, ctrls.PAD_16,
+        controls.PAD_1,  controls.PAD_2,  controls.PAD_3,  controls.PAD_4,
+        controls.PAD_5,  controls.PAD_6,  controls.PAD_7,  controls.PAD_8,
+        controls.PAD_9,  controls.PAD_10, controls.PAD_11, controls.PAD_12,
+        controls.PAD_13, controls.PAD_14, controls.PAD_15, controls.PAD_16,
     ].map((control, index) => new comps.SceneButton(control, { index }));
 }
 
@@ -85,10 +85,10 @@ export class PatternView extends AbstractView {
     static parent = BaseView;
 
     clipSlotButtons = [
-        ctrls.PAD_1,  ctrls.PAD_2,  ctrls.PAD_3,  ctrls.PAD_4,
-        ctrls.PAD_5,  ctrls.PAD_6,  ctrls.PAD_7,  ctrls.PAD_8,
-        ctrls.PAD_9,  ctrls.PAD_10, ctrls.PAD_11, ctrls.PAD_12,
-        ctrls.PAD_13, ctrls.PAD_14, ctrls.PAD_15, ctrls.PAD_16,
+        controls.PAD_1,  controls.PAD_2,  controls.PAD_3,  controls.PAD_4,
+        controls.PAD_5,  controls.PAD_6,  controls.PAD_7,  controls.PAD_8,
+        controls.PAD_9,  controls.PAD_10, controls.PAD_11, controls.PAD_12,
+        controls.PAD_13, controls.PAD_14, controls.PAD_15, controls.PAD_16,
     ].map((control, index) => new comps.ClipSlotButton(control, { index }));
 }
 

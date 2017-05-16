@@ -1,7 +1,6 @@
 import 'taktil/env'; // must be first in entry file (sets polyfills)
 import { session } from 'taktil';
 
-import store from './store';
 import controls from './controls';
 import { BaseView, SceneView, PatternView, PadMidiView, NavigateView } from './views';
 
@@ -21,13 +20,10 @@ host.addDeviceNameBasedDiscoveryPair(['Maschine Studio Virtual Input'], ['Maschi
 
 // init session
 session.on('init', () => {
-    // 1. init api sourced data
-    store.init();
-
-    // 2. set master controls map
+    // 1. set master controls map
     session.controls = controls;
 
-    // 3. add views to session
+    // 2. add views to session
     session.views = [
         BaseView,
         SceneView,
@@ -36,6 +32,6 @@ session.on('init', () => {
         NavigateView,
     ];
 
-    // 4. set initial active view to trigger initial render of Controls
+    // 3. set initial active view (triggers initial render of controls)
     session.activeView = PatternView;
 });
