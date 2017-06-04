@@ -2,11 +2,11 @@ import store from 'store';
 
 
 export function rgb2hsb({ r, g, b }: { r: number, g: number, b: number }) {
-    var result: { h: number, s: number, b: number } = { h: undefined, s: undefined, b: undefined };
+    const result: { h: number, s: number, b: number } = { h: undefined, s: undefined, b: undefined };
 
-    var minVal = Math.min(r, g, b);
-    var maxVal = Math.max(r, g, b);
-    var delta = maxVal - minVal;
+    const minVal = Math.min(r, g, b);
+    const maxVal = Math.max(r, g, b);
+    const delta = maxVal - minVal;
 
     result.b = maxVal;
 
@@ -15,13 +15,17 @@ export function rgb2hsb({ r, g, b }: { r: number, g: number, b: number }) {
         result.s = 0;
     } else {
         result.s = delta / maxVal;
-        var del_R = (((maxVal - r) / 6) + (delta / 2)) / delta;
-        var del_G = (((maxVal - g) / 6) + (delta / 2)) / delta;
-        var del_B = (((maxVal - b) / 6) + (delta / 2)) / delta;
+        let del_R = (((maxVal - r) / 6) + (delta / 2)) / delta;
+        let del_G = (((maxVal - g) / 6) + (delta / 2)) / delta;
+        let del_B = (((maxVal - b) / 6) + (delta / 2)) / delta;
 
-        if (r == maxVal) { result.h = del_B - del_G; }
-        else if (g == maxVal) { result.h = (1 / 3) + del_R - del_B; }
-        else if (b == maxVal) { result.h = (2 / 3) + del_G - del_R; }
+        if (r == maxVal) {
+            result.h = del_B - del_G;
+        } else if (g == maxVal) {
+            result.h = (1 / 3) + del_R - del_B;
+        } else if (b == maxVal) {
+            result.h = (2 / 3) + del_G - del_R;
+        }
 
         if (result.h < 0) { result.h += 1; }
         if (result.h > 1) { result.h -= 1; }
@@ -151,5 +155,3 @@ export class SyncedInterval {
         return this;
     }
 }
-
-// const si = new SyncedInterval(() => {}, 1/2).start();

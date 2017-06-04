@@ -1,4 +1,4 @@
-import { AbstractButton, SimpleControl, Color } from 'taktil';
+import { Button, SimpleControl, Color } from 'taktil';
 
 import store from 'store';
 
@@ -14,7 +14,7 @@ interface ClipSlotButtonState {
 }
 
 
-export default class ClipSlotButton extends AbstractButton<{ index: number }, ClipSlotButtonState> {
+export default class ClipSlotButton extends Button<{ index: number }, ClipSlotButtonState> {
     clipLauncherSlotBank = store.cursorTrack.clipLauncherSlotBank();
 
     state = {

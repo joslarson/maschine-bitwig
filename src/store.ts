@@ -1,6 +1,3 @@
-import { session } from 'taktil';
-
-
 interface Store {
     transport: API.Transport;
     application: API.Application;

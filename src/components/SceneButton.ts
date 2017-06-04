@@ -1,4 +1,4 @@
-import { AbstractButton, SimpleControl, Color, session } from 'taktil';
+import { Button, SimpleControl, Color } from 'taktil';
 
 import store from 'store';
 
@@ -10,7 +10,7 @@ interface SceneButtonState {
     empty: boolean;
 }
 
-export default class SceneButton extends AbstractButton<{ index: number }, SceneButtonState> {
+export default class SceneButton extends Button<{ index: number }, SceneButtonState> {
     scene: API.Scene;
 
     state = { on: false, exists: false, empty: true, color: { r: .5, g: 0, b: 1 } };

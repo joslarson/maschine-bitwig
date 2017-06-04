@@ -1,4 +1,4 @@
-import { AbstractRange, SimpleControl } from 'taktil';
+import { Range, SimpleControl } from 'taktil';
 import store from '../store';
 
 interface VolumeRangeState {
@@ -8,7 +8,7 @@ interface VolumeRangeState {
 }
 
 
-export default class VolumeRange extends AbstractRange<{ track: API.Track }, VolumeRangeState> {
+export default class VolumeRange extends Range<{ track: API.Track }, VolumeRangeState> {
     state = { value: 0, meter: 0, isPlaying: false };
 
     getOutput(control: SimpleControl) {

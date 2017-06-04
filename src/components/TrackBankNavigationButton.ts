@@ -1,9 +1,9 @@
-import { AbstractButton, SimpleControl, Color } from 'taktil';
+import { Button, SimpleControl, Color } from 'taktil';
 
 import store from 'store';
 
 
-export default class TrackBankNavigationButton extends AbstractButton<{ index: number }, { on: boolean, color?: Color, exists: boolean }> {
+export default class TrackBankNavigationButton extends Button<{ index: number }, { on: boolean, color?: Color, exists: boolean }> {
     getInitialState() {
         return { on: false, exists: false };
     }

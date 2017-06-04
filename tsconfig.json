@@ -8,12 +8,15 @@
         "moduleResolution": "node",
         "allowJs": true,
         "importHelpers": true,
-        "lib": ["dom", "es6", "dom.iterable", "scripthost"]
+        "lib": ["dom", "es6", "dom.iterable", "scripthost"],
+        "typeRoots": [
+            "@types",
+            "typed-bitwig-api"
+        ]
     },
     "compileOnSave": false,
     "include": [
-        "src/**/*.ts",
-        "typed-bitwig-api/bitwig-api.d.ts"
+        "src/**/*.ts"
     ],
     "exclude": []
 }

@@ -1,9 +1,9 @@
-import { AbstractButton } from 'taktil';
+import { Button } from 'taktil';
 
 import store from 'store';
 
 
-export default class BrowserToggle extends AbstractButton {
+export default class BrowserToggle extends Button {
     onInit() {
         store.popupBrowser.exists().addValueObserver(browserExists => {
             this.setState({ on: browserExists });

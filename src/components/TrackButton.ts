@@ -1,4 +1,4 @@
-import { AbstractButton, SimpleControl, Color } from 'taktil';
+import { Button, SimpleControl, Color } from 'taktil';
 
 import store from 'store';
 
@@ -12,7 +12,7 @@ interface TrackButtonState {
 }
 
 
-export default class TrackButton extends AbstractButton<{ index: number }, TrackButtonState> {
+export default class TrackButton extends Button<{ index: number }, TrackButtonState> {
     track: API.Track;
 
     notes: API.PlayingNote[] = [];

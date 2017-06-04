@@ -1,10 +1,10 @@
-import { session, AbstractButton } from 'taktil';
+import { Button } from 'taktil';
 import * as components from 'taktil/contrib/components';
 
 import store from 'store';
 
 
-export class ArmToggle extends AbstractButton<{ track: API.Track }> {
+export class ArmToggle extends Button<{ track: API.Track }> {
     onInit() {
         this.props.track.getArm().addValueObserver(isArmed => {
             this.setState({ ...this.state, on: isArmed });
@@ -16,7 +16,7 @@ export class ArmToggle extends AbstractButton<{ track: API.Track }> {
     }
 }
 
-export class TempoButton extends AbstractButton<{ transport: API.Transport }> {
+export class TempoButton extends Button<{ transport: API.Transport }> {
     onPress() {
         this.setState({ ...this.state, on: true });
         this.props.transport.tapTempo();
@@ -29,7 +29,7 @@ export class TempoButton extends AbstractButton<{ transport: API.Transport }> {
     }
 }
 
-export class TempoRing extends AbstractButton {
+export class TempoRing extends Button {
     onInit() {
         session.on('activateMode', mode => {
             if (mode === 'TEMPO') this.setState({ ...this.state, on: true });

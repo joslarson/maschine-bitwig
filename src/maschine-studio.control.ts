@@ -1,5 +1,4 @@
-import 'taktil/env'; // must be first in entry file (sets polyfills)
-import { session } from 'taktil';
+import 'taktil/env'; // must be first line in entry file
 
 import controls from './controls';
 import { BaseView, SceneView, PatternView, PadMidiView, NavigateView } from './views';
