@@ -2,7 +2,6 @@ import { Button, SimpleControl, Color } from 'taktil';
 
 import store from 'store';
 
-
 interface TrackButtonState {
     on: boolean;
     color?: Color;
@@ -10,7 +9,6 @@ interface TrackButtonState {
     disabled: boolean;
     noteOn: boolean;
 }
-
 
 export default class TrackButton extends Button<{ index: number }, TrackButtonState> {
     track: API.Track;
@@ -27,7 +25,7 @@ export default class TrackButton extends Button<{ index: number }, TrackButtonSt
             value: on ? 1 : 0,
             disabled: !exists,
             accent: noteOn,
-            ...(color === undefined ? {} : { color }),
+            ...color === undefined ? {} : { color },
         };
     }
 
@@ -40,7 +38,7 @@ export default class TrackButton extends Button<{ index: number }, TrackButtonSt
         });
 
         this.track.addIsSelectedInEditorObserver(isSelected => {
-            this.setState({ ...this.state, on: isSelected })
+            this.setState({ ...this.state, on: isSelected });
         });
 
         this.track.exists().addValueObserver(trackExists => {
@@ -61,7 +59,7 @@ export default class TrackButton extends Button<{ index: number }, TrackButtonSt
                 if (this.memory.noteOn) {
                     clearTimeout(this.memory.noteOn);
                 } else {
-                    this.setState({ noteOn: true })
+                    this.setState({ noteOn: true });
                 }
                 this.memory.noteOn = setTimeout(() => {
                     delete this.memory.noteOn;

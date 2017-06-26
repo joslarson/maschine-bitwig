@@ -1,8 +1,11 @@
 import store from 'store';
 
-
-export function rgb2hsb({ r, g, b }: { r: number, g: number, b: number }) {
-    const result: { h: number, s: number, b: number } = { h: undefined, s: undefined, b: undefined };
+export function rgb2hsb({ r, g, b }: { r: number; g: number; b: number }) {
+    const result: { h: number; s: number; b: number } = {
+        h: undefined,
+        s: undefined,
+        b: undefined,
+    };
 
     const minVal = Math.min(r, g, b);
     const maxVal = Math.max(r, g, b);
@@ -15,20 +18,24 @@ export function rgb2hsb({ r, g, b }: { r: number, g: number, b: number }) {
         result.s = 0;
     } else {
         result.s = delta / maxVal;
-        let del_R = (((maxVal - r) / 6) + (delta / 2)) / delta;
-        let del_G = (((maxVal - g) / 6) + (delta / 2)) / delta;
-        let del_B = (((maxVal - b) / 6) + (delta / 2)) / delta;
+        let del_R = ((maxVal - r) / 6 + delta / 2) / delta;
+        let del_G = ((maxVal - g) / 6 + delta / 2) / delta;
+        let del_B = ((maxVal - b) / 6 + delta / 2) / delta;
 
         if (r == maxVal) {
             result.h = del_B - del_G;
         } else if (g == maxVal) {
-            result.h = (1 / 3) + del_R - del_B;
+            result.h = 1 / 3 + del_R - del_B;
         } else if (b == maxVal) {
-            result.h = (2 / 3) + del_G - del_R;
+            result.h = 2 / 3 + del_G - del_R;
         }
 
-        if (result.h < 0) { result.h += 1; }
-        if (result.h > 1) { result.h -= 1; }
+        if (result.h < 0) {
+            result.h += 1;
+        }
+        if (result.h > 1) {
+            result.h -= 1;
+        }
     }
 
     result.h = Math.round(result.h * 360);
@@ -36,18 +43,22 @@ export function rgb2hsb({ r, g, b }: { r: number, g: number, b: number }) {
     result.b = Math.round(result.b * 1);
 
     result.h = Math.floor(result.h * 127.0 / 360.0);
-    result.s = Math.floor ((1 - Math.pow (1 - result.s, 2)) * 127.0);
+    result.s = Math.floor((1 - Math.pow(1 - result.s, 2)) * 127.0);
     // result.s = Math.floor(result.s * 127.0);
     result.b = Math.floor(result.b * 127.0);
- 
+
     return result;
 }
 
-export function rgb2hsv ({ r, g, b }: { r: number, g: number, b: number }) {
-    let rr, gg, bb,
-        h, s, v = Math.max(r, g, b),
+export function rgb2hsv({ r, g, b }: { r: number; g: number; b: number }) {
+    let rr,
+        gg,
+        bb,
+        h,
+        s,
+        v = Math.max(r, g, b),
         diff = v - Math.min(r, g, b),
-        diffc = function(c){
+        diffc = function(c) {
             return (v - c) / 6 / diff + 1 / 2;
         };
 
@@ -62,9 +73,9 @@ export function rgb2hsv ({ r, g, b }: { r: number, g: number, b: number }) {
         if (r === v) {
             h = bb - gg;
         } else if (g === v) {
-            h = (1 / 3) + rr - bb;
+            h = 1 / 3 + rr - bb;
         } else if (b === v) {
-            h = (2 / 3) + gg - rr;
+            h = 2 / 3 + gg - rr;
         }
 
         if (h < 0) {
@@ -78,17 +89,16 @@ export function rgb2hsv ({ r, g, b }: { r: number, g: number, b: number }) {
         // h: Math.round(h * 127),
         h: getOffsetHue(Math.round(h * 127), 0),
         s: Math.round(s * 127),
-        v: Math.round(v * 127)
+        v: Math.round(v * 127),
     };
 }
 
-
 function getOffsetHue(hue, offset) {
-    offset = offset > 127 ? offset % 127 : (offset < -127 ? offset % -127 : offset);
+    offset = offset > 127 ? offset % 127 : offset < -127 ? offset % -127 : offset;
     if (offset >= 0) {
         return hue + offset <= 127 ? hue + offset : hue + offset - 127;
     } else {
-        return hue + offset >= 0   ? hue + offset : hue + offset + 127;
+        return hue + offset >= 0 ? hue + offset : hue + offset + 127;
     }
 }
 
@@ -103,7 +113,7 @@ export class SyncedInterval {
     target: number = null;
     isOddInterval = true;
 
-    constructor (callback, beats) {
+    constructor(callback, beats) {
         this.callback = callback;
         this.beats = beats;
     }
@@ -112,12 +122,11 @@ export class SyncedInterval {
         const startTime = new Date().getTime();
         const position = store.transport ? store.transport.getPosition().get() : 1;
         const isPlaying = store.transport ? store.transport.isPlaying().get() : false;
-        
-        const bpm = (store.transport ?
-                     store.transport.tempo().get() * (
-                         SyncedInterval.MAX_BPM - SyncedInterval.MIN_BPM
-                     ) + SyncedInterval.MIN_BPM
-                     : 120);
+
+        const bpm = store.transport
+            ? store.transport.tempo().get() * (SyncedInterval.MAX_BPM - SyncedInterval.MIN_BPM) +
+                  SyncedInterval.MIN_BPM
+            : 120;
         const beatLength = 60000 / bpm;
 
         let delay = this.beats * beatLength - SyncedInterval.CODE_LAG;
@@ -138,13 +147,16 @@ export class SyncedInterval {
         host.scheduleTask(() => {
             if (!this.cancelled) {
                 this.isOddInterval = !this.isOddInterval;
-                const isOddInterval = isPlaying ? this.target % (this.beats * 2) !== 0 : this.isOddInterval;
+                const isOddInterval = isPlaying
+                    ? this.target % (this.beats * 2) !== 0
+                    : this.isOddInterval;
                 this.callback(isOddInterval);
                 // update codeLag
                 const endTime = new Date().getTime();
-                SyncedInterval.CODE_LAG = ((endTime - (startTime + delay)) + SyncedInterval.CODE_LAG * 29) / 30;
+                SyncedInterval.CODE_LAG =
+                    (endTime - (startTime + delay) + SyncedInterval.CODE_LAG * 29) / 30;
                 if (this.target !== null) this.target = this.target + this.beats;
-                this.start();  // repeat
+                this.start(); // repeat
             }
         }, delay);
         return this;

@@ -2,7 +2,6 @@ import { Button, SimpleControl, Color } from 'taktil';
 
 import store from 'store';
 
-
 interface SceneButtonState {
     on: boolean;
     color: Color;
@@ -13,7 +12,7 @@ interface SceneButtonState {
 export default class SceneButton extends Button<{ index: number }, SceneButtonState> {
     scene: API.Scene;
 
-    state = { on: false, exists: false, empty: true, color: { r: .5, g: 0, b: 1 } };
+    state = { on: false, exists: false, empty: true, color: { r: 0.5, g: 0, b: 1 } };
 
     getOutput(control: SimpleControl) {
         const { on, empty, color } = this.state;
@@ -24,7 +23,7 @@ export default class SceneButton extends Button<{ index: number }, SceneButtonSt
         this.scene = store.sceneBank.getScene(this.props.index);
 
         this.scene.addIsSelectedInEditorObserver(isSelected => {
-            this.setState({ on: isSelected })
+            this.setState({ on: isSelected });
         });
 
         this.scene.exists().addValueObserver(sceneExists => {

@@ -22,7 +22,8 @@ session.on('init', () => {
     store.application = host.createApplication();
 
     // cursorTrack
-    store.cursorTrack = host.createArrangerCursorTrack(0, 16) as any as API.CursorTrack & API.Track;
+    store.cursorTrack = (host.createArrangerCursorTrack(0, 16) as any) as API.CursorTrack &
+        API.Track;
     store.cursorTrack.isGroup().markInterested();
     store.cursorTrack.color().markInterested();
 
@@ -46,6 +47,5 @@ session.on('init', () => {
     store.masterTrack = host.createMasterTrack(0);
     store.masterTrack.exists().markInterested();
 });
-
 
 export default store;

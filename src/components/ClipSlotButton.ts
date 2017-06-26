@@ -2,7 +2,6 @@ import { Button, SimpleControl, Color } from 'taktil';
 
 import store from 'store';
 
-
 interface ClipSlotButtonState {
     on: boolean;
     color: Color;
@@ -13,25 +12,32 @@ interface ClipSlotButtonState {
     hasContent: boolean;
 }
 
-
 export default class ClipSlotButton extends Button<{ index: number }, ClipSlotButtonState> {
     clipLauncherSlotBank = store.cursorTrack.clipLauncherSlotBank();
 
     state = {
         on: false,
         color: undefined,
-        isPlaying: false, isPlaybackQueued: false,
-        isRecording: false, isRecordingQueued: false,
+        isPlaying: false,
+        isPlaybackQueued: false,
+        isRecording: false,
+        isRecordingQueued: false,
         hasContent: false,
     };
 
     getOutput(control: SimpleControl) {
-        const { isPlaying, isPlaybackQueued, isRecording, isRecordingQueued, hasContent } = this.state;
+        const {
+            isPlaying,
+            isPlaybackQueued,
+            isRecording,
+            isRecordingQueued,
+            hasContent,
+        } = this.state;
         const value = isPlaying || isPlaybackQueued || isRecording || isRecordingQueued ? 1 : 0;
         const disabled = !hasContent && !isRecordingQueued;
         const flashing = isPlaybackQueued || isRecordingQueued;
         const color = isRecordingQueued || isRecording ? { r: 1, g: 0, b: 0 } : this.state.color;
-        return { value, ...(color === undefined ? {} : { color }), disabled, flashing };
+        return { value, ...color === undefined ? {} : { color }, disabled, flashing };
     }
 
     onInit() {

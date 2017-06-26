@@ -7,7 +7,6 @@ interface VolumeRangeState {
     isPlaying: boolean;
 }
 
-
 export default class VolumeRange extends Range<{ track: API.Track }, VolumeRangeState> {
     state = { value: 0, meter: 0, isPlaying: false };
 
@@ -19,7 +18,7 @@ export default class VolumeRange extends Range<{ track: API.Track }, VolumeRange
     onInit() {
         this.props.track.getVolume().addValueObserver((value: number) => this.setState({ value }));
         this.props.track.addVuMeterObserver(128, -1, false, meter => {
-            if (this.state.isPlaying) this.setState({ meter: Math.min(meter/127, 1) });
+            if (this.state.isPlaying) this.setState({ meter: Math.min(meter / 127, 1) });
         });
         store.transport.isPlaying().addValueObserver((isPlaying: boolean) => {
             this.setState({ isPlaying });

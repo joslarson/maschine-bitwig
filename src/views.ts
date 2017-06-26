@@ -1,19 +1,23 @@
 import { View } from 'taktil';
 import {
-    ModeGate, ViewToggle, RestartButton, LoopToggle,
-    MetronomeToggle, PlayToggle, PreRollToggle,
+    ModeGate,
+    ViewToggle,
+    RestartButton,
+    LoopToggle,
+    MetronomeToggle,
+    PlayToggle,
+    PreRollToggle,
 } from 'taktil/contrib/components';
 
 import controls from './controls';
 import * as components from './components';
 import store from './store';
 
-
 export class BaseView extends View {
     // Top Left
-    arrangeLayoutButton = new components.LayoutButton(controls.ARRANGE, { layout: 'ARRANGE'});
-    mixLayoutButton = new components.LayoutButton(controls.MIX, { layout: 'MIX'});
-    editLayoutButton = new components.LayoutButton(controls.SAMPLING, { layout: 'EDIT'});
+    arrangeLayoutButton = new components.LayoutButton(controls.ARRANGE, { layout: 'ARRANGE' });
+    mixLayoutButton = new components.LayoutButton(controls.MIX, { layout: 'MIX' });
+    editLayoutButton = new components.LayoutButton(controls.SAMPLING, { layout: 'EDIT' });
     toggleBrowserButton = new components.BrowserToggle(controls.BROWSE, {});
 
     // Performance
@@ -21,23 +25,54 @@ export class BaseView extends View {
 
     // Groups
     trackButtons = [
-        controls.GROUP_A, controls.GROUP_B, controls.GROUP_C, controls.GROUP_D,
-        controls.GROUP_E, controls.GROUP_F, controls.GROUP_G, controls.GROUP_H,
+        controls.GROUP_A,
+        controls.GROUP_B,
+        controls.GROUP_C,
+        controls.GROUP_D,
+        controls.GROUP_E,
+        controls.GROUP_F,
+        controls.GROUP_G,
+        controls.GROUP_H,
     ].map((control, index) => new components.TrackButton(control, { index }));
 
     trackNavButtons = [
-        controls.GROUP_A, controls.GROUP_B, controls.GROUP_C, controls.GROUP_D,
-        controls.GROUP_E, controls.GROUP_F, controls.GROUP_G, controls.GROUP_H,
-    ].map((control, index) => new components.TrackBankNavigationButton(control, 'SHIFT', { index }));
+        controls.GROUP_A,
+        controls.GROUP_B,
+        controls.GROUP_C,
+        controls.GROUP_D,
+        controls.GROUP_E,
+        controls.GROUP_F,
+        controls.GROUP_G,
+        controls.GROUP_H,
+    ].map(
+        (control, index) => new components.TrackBankNavigationButton(control, 'SHIFT', { index }),
+    );
 
     volumeKnobs = [
-        controls.VOL_A, controls.VOL_B, controls.VOL_C, controls.VOL_D,
-        controls.VOL_E, controls.VOL_F, controls.VOL_G, controls.VOL_H,
-    ].map((control, index) => new components.VolumeRange(control, { track: store.trackBank.getChannel(index) as API.Track }));
+        controls.VOL_A,
+        controls.VOL_B,
+        controls.VOL_C,
+        controls.VOL_D,
+        controls.VOL_E,
+        controls.VOL_F,
+        controls.VOL_G,
+        controls.VOL_H,
+    ].map(
+        (control, index) =>
+            new components.VolumeRange(control, {
+                track: store.trackBank.getChannel(index) as API.Track,
+            }),
+    );
 
     volumeKnobsTouch = [
-        controls.VOL_TOUCH_A, controls.VOL_TOUCH_B, controls.VOL_TOUCH_C, controls.VOL_TOUCH_D,
-        controls.VOL_TOUCH_E, controls.VOL_TOUCH_F, controls.VOL_TOUCH_G, controls.VOL_TOUCH_H,
+        controls.VOL_TOUCH_A,
+        controls.VOL_TOUCH_B,
+        controls.VOL_TOUCH_C,
+        controls.VOL_TOUCH_D,
+        controls.VOL_TOUCH_E,
+        controls.VOL_TOUCH_F,
+        controls.VOL_TOUCH_G,
+        controls.VOL_TOUCH_H,
     ].map((control, index) => new components.VolumeKnobTouch(control, { index }));
 
     masterVolume = new components.VolumeRange(controls.KNOB, { track: store.masterTrack });
@@ -75,10 +110,22 @@ export class BaseView extends View {
 export class SceneView extends View {
     static parent = BaseView;
     sceneButtons = [
-        controls.PAD_1,  controls.PAD_2,  controls.PAD_3,  controls.PAD_4,
-        controls.PAD_5,  controls.PAD_6,  controls.PAD_7,  controls.PAD_8,
-        controls.PAD_9,  controls.PAD_10, controls.PAD_11, controls.PAD_12,
-        controls.PAD_13, controls.PAD_14, controls.PAD_15, controls.PAD_16,
+        controls.PAD_1,
+        controls.PAD_2,
+        controls.PAD_3,
+        controls.PAD_4,
+        controls.PAD_5,
+        controls.PAD_6,
+        controls.PAD_7,
+        controls.PAD_8,
+        controls.PAD_9,
+        controls.PAD_10,
+        controls.PAD_11,
+        controls.PAD_12,
+        controls.PAD_13,
+        controls.PAD_14,
+        controls.PAD_15,
+        controls.PAD_16,
     ].map((control, index) => new components.SceneButton(control, { index }));
 }
 
@@ -86,10 +133,22 @@ export class PatternView extends View {
     static parent = BaseView;
 
     clipSlotButtons = [
-        controls.PAD_1,  controls.PAD_2,  controls.PAD_3,  controls.PAD_4,
-        controls.PAD_5,  controls.PAD_6,  controls.PAD_7,  controls.PAD_8,
-        controls.PAD_9,  controls.PAD_10, controls.PAD_11, controls.PAD_12,
-        controls.PAD_13, controls.PAD_14, controls.PAD_15, controls.PAD_16,
+        controls.PAD_1,
+        controls.PAD_2,
+        controls.PAD_3,
+        controls.PAD_4,
+        controls.PAD_5,
+        controls.PAD_6,
+        controls.PAD_7,
+        controls.PAD_8,
+        controls.PAD_9,
+        controls.PAD_10,
+        controls.PAD_11,
+        controls.PAD_12,
+        controls.PAD_13,
+        controls.PAD_14,
+        controls.PAD_15,
+        controls.PAD_16,
     ].map((control, index) => new components.ClipSlotButton(control, { index }));
 }
 

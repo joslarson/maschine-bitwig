@@ -2,7 +2,6 @@ import { Button } from 'taktil';
 
 import store from 'store';
 
-
 export default class BrowserToggle extends Button {
     onInit() {
         store.popupBrowser.exists().addValueObserver(browserExists => {
