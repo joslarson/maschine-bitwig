@@ -2,7 +2,9 @@ import { Button, SimpleControl, Color } from 'taktil';
 
 import store from 'store';
 
-interface ClipSlotButtonState {
+type Props = { index: number };
+
+interface State {
     on: boolean;
     color: Color;
     isPlaying: boolean;
@@ -12,10 +14,8 @@ interface ClipSlotButtonState {
     hasContent: boolean;
 }
 
-export default class ClipSlotButton extends Button<{ index: number }, ClipSlotButtonState> {
-    clipLauncherSlotBank = store.cursorTrack.clipLauncherSlotBank();
-
-    state = {
+export default class ClipSlotButton extends Button<Props, State> {
+    state: State = {
         on: false,
         color: undefined,
         isPlaying: false,
@@ -24,6 +24,7 @@ export default class ClipSlotButton extends Button<{ index: number }, ClipSlotBu
         isRecordingQueued: false,
         hasContent: false,
     };
+    clipLauncherSlotBank = store.cursorTrack.clipLauncherSlotBank();
 
     getOutput(control: SimpleControl) {
         const {

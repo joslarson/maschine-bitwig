@@ -9,3 +9,4 @@ export { default as TrackBankNavigationButton } from './TrackBankNavigationButto
 export { default as TrackButton } from './TrackButton';
 export { default as VolumeKnobTouch } from './VolumeKnobTouch';
 export { default as VolumeRange } from './VolumeRange';
+export { default as ShiftButton } from './ShiftButton';

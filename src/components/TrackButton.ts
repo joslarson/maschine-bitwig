@@ -2,7 +2,9 @@ import { Button, SimpleControl, Color } from 'taktil';
 
 import store from 'store';
 
-interface TrackButtonState {
+type Props = { index: number };
+
+interface State {
     on: boolean;
     color?: Color;
     exists: boolean;
@@ -10,14 +12,10 @@ interface TrackButtonState {
     noteOn: boolean;
 }
 
-export default class TrackButton extends Button<{ index: number }, TrackButtonState> {
-    track: API.Track;
-
+export default class TrackButton extends Button<Props, State> {
+    state: State = { on: false, disabled: false, exists: false, noteOn: false };
     notes: API.PlayingNote[] = [];
-
-    getInitialState() {
-        return { on: false, disabled: false, exists: false, noteOn: false };
-    }
+    track: API.Track;
 
     getOutput(control: SimpleControl) {
         const { on, exists, color, noteOn } = this.state;

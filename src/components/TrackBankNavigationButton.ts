@@ -2,13 +2,11 @@ import { Button, SimpleControl, Color } from 'taktil';
 
 import store from 'store';
 
-export default class TrackBankNavigationButton extends Button<
-    { index: number },
-    { on: boolean; color?: Color; exists: boolean }
-> {
-    getInitialState() {
-        return { on: false, exists: false };
-    }
+type Props = { index: number };
+type State = { on: boolean; color?: Color; exists: boolean };
+
+export default class TrackBankNavigationButton extends Button<Props, State> {
+    state: State = { on: false, exists: false };
 
     getOutput(control: SimpleControl) {
         const { on, exists, color } = this.state;

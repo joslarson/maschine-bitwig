@@ -12,21 +12,14 @@ host.defineController(
     'Joseph Larson', // author
 );
 
-// setup and Discover Midi Controllers
+// setup and discover midi controllers
 host.defineMidiPorts(1, 1); // number of midi inputs, outputs
 host.addDeviceNameBasedDiscoveryPair(
     ['Maschine Studio Virtual Input'],
     ['Maschine Studio Virtual Output'],
 );
 
-// init session
 session.on('init', () => {
-    // 1. set master controls map
-    session.controls = controls;
-
-    // 2. add views to session
     session.views = [BaseView, SceneView, PatternView, PadMidiView, NavigateView];
-
-    // 3. set initial active view (triggers initial render of controls)
-    session.activeView = PatternView;
+    session.activateView(PatternView);
 });

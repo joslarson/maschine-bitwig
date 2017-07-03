@@ -5,7 +5,8 @@
   "dependencies": {
     "lodash-es": "^4.17.4",
     "taktil": "^0.3.1",
-    "tslib": "^1.6.0"
+    "tslib": "^1.6.0",
+    "typescript": "^2.4.1"
   },
   "scripts": {},
   "author": "Joseph Larson",

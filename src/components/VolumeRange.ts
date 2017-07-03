@@ -1,14 +1,16 @@
 import { Range, SimpleControl } from 'taktil';
 import store from '../store';
 
-interface VolumeRangeState {
+type Props = { track: API.Track };
+
+interface State {
     value: number;
     meter: number;
     isPlaying: boolean;
 }
 
-export default class VolumeRange extends Range<{ track: API.Track }, VolumeRangeState> {
-    state = { value: 0, meter: 0, isPlaying: false };
+export default class VolumeRange extends Range<Props, State> {
+    state: State = { value: 0, meter: 0, isPlaying: false };
 
     getOutput(control: SimpleControl) {
         const { value, meter, isPlaying } = this.state;

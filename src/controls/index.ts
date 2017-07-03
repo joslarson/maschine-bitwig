@@ -1,10 +1,10 @@
-import { SimpleControl } from 'taktil';
+import { ControlTemplate, Control, SimpleControl } from 'taktil';
 
 import MaschineButton from './MaschineButton';
 import MaschineColorButton from './MaschineColorButton';
 import MaschinePanKnob from './MaschinePanKnob';
 
-export default {
+export default new ControlTemplate({
     // TOP LEFT
     CHANNEL: new MaschineButton({ status: 0xb0, data1: 0x15 }),
     PLUGIN: new MaschineButton({ status: 0xb0, data1: 0x16 }),
@@ -185,4 +185,4 @@ export default {
     PARAM_6: new MaschineButton({ status: 0xba, data1: 0x71 }),
     PARAM_7: new MaschineButton({ status: 0xba, data1: 0x73 }),
     PARAM_8: new MaschineButton({ status: 0xba, data1: 0x75 }),
-};
+});

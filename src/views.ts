@@ -81,7 +81,7 @@ export class BaseView extends View {
     restartButton = new RestartButton(controls.RESTART, { transport: store.transport });
     loopToggle = new LoopToggle(controls.RESTART, 'SHIFT', { transport: store.transport });
     metronomeToggle = new MetronomeToggle(controls.METRO, { transport: store.transport });
-    shiftModeGate = new ModeGate(controls.GRID, { mode: 'SHIFT' });
+    shiftButton = new components.ShiftButton(controls.GRID);
     playToggle = new PlayToggle(controls.PLAY, { transport: store.transport });
     armToggle = new components.ArmToggle(controls.REC, { track: store.cursorTrack });
     preRollToggle = new PreRollToggle(controls.REC, 'SHIFT', { transport: store.transport });
