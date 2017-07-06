@@ -1,4 +1,5 @@
 import { View } from 'taktil';
+
 import {
     ModeGate,
     ViewToggle,
@@ -9,11 +10,11 @@ import {
     PreRollToggle,
 } from 'taktil/contrib/components';
 
-import controls from './controls';
-import * as components from './components';
-import store from './store';
+import controls from '../controls';
+import * as components from '../components';
+import store from '../store';
 
-export class BaseView extends View {
+export default class BaseView extends View {
     // Top Left
     arrangeLayoutButton = new components.LayoutButton(controls.ARRANGE, { layout: 'ARRANGE' });
     mixLayoutButton = new components.LayoutButton(controls.MIX, { layout: 'MIX' });
@@ -87,10 +88,10 @@ export class BaseView extends View {
     preRollToggle = new PreRollToggle(controls.REC, 'SHIFT', { transport: store.transport });
 
     // Pads
-    sceneViewButton = new ViewToggle(controls.SCENE, { view: SceneView });
-    patternViewButton = new ViewToggle(controls.PATTERN, { view: PatternView });
-    padMidiViewButton = new ViewToggle(controls.PAD_MODE, { view: PadMidiView });
-    navigateViewButton = new ViewToggle(controls.NAVIGATE, { view: NavigateView });
+    sceneViewButton = new ViewToggle(controls.SCENE, { view: 'SceneView' });
+    patternViewButton = new ViewToggle(controls.PATTERN, { view: 'PatternView' });
+    padMidiViewButton = new ViewToggle(controls.PAD_MODE, { view: 'PadMidiView' });
+    navigateViewButton = new ViewToggle(controls.NAVIGATE, { view: 'NavigateView' });
     duplicateModeGate = new ModeGate(controls.DUPLICATE, { mode: 'DUPLICATE' });
     selectModeGate = new ModeGate(controls.SELECT, { mode: 'SELECT' });
     soloModeGate = new ModeGate(controls.SOLO, { mode: 'SOLO' });
@@ -105,57 +106,4 @@ export class BaseView extends View {
     toggleBrowserRing = new components.BrowserToggle(controls.JOG_RING, {});
     tempoRing = new components.TempoRing(controls.JOG_RING, 'TEMPO', {});
     browserExitButton = new components.BrowserExitButton(controls.BACK, {});
-}
-
-export class SceneView extends View {
-    static parent = BaseView;
-    sceneButtons = [
-        controls.PAD_1,
-        controls.PAD_2,
-        controls.PAD_3,
-        controls.PAD_4,
-        controls.PAD_5,
-        controls.PAD_6,
-        controls.PAD_7,
-        controls.PAD_8,
-        controls.PAD_9,
-        controls.PAD_10,
-        controls.PAD_11,
-        controls.PAD_12,
-        controls.PAD_13,
-        controls.PAD_14,
-        controls.PAD_15,
-        controls.PAD_16,
-    ].map((control, index) => new components.SceneButton(control, { index }));
-}
-
-export class PatternView extends View {
-    static parent = BaseView;
-
-    clipSlotButtons = [
-        controls.PAD_1,
-        controls.PAD_2,
-        controls.PAD_3,
-        controls.PAD_4,
-        controls.PAD_5,
-        controls.PAD_6,
-        controls.PAD_7,
-        controls.PAD_8,
-        controls.PAD_9,
-        controls.PAD_10,
-        controls.PAD_11,
-        controls.PAD_12,
-        controls.PAD_13,
-        controls.PAD_14,
-        controls.PAD_15,
-        controls.PAD_16,
-    ].map((control, index) => new components.ClipSlotButton(control, { index }));
-}
-
-export class PadMidiView extends View {
-    static parent = BaseView;
-}
-
-export class NavigateView extends View {
-    static parent = BaseView;
 }

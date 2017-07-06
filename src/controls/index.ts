@@ -1,10 +1,10 @@
-import { ControlTemplate, Control, SimpleControl } from 'taktil';
+import { ControlTemplate, SimpleControl } from 'taktil';
 
 import MaschineButton from './MaschineButton';
 import MaschineColorButton from './MaschineColorButton';
 import MaschinePanKnob from './MaschinePanKnob';
 
-export default new ControlTemplate({
+export default ControlTemplate({
     // TOP LEFT
     CHANNEL: new MaschineButton({ status: 0xb0, data1: 0x15 }),
     PLUGIN: new MaschineButton({ status: 0xb0, data1: 0x16 }),
@@ -168,21 +168,21 @@ export default new ControlTemplate({
     // MACRO_7: new MaschineButton({ status: 0xB0, data1: 0x73 }),
     // MACRO_8: new MaschineButton({ status: 0xB0, data1: 0x75 }),
 
-    PARAM_TOUCH_1: new MaschineButton({ status: 0xba, data1: 0x66 }),
-    PARAM_TOUCH_2: new MaschineButton({ status: 0xba, data1: 0x68 }),
-    PARAM_TOUCH_3: new MaschineButton({ status: 0xba, data1: 0x6a }),
-    PARAM_TOUCH_4: new MaschineButton({ status: 0xba, data1: 0x6c }),
-    PARAM_TOUCH_5: new MaschineButton({ status: 0xba, data1: 0x6e }),
-    PARAM_TOUCH_6: new MaschineButton({ status: 0xba, data1: 0x70 }),
-    PARAM_TOUCH_7: new MaschineButton({ status: 0xba, data1: 0x72 }),
-    PARAM_TOUCH_8: new MaschineButton({ status: 0xba, data1: 0x74 }),
+    // PARAM_TOUCH_1: new MaschineButton({ status: 0xba, data1: 0x66 }),
+    // PARAM_TOUCH_2: new MaschineButton({ status: 0xba, data1: 0x68 }),
+    // PARAM_TOUCH_3: new MaschineButton({ status: 0xba, data1: 0x6a }),
+    // PARAM_TOUCH_4: new MaschineButton({ status: 0xba, data1: 0x6c }),
+    // PARAM_TOUCH_5: new MaschineButton({ status: 0xba, data1: 0x6e }),
+    // PARAM_TOUCH_6: new MaschineButton({ status: 0xba, data1: 0x70 }),
+    // PARAM_TOUCH_7: new MaschineButton({ status: 0xba, data1: 0x72 }),
+    // PARAM_TOUCH_8: new MaschineButton({ status: 0xba, data1: 0x74 }),
 
-    PARAM_1: new MaschineButton({ status: 0xba, data1: 0x67 }),
-    PARAM_2: new MaschineButton({ status: 0xba, data1: 0x69 }),
-    PARAM_3: new MaschineButton({ status: 0xba, data1: 0x6b }),
-    PARAM_4: new MaschineButton({ status: 0xba, data1: 0x6d }),
-    PARAM_5: new MaschineButton({ status: 0xba, data1: 0x6f }),
-    PARAM_6: new MaschineButton({ status: 0xba, data1: 0x71 }),
-    PARAM_7: new MaschineButton({ status: 0xba, data1: 0x73 }),
-    PARAM_8: new MaschineButton({ status: 0xba, data1: 0x75 }),
+    // PARAM_1: new MaschineButton({ status: 0xba, data1: 0x67 }),
+    // PARAM_2: new MaschineButton({ status: 0xba, data1: 0x69 }),
+    // PARAM_3: new MaschineButton({ status: 0xba, data1: 0x6b }),
+    // PARAM_4: new MaschineButton({ status: 0xba, data1: 0x6d }),
+    // PARAM_5: new MaschineButton({ status: 0xba, data1: 0x6f }),
+    // PARAM_6: new MaschineButton({ status: 0xba, data1: 0x71 }),
+    // PARAM_7: new MaschineButton({ status: 0xba, data1: 0x73 }),
+    // PARAM_8: new MaschineButton({ status: 0xba, data1: 0x75 }),
 });

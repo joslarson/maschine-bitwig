@@ -1,9 +1,10 @@
-import 'taktil/env'; // must be first line in entry file
+// 1. setup taktil env (must be first import in entry file)
+import 'taktil/env';
 
-import controls from './controls';
+import store from './store';
 import { BaseView, SceneView, PatternView, PadMidiView, NavigateView } from './views';
 
-// define controller script
+// 2. define controller script
 host.defineController(
     'Native Instruments', // vendor
     'Maschine Studio', // name
@@ -12,14 +13,15 @@ host.defineController(
     'Joseph Larson', // author
 );
 
-// setup and discover midi controllers
+// 3. setup and discover midi controllers
 host.defineMidiPorts(1, 1); // number of midi inputs, outputs
 host.addDeviceNameBasedDiscoveryPair(
     ['Maschine Studio Virtual Input'],
     ['Maschine Studio Virtual Output'],
 );
 
+// 4. register views to the session, activate initial view to trigger initial render
 session.on('init', () => {
-    session.views = [BaseView, SceneView, PatternView, PadMidiView, NavigateView];
-    session.activateView(PatternView);
+    session.registerViews(BaseView, SceneView, PatternView, PadMidiView, NavigateView);
+    session.activateView('PatternView');
 });
