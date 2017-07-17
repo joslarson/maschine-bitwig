@@ -19,7 +19,7 @@ export default class BaseView extends View {
     arrangeLayoutButton = new components.LayoutButton(controls.ARRANGE, { layout: 'ARRANGE' });
     mixLayoutButton = new components.LayoutButton(controls.MIX, { layout: 'MIX' });
     editLayoutButton = new components.LayoutButton(controls.SAMPLING, { layout: 'EDIT' });
-    toggleBrowserButton = new components.BrowserToggle(controls.BROWSE, {});
+    toggleBrowserButton = new components.BrowserToggle(controls.BROWSE);
 
     // Performance
     tempoButton = new components.TempoButton(controls.TAP, { transport: store.transport });
@@ -103,7 +103,7 @@ export default class BaseView extends View {
     copyButton = new components.ActionButton(controls.COPY, { action: 'copy' });
     pasteButton = new components.ActionButton(controls.PASTE, { action: 'paste' });
     deleteButton = new components.ActionButton(controls.CLEAR, { action: 'delete' });
-    toggleBrowserRing = new components.BrowserToggle(controls.JOG_RING, {});
-    tempoRing = new components.TempoRing(controls.JOG_RING, 'TEMPO', {});
-    browserExitButton = new components.BrowserExitButton(controls.BACK, {});
+    toggleBrowserRing = new components.BrowserToggle(controls.JOG_RING);
+    tempoRing = new components.TempoRing(controls.JOG_RING, 'TEMPO');
+    browserExitButton = new components.BrowserExitButton(controls.BACK);
 }
