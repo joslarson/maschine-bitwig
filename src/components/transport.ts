@@ -1,7 +1,4 @@
 import { Button } from 'taktil';
-import * as components from 'taktil/contrib/components';
-
-import store from 'store';
 
 export class ArmToggle extends Button<{ track: API.Track }> {
     onInit() {

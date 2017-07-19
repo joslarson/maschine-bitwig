@@ -1,6 +1,6 @@
 import { Button } from 'taktil';
 
-import store from 'store';
+import store from '../store';
 
 export default class BrowserExitButton extends Button {
     onPress() {

@@ -65,10 +65,9 @@ export default class MaschineColorButton extends SimpleControl<MaschineColorButt
     getMidiOutput(state): (MidiMessage | SysexMessage)[] {
         const doNotSaturate = isEqual(state.color, colors.offWhite);
         const hsb = rgb2hsv(state.color);
-        const { status, data1 } = this;
-        let brightnessData2 = !this.activeComponent || state.disabled
-            ? 0
-            : state.value === 0 ? 20 : 127;
+        const { data1 } = this;
+        let brightnessData2 =
+            !this.activeComponent || state.disabled ? 0 : state.value === 0 ? 20 : 127;
         if (brightnessData2 === 127 && state.flashing) brightnessData2 = state.flashOn ? 127 : 20;
         if (state.accent)
             brightnessData2 = brightnessData2 === 127 ? 127 : Math.min(brightnessData2 + 15, 127);

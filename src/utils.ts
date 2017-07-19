@@ -1,10 +1,10 @@
-import store from 'store';
+import store from './store';
 
 export function rgb2hsb({ r, g, b }: { r: number; g: number; b: number }) {
     const result: { h: number; s: number; b: number } = {
-        h: undefined,
-        s: undefined,
-        b: undefined,
+        h: 0,
+        s: 0,
+        b: 0,
     };
 
     const minVal = Math.min(r, g, b);
@@ -110,7 +110,7 @@ export class SyncedInterval {
     callback: Function;
     beats: number;
     cancelled = false;
-    target: number = null;
+    target: number | null = null;
     isOddInterval = true;
 
     constructor(callback, beats) {
@@ -125,7 +125,7 @@ export class SyncedInterval {
 
         const bpm = store.transport
             ? store.transport.tempo().get() * (SyncedInterval.MAX_BPM - SyncedInterval.MIN_BPM) +
-                  SyncedInterval.MIN_BPM
+              SyncedInterval.MIN_BPM
             : 120;
         const beatLength = 60000 / bpm;
 
@@ -138,14 +138,14 @@ export class SyncedInterval {
             this.isOddInterval = true;
         }
 
-        if (isPlaying) {
+        if (isPlaying && this.target !== null) {
             delay = (this.target - position) * beatLength * this.beats - SyncedInterval.CODE_LAG;
         } else {
             this.target = null;
         }
 
         host.scheduleTask(() => {
-            if (!this.cancelled) {
+            if (!this.cancelled && this.target !== null) {
                 this.isOddInterval = !this.isOddInterval;
                 const isOddInterval = isPlaying
                     ? this.target % (this.beats * 2) !== 0

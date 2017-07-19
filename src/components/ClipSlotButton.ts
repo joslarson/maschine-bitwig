@@ -1,12 +1,12 @@
 import { Button, SimpleControl, Color } from 'taktil';
 
-import store from 'store';
+import store from '../store';
 
 type Props = { index: number };
 
 interface State {
     on: boolean;
-    color: Color;
+    color: Color | undefined;
     isPlaying: boolean;
     isPlaybackQueued: boolean;
     isRecording: boolean;

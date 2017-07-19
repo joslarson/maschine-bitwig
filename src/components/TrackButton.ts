@@ -1,6 +1,6 @@
 import { Button, SimpleControl, Color } from 'taktil';
 
-import store from 'store';
+import store from '../store';
 
 type Props = { index: number };
 

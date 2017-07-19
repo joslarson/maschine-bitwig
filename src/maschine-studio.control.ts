@@ -1,7 +1,6 @@
 // 1. setup taktil env (must be first import in entry file)
 import 'taktil/env';
 
-import store from './store';
 import { BaseView, SceneView, PatternView, PadMidiView, NavigateView } from './views';
 
 // 2. define controller script

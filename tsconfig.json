@@ -1,27 +1,32 @@
 {
-    "compilerOptions": {
-        "target": "es5",
-        "module": "es2015",
-        "rootDir": "src",
-        "baseUrl": "./src",
-        "sourceMap": false,
-        "moduleResolution": "node",
-        "allowJs": true,
-        "importHelpers": true,
-        "lib": [
-            "dom",
-            "es6",
-            "dom.iterable",
-            "scripthost"
-        ],
-        "typeRoots": [
-            "@types",
-            "typed-bitwig-api"
-        ]
-    },
-    "compileOnSave": false,
-    "include": [
-        "src/**/*.ts"
+  "compilerOptions": {
+    "target": "es5",
+    "module": "es2015",
+    "rootDir": "src",
+    "baseUrl": "./src",
+    "sourceMap": false,
+    "moduleResolution": "node",
+    "allowJs": true,
+    "checkJs": true,
+    "importHelpers": true,
+    "lib": [
+      "dom",
+      "es6",
+      "dom.iterable",
+      "scripthost"
     ],
-    "exclude": []
+    "typeRoots": [
+      "@types",
+      "typed-bitwig-api"
+    ]
+  },
+  "compileOnSave": false,
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.js"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }
