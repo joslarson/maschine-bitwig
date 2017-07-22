@@ -1,6 +1,6 @@
 {
   "name": "maschine-bitwig",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "",
   "dependencies": {
     "lodash-es": "^4.17.4",
@@ -8,23 +8,15 @@
     "tslib": "^1.6.0"
   },
   "devDependencies": {
-    "awesome-typescript-loader": "^3.2.1",
+    "webpack": "^3.3.0",
     "bitwig-webpack-plugin": "^1.0.0",
     "case-sensitive-paths-webpack-plugin": "^2.1.1",
     "copy-webpack-plugin": "^4.0.1",
-    "npx": "^9.3.2",
     "ts-loader": "^2.3.1",
     "typed-bitwig-api": "^2.0.0",
-    "typescript": "^2.4.1",
-    "webpack": "^3.3.0"
+    "typescript": "^2.4.1"
   },
   "scripts": {},
   "author": "Joseph Larson",
-  "license": "BSD-3-Clause",
-  "taktil": {
-    "entries": "src/*.control.@(js|ts)",
-    "copy": [
-      "./src/README.md"
-    ]
-  }
+  "license": "BSD-3-Clause"
 }
