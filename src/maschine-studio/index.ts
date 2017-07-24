@@ -1,7 +1,7 @@
 // 1. setup taktil env (must be first import in entry file)
 import 'taktil/env';
 
-import { BaseView, SceneView, PatternView, PadMidiView, NavigateView } from './views';
+import * as views from './views';
 
 // 2. define controller script
 host.defineController(
@@ -20,7 +20,13 @@ host.addDeviceNameBasedDiscoveryPair(
 );
 
 // 4. register views to the session
-session.registerViews(BaseView, SceneView, PatternView, PadMidiView, NavigateView);
+session.registerViews(
+    views.BaseView,
+    views.SceneView,
+    views.PatternView,
+    views.PadMidiView,
+    views.NavigateView
+);
 
 // 5. on init, activate view to trigger initial render
-session.on('init', () => session.activateView(PatternView));
+session.on('init', () => session.activateView(views.PatternView));

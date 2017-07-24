@@ -8,8 +8,8 @@ const tsconfig = require('./tsconfig.json');
 
 module.exports = {
     entry: {
-        'maschine-studio.control': './src/maschine-studio.control.ts',
-        'maschine-mikro.control': './src/maschine-mikro.control.ts',
+        'maschine-studio.control': './src/maschine-studio',
+        'maschine-mikro.control': './src/maschine-mikro',
     },
     output: { path: path.resolve(__dirname, 'dist'), filename: '[name].js' },
     resolve: {
@@ -24,10 +24,10 @@ module.exports = {
         new CopyWebpackPlugin([{ from: 'README.md' }]), // non JS things to copy
         new CaseSensitivePathsPlugin(), // protects against case sensitive file systems
         new webpack.NamedModulesPlugin(), // makes it easier to debug webpack output
-        new webpack.optimize.ModuleConcatenationPlugin(), // makes webpack output smaller and more readable
+        // new webpack.optimize.ModuleConcatenationPlugin(), // makes webpack output smaller and more readable
         // bundle everything coming from the node_modules folder separately
         new webpack.optimize.CommonsChunkPlugin({
-            name: 'common',
+            name: 'libs.bundle',
             minChunks: function(module) {
                 return module.context && module.context.indexOf('node_modules') !== -1;
             },

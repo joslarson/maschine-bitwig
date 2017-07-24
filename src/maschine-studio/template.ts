@@ -1,8 +1,8 @@
 import { ControlTemplate, SimpleControl } from 'taktil';
 
-import MaschineButton from './MaschineButton';
-import MaschineColorButton from './MaschineColorButton';
-import MaschinePanKnob from './MaschinePanKnob';
+import MaschineButton from 'controls/MaschineButton';
+import MaschineColorButton from 'controls/MaschineColorButton';
+import MaschinePanKnob from 'controls/MaschinePanKnob';
 
 export default ControlTemplate({
     // TOP LEFT

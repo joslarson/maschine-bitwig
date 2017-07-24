@@ -1,3 +1,13 @@
+export {
+    ModeGate,
+    ViewToggle,
+    RestartButton,
+    LoopToggle,
+    MetronomeToggle,
+    PlayToggle,
+    PreRollToggle,
+} from 'taktil/contrib/components';
+
 export * from './transport';
 export { default as ActionButton } from './ActionButton';
 export { default as BrowserExitButton } from './BrowserExitButton';

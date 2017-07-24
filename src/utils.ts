@@ -1,4 +1,4 @@
-import store from './store';
+import store from 'store';
 
 export function rgb2hsb({ r, g, b }: { r: number; g: number; b: number }) {
     const result: { h: number; s: number; b: number } = {
@@ -113,7 +113,7 @@ export class SyncedInterval {
     target: number | null = null;
     isOddInterval = true;
 
-    constructor(callback, beats) {
+    constructor(callback: (...args: any[]) => void, beats: number) {
         this.callback = callback;
         this.beats = beats;
     }

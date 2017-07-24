@@ -1,12 +1,13 @@
 import { View } from 'taktil';
 
 import BaseView from './BaseView';
-import controls from '../controls';
-import * as components from '../components';
+import controls from '../template';
+import * as components from 'components';
 
-export default class SceneView extends View {
+export default class PatternView extends View {
     static parent = BaseView;
-    sceneButtons = [
+
+    clipSlotButtons = [
         controls.PAD_1,
         controls.PAD_2,
         controls.PAD_3,
@@ -23,5 +24,5 @@ export default class SceneView extends View {
         controls.PAD_14,
         controls.PAD_15,
         controls.PAD_16,
-    ].map((control, index) => new components.SceneButton(control, { index }));
+    ].map((control, index) => new components.ClipSlotButton(control, { index }));
 }
