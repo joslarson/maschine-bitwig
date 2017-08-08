@@ -1,6 +1,6 @@
 import { View } from 'taktil';
 
-import ctrls from '../template';
+import template from '../template';
 import * as components from 'components';
 import store from 'store';
 

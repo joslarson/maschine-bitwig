@@ -1,7 +1,7 @@
 class Store {
     transport: API.Transport;
     application: API.Application;
-    cursorTrack: API.CursorTrack & API.Track;
+    cursorTrack: API.CursorTrack;
     trackBank: API.TrackBank;
     popupBrowser: API.PopupBrowser;
     sceneBank: API.SceneBank;
@@ -23,8 +23,7 @@ class Store {
         this.application = host.createApplication();
 
         // cursorTrack
-        this.cursorTrack = (host.createArrangerCursorTrack(0, 16) as any) as API.CursorTrack &
-            API.Track;
+        this.cursorTrack = host.createArrangerCursorTrack(0, 16);
         this.cursorTrack.isGroup().markInterested();
         this.cursorTrack.color().markInterested();
 

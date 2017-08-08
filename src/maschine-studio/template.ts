@@ -4,7 +4,7 @@ import MaschineButton from 'controls/MaschineButton';
 import MaschineColorButton from 'controls/MaschineColorButton';
 import MaschinePanKnob from 'controls/MaschinePanKnob';
 
-export default ControlTemplate({
+export default new ControlTemplate({
     // TOP LEFT
     CHANNEL: new MaschineButton({ status: 0xb0, data1: 0x15 }),
     PLUGIN: new MaschineButton({ status: 0xb0, data1: 0x16 }),
@@ -150,23 +150,23 @@ export default ControlTemplate({
     PAN_G: new MaschinePanKnob({ status: 0xb8, data1: 0x73 }),
     PAN_H: new MaschinePanKnob({ status: 0xb8, data1: 0x75 }),
 
-    // MACRO_TOUCH_1: new MaschineButton({ status: 0xB0, data1: 0x66 }),
-    // MACRO_TOUCH_2: new MaschineButton({ status: 0xB0, data1: 0x68 }),
-    // MACRO_TOUCH_3: new MaschineButton({ status: 0xB0, data1: 0x6A }),
-    // MACRO_TOUCH_4: new MaschineButton({ status: 0xB0, data1: 0x6C }),
-    // MACRO_TOUCH_5: new MaschineButton({ status: 0xB0, data1: 0x6E }),
-    // MACRO_TOUCH_6: new MaschineButton({ status: 0xB0, data1: 0x70 }),
-    // MACRO_TOUCH_7: new MaschineButton({ status: 0xB0, data1: 0x72 }),
-    // MACRO_TOUCH_8: new MaschineButton({ status: 0xB0, data1: 0x74 }),
+    // MACRO_TOUCH_1: new MaschineButton({ status: 0xb0, data1: 0x66 }),
+    // MACRO_TOUCH_2: new MaschineButton({ status: 0xb0, data1: 0x68 }),
+    // MACRO_TOUCH_3: new MaschineButton({ status: 0xb0, data1: 0x6a }),
+    // MACRO_TOUCH_4: new MaschineButton({ status: 0xb0, data1: 0x6c }),
+    // MACRO_TOUCH_5: new MaschineButton({ status: 0xb0, data1: 0x6e }),
+    // MACRO_TOUCH_6: new MaschineButton({ status: 0xb0, data1: 0x70 }),
+    // MACRO_TOUCH_7: new MaschineButton({ status: 0xb0, data1: 0x72 }),
+    // MACRO_TOUCH_8: new MaschineButton({ status: 0xb0, data1: 0x74 }),
 
-    // MACRO_1: new MaschineButton({ status: 0xB0, data1: 0x67 }),
-    // MACRO_2: new MaschineButton({ status: 0xB0, data1: 0x69 }),
-    // MACRO_3: new MaschineButton({ status: 0xB0, data1: 0x6B }),
-    // MACRO_4: new MaschineButton({ status: 0xB0, data1: 0x6D }),
-    // MACRO_5: new MaschineButton({ status: 0xB0, data1: 0x6F }),
-    // MACRO_6: new MaschineButton({ status: 0xB0, data1: 0x71 }),
-    // MACRO_7: new MaschineButton({ status: 0xB0, data1: 0x73 }),
-    // MACRO_8: new MaschineButton({ status: 0xB0, data1: 0x75 }),
+    // MACRO_1: new MaschineButton({ status: 0xb0, data1: 0x67 }),
+    // MACRO_2: new MaschineButton({ status: 0xb0, data1: 0x69 }),
+    // MACRO_3: new MaschineButton({ status: 0xb0, data1: 0x6b }),
+    // MACRO_4: new MaschineButton({ status: 0xb0, data1: 0x6d }),
+    // MACRO_5: new MaschineButton({ status: 0xb0, data1: 0x6f }),
+    // MACRO_6: new MaschineButton({ status: 0xb0, data1: 0x71 }),
+    // MACRO_7: new MaschineButton({ status: 0xb0, data1: 0x73 }),
+    // MACRO_8: new MaschineButton({ status: 0xb0, data1: 0x75 }),
 
     // PARAM_TOUCH_1: new MaschineButton({ status: 0xba, data1: 0x66 }),
     // PARAM_TOUCH_2: new MaschineButton({ status: 0xba, data1: 0x68 }),

@@ -36,7 +36,7 @@ export default class BaseView extends View {
         template.GROUP_G,
         template.GROUP_H,
     ].map(
-        (control, index) => new components.TrackBankNavigationButton(control, 'SHIFT', { index })
+        (control, index) => new components.TrackBankNavigationButton(control, { index }, 'SHIFT')
     );
 
     volumeKnobs = [
@@ -70,18 +70,22 @@ export default class BaseView extends View {
 
     // Transport
     restartButton = new components.RestartButton(template.RESTART, { transport: store.transport });
-    loopToggle = new components.LoopToggle(template.RESTART, 'SHIFT', {
-        transport: store.transport,
-    });
+    loopToggle = new components.LoopToggle(
+        template.RESTART,
+        { transport: store.transport },
+        'SHIFT'
+    );
     metronomeToggle = new components.MetronomeToggle(template.METRO, {
         transport: store.transport,
     });
     shiftButton = new components.ShiftButton(template.GRID);
     playToggle = new components.PlayToggle(template.PLAY, { transport: store.transport });
     armToggle = new components.ArmToggle(template.REC, { track: store.cursorTrack });
-    preRollToggle = new components.PreRollToggle(template.REC, 'SHIFT', {
-        transport: store.transport,
-    });
+    preRollToggle = new components.PreRollToggle(
+        template.REC,
+        { transport: store.transport },
+        'SHIFT'
+    );
 
     // Pads
     sceneViewButton = new components.ViewToggle(template.SCENE, { view: 'SceneView' });

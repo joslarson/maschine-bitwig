@@ -4,17 +4,17 @@
   "description": "",
   "dependencies": {
     "lodash-es": "^4.17.4",
-    "taktil": "^0.5.0",
+    "taktil": "^0.6.0-0",
     "tslib": "^1.6.0"
   },
   "devDependencies": {
-    "webpack": "^3.3.0",
     "bitwig-webpack-plugin": "^1.0.0",
     "case-sensitive-paths-webpack-plugin": "^2.1.1",
     "copy-webpack-plugin": "^4.0.1",
     "ts-loader": "^2.3.1",
-    "typed-bitwig-api": "^2.0.0",
-    "typescript": "^2.4.1"
+    "typed-bitwig-api": "^2.1.1-beta.3",
+    "typescript": "^2.4.1",
+    "webpack": "^3.3.0"
   },
   "scripts": {},
   "author": "Joseph Larson",
