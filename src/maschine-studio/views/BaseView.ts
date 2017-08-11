@@ -1,53 +1,53 @@
 import { View } from 'taktil';
 
-import template from '../template';
+import controls from '../controls';
 import * as components from 'components';
 import store from 'store';
 
 export default class BaseView extends View {
     // Top Left
-    arrangeLayoutButton = new components.LayoutButton(template.ARRANGE, { layout: 'ARRANGE' });
-    mixLayoutButton = new components.LayoutButton(template.MIX, { layout: 'MIX' });
-    editLayoutButton = new components.LayoutButton(template.SAMPLING, { layout: 'EDIT' });
-    toggleBrowserButton = new components.BrowserToggle(template.BROWSE);
+    arrangeLayoutButton = new components.LayoutButton(controls.ARRANGE, { layout: 'ARRANGE' });
+    mixLayoutButton = new components.LayoutButton(controls.MIX, { layout: 'MIX' });
+    editLayoutButton = new components.LayoutButton(controls.SAMPLING, { layout: 'EDIT' });
+    toggleBrowserButton = new components.BrowserToggle(controls.BROWSE);
 
     // Performance
-    tempoButton = new components.TempoButton(template.TAP, { transport: store.transport });
+    tempoButton = new components.TempoButton(controls.TAP, { transport: store.transport });
 
     // Groups
     trackButtons = [
-        template.GROUP_A,
-        template.GROUP_B,
-        template.GROUP_C,
-        template.GROUP_D,
-        template.GROUP_E,
-        template.GROUP_F,
-        template.GROUP_G,
-        template.GROUP_H,
+        controls.GROUP_A,
+        controls.GROUP_B,
+        controls.GROUP_C,
+        controls.GROUP_D,
+        controls.GROUP_E,
+        controls.GROUP_F,
+        controls.GROUP_G,
+        controls.GROUP_H,
     ].map((control, index) => new components.TrackButton(control, { index }));
 
     trackNavButtons = [
-        template.GROUP_A,
-        template.GROUP_B,
-        template.GROUP_C,
-        template.GROUP_D,
-        template.GROUP_E,
-        template.GROUP_F,
-        template.GROUP_G,
-        template.GROUP_H,
+        controls.GROUP_A,
+        controls.GROUP_B,
+        controls.GROUP_C,
+        controls.GROUP_D,
+        controls.GROUP_E,
+        controls.GROUP_F,
+        controls.GROUP_G,
+        controls.GROUP_H,
     ].map(
         (control, index) => new components.TrackBankNavigationButton(control, { index }, 'SHIFT')
     );
 
     volumeKnobs = [
-        template.VOL_A,
-        template.VOL_B,
-        template.VOL_C,
-        template.VOL_D,
-        template.VOL_E,
-        template.VOL_F,
-        template.VOL_G,
-        template.VOL_H,
+        controls.VOL_A,
+        controls.VOL_B,
+        controls.VOL_C,
+        controls.VOL_D,
+        controls.VOL_E,
+        controls.VOL_F,
+        controls.VOL_G,
+        controls.VOL_H,
     ].map(
         (control, index) =>
             new components.VolumeRange(control, {
@@ -56,54 +56,54 @@ export default class BaseView extends View {
     );
 
     volumeKnobsTouch = [
-        template.VOL_TOUCH_A,
-        template.VOL_TOUCH_B,
-        template.VOL_TOUCH_C,
-        template.VOL_TOUCH_D,
-        template.VOL_TOUCH_E,
-        template.VOL_TOUCH_F,
-        template.VOL_TOUCH_G,
-        template.VOL_TOUCH_H,
+        controls.VOL_TOUCH_A,
+        controls.VOL_TOUCH_B,
+        controls.VOL_TOUCH_C,
+        controls.VOL_TOUCH_D,
+        controls.VOL_TOUCH_E,
+        controls.VOL_TOUCH_F,
+        controls.VOL_TOUCH_G,
+        controls.VOL_TOUCH_H,
     ].map((control, index) => new components.VolumeKnobTouch(control, { index }));
 
-    masterVolume = new components.VolumeRange(template.KNOB, { track: store.masterTrack });
+    masterVolume = new components.VolumeRange(controls.KNOB, { track: store.masterTrack });
 
     // Transport
-    restartButton = new components.RestartButton(template.RESTART, { transport: store.transport });
+    restartButton = new components.RestartButton(controls.RESTART, { transport: store.transport });
     loopToggle = new components.LoopToggle(
-        template.RESTART,
+        controls.RESTART,
         { transport: store.transport },
         'SHIFT'
     );
-    metronomeToggle = new components.MetronomeToggle(template.METRO, {
+    metronomeToggle = new components.MetronomeToggle(controls.METRO, {
         transport: store.transport,
     });
-    shiftButton = new components.ShiftButton(template.GRID);
-    playToggle = new components.PlayToggle(template.PLAY, { transport: store.transport });
-    armToggle = new components.ArmToggle(template.REC, { track: store.cursorTrack });
+    shiftButton = new components.ModeButton(controls.GRID, { mode: 'SHIFT' });
+    playToggle = new components.PlayToggle(controls.PLAY, { transport: store.transport });
+    armToggle = new components.ArmToggle(controls.REC, { track: store.cursorTrack });
     preRollToggle = new components.PreRollToggle(
-        template.REC,
+        controls.REC,
         { transport: store.transport },
         'SHIFT'
     );
 
     // Pads
-    sceneViewButton = new components.ViewToggle(template.SCENE, { view: 'SceneView' });
-    patternViewButton = new components.ViewToggle(template.PATTERN, { view: 'PatternView' });
-    padMidiViewButton = new components.ViewToggle(template.PAD_MODE, { view: 'PadMidiView' });
-    navigateViewButton = new components.ViewToggle(template.NAVIGATE, { view: 'NavigateView' });
-    duplicateModeGate = new components.ModeGate(template.DUPLICATE, { mode: 'DUPLICATE' });
-    selectModeGate = new components.ModeGate(template.SELECT, { mode: 'SELECT' });
-    soloModeGate = new components.ModeGate(template.SOLO, { mode: 'SOLO' });
-    muteModeGate = new components.ModeGate(template.MUTE, { mode: 'MUTE' });
+    sceneViewButton = new components.ViewToggle(controls.SCENE, { view: 'SceneView' });
+    patternViewButton = new components.ViewToggle(controls.PATTERN, { view: 'PatternView' });
+    padMidiViewButton = new components.ViewToggle(controls.PAD_MODE, { view: 'PadMidiView' });
+    navigateViewButton = new components.ViewToggle(controls.NAVIGATE, { view: 'NavigateView' });
+    duplicateModeGate = new components.ModeGate(controls.DUPLICATE, { mode: 'DUPLICATE' });
+    selectModeGate = new components.ModeGate(controls.SELECT, { mode: 'SELECT' });
+    soloModeGate = new components.ModeGate(controls.SOLO, { mode: 'SOLO' });
+    muteModeGate = new components.ModeGate(controls.MUTE, { mode: 'MUTE' });
 
     // Edit
-    undoButton = new components.ActionButton(template.UNDO, { action: 'undo' });
-    redoButton = new components.ActionButton(template.REDO, { action: 'redo' });
-    copyButton = new components.ActionButton(template.COPY, { action: 'copy' });
-    pasteButton = new components.ActionButton(template.PASTE, { action: 'paste' });
-    deleteButton = new components.ActionButton(template.CLEAR, { action: 'delete' });
-    toggleBrowserRing = new components.BrowserToggle(template.JOG_RING);
-    tempoRing = new components.TempoRing(template.JOG_RING, 'TEMPO');
-    browserExitButton = new components.BrowserExitButton(template.BACK);
+    undoButton = new components.ActionButton(controls.UNDO, { action: 'undo' });
+    redoButton = new components.ActionButton(controls.REDO, { action: 'redo' });
+    copyButton = new components.ActionButton(controls.COPY, { action: 'copy' });
+    pasteButton = new components.ActionButton(controls.PASTE, { action: 'paste' });
+    deleteButton = new components.ActionButton(controls.CLEAR, { action: 'delete' });
+    toggleBrowserRing = new components.BrowserToggle(controls.JOG_RING);
+    tempoRing = new components.TempoRing(controls.JOG_RING, 'TEMPO');
+    browserExitButton = new components.BrowserExitButton(controls.BACK);
 }

@@ -18,6 +18,7 @@ class Store {
         this.transport = host.createTransport();
         this.transport.tempo().markInterested();
         this.transport.getPosition().markInterested();
+        this.transport.isPlaying().markInterested();
 
         // application
         this.application = host.createApplication();

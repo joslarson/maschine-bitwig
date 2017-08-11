@@ -1,9 +1,9 @@
-// 1. setup bitwig api
-host.loadAPI(4);
-// host.setShouldFailOnDeprecatedUse(true);
-// 2. load taktil env (must be first import in entry file)
-import 'taktil/env';
-import { BaseView } from './views';
+// 1. setup taktil env
+loadAPI(3); // set bitwig api version
+// host.setShouldFailOnDeprecatedUse(true); // optional
+import 'taktil/env'; // must be first import in entry file
+
+import * as views from './views';
 
 // 3. define controller script
 host.defineController(
@@ -19,7 +19,7 @@ host.defineMidiPorts(1, 1); // number of midi inputs, outputs
 host.addDeviceNameBasedDiscoveryPair(['Maschine Mikro Input'], ['Maschine Mikro Output']);
 
 // 5. register views to the session
-session.registerViews(BaseView);
+session.registerViews(views.BaseView, views.SceneView, views.PatternView);
 
 // 6. on init, activate view to trigger initial render
-session.on('init', () => session.activateView(BaseView));
+session.on('init', () => session.activateView(views.BaseView));

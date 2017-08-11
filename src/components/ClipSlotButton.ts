@@ -2,7 +2,10 @@ import { Button, SimpleControl, Color } from 'taktil';
 
 import store from '../store';
 
-type Props = { index: number };
+type Props = {
+    index: number;
+    binary?: boolean;
+};
 
 interface State {
     on: boolean;
@@ -34,14 +37,24 @@ export default class ClipSlotButton extends Button<Props, State> {
             isRecordingQueued,
             hasContent,
         } = this.state;
-        const value = isPlaying || isPlaybackQueued || isRecording || isRecordingQueued ? 1 : 0;
-        const disabled = !hasContent && !isRecordingQueued;
-        const flashing = isPlaybackQueued || isRecordingQueued;
-        const color = isRecordingQueued || isRecording ? { r: 1, g: 0, b: 0 } : this.state.color;
+
+        let value = isPlaying || isPlaybackQueued || isRecording || isRecordingQueued ? 1 : 0;
+        let disabled = !hasContent && !isRecordingQueued;
+        let flashing = isPlaybackQueued || isRecordingQueued;
+        let color = isRecordingQueued || isRecording ? { r: 1, g: 0, b: 0 } : this.state.color;
+
+        if (this.props.binary) {
+            value = hasContent || isRecordingQueued ? 1 : 0;
+            disabled = false;
+            flashing = isPlaybackQueued || isRecordingQueued || isPlaying || isRecording;
+        }
+
         return { value, ...color === undefined ? {} : { color }, disabled, flashing };
     }
 
     onInit() {
+        store.sceneBank.getScene(this.props.index).exists().markInterested();
+
         this.clipLauncherSlotBank.addIsPlayingObserver((index, isPlaying) => {
             if (index === this.props.index) this.setState({ isPlaying });
         });

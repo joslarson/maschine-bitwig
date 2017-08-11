@@ -24,5 +24,5 @@ export default class PatternView extends View {
         controls.PAD_14,
         controls.PAD_15,
         controls.PAD_16,
-    ].map((control, index) => new components.ClipSlotButton(control, { index }));
+    ].map((control, index) => new components.ClipSlotButton(control, { index, binary: true }));
 }
