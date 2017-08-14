@@ -1,8 +1,9 @@
 import { ControlTemplate, SimpleControl } from 'taktil';
 
-import MaschineButton from 'controls/MaschineButton';
-import MaschineColorButton from 'controls/MaschineColorButton';
-import MaschinePanKnob from 'controls/MaschinePanKnob';
+import MaschineButton from '../controls/MaschineButton';
+import MaschineColorButton from '../controls/MaschineColorButton';
+import MaschinePanKnob from '../controls/MaschinePanKnob';
+import RelativeKnob from '../controls/RelativeKnob';
 
 export default new ControlTemplate({
     // TOP LEFT
@@ -90,7 +91,7 @@ export default new ControlTemplate({
     REDO: new MaschineButton({ status: 0xb6, data1: 0x1a }),
     QUANTIZE: new MaschineButton({ status: 0xb6, data1: 0x1b }),
     CLEAR: new MaschineButton({ status: 0xb6, data1: 0x1c }),
-    JOG_DIAL: new MaschineButton({ status: 0xb6, data1: 0x1d }),
+    JOG_DIAL: new RelativeKnob({ status: 0xb6, data1: 0x1d }),
     JOG_RING: new MaschineButton({ status: 0xb6, data1: 0x1e }),
     BACK: new MaschineButton({ status: 0xb6, data1: 0x66 }),
     LEFT_ARROW: new MaschineButton({ status: 0xb6, data1: 0x67 }),

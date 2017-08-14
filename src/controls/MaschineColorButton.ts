@@ -17,6 +17,8 @@ interface MaschineColorButtonState {
 }
 
 export default class MaschineColorButton extends SimpleControl<MaschineColorButtonState> {
+    dimValue = 20;
+
     state = {
         value: 0,
         color: colors.offWhite,
@@ -65,12 +67,18 @@ export default class MaschineColorButton extends SimpleControl<MaschineColorButt
     getMidiOutput(state): (MidiMessage | SysexMessage)[] {
         const doNotSaturate = isEqual(state.color, colors.offWhite);
         const hsb = rgb2hsv(state.color);
-        const { data1 } = this;
+        const { data1, minValue, maxValue, dimValue } = this;
         let brightnessData2 =
-            !this.activeComponent || state.disabled ? 0 : state.value === 0 ? 20 : 127;
-        if (brightnessData2 === 127 && state.flashing) brightnessData2 = state.flashOn ? 127 : 20;
-        if (state.accent)
-            brightnessData2 = brightnessData2 === 127 ? 127 : Math.min(brightnessData2 + 15, 127);
+            !this.activeComponent || state.disabled
+                ? minValue
+                : state.value === minValue ? dimValue : maxValue;
+        if (brightnessData2 === maxValue && state.flashing) {
+            brightnessData2 = state.flashOn ? maxValue : dimValue;
+        }
+        if (state.accent) {
+            brightnessData2 =
+                brightnessData2 === maxValue ? maxValue : Math.min(brightnessData2 + 15, maxValue);
+        }
         let saturationData2 = doNotSaturate
             ? hsb.s
             : hsb.s === 0 ? 0 : 100 + Math.round(hsb.s / 127 * 27);
@@ -92,7 +100,8 @@ export default class MaschineColorButton extends SimpleControl<MaschineColorButt
     }
 
     postRender() {
-        if (this.state.value > 0 && this.state.flashing) {
+        const { minValue, state: { value, flashing } } = this;
+        if (value > minValue && flashing) {
             if (!this.flashInterval) {
                 this.flashInterval = new SyncedInterval(isOddInterval => {
                     this.setState({ flashOn: isOddInterval });

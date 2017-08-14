@@ -1,6 +1,6 @@
 // 1. setup taktil env
 loadAPI(3); // set bitwig api version
-host.setShouldFailOnDeprecatedUse(true); // optional
+// host.setShouldFailOnDeprecatedUse(true); // optional
 import 'taktil/env'; // must be first import in entry file
 
 import * as views from './views';

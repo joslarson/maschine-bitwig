@@ -1,4 +1,4 @@
-import { Button } from 'taktil';
+import { Button, Control, ControlState } from 'taktil';
 
 export class ArmToggle extends Button<{ track: API.Track }> {
     onInit() {
@@ -25,7 +25,7 @@ export class TempoButton extends Button<{ transport: API.Transport }> {
     }
 }
 
-export class TempoRing extends Button {
+export class TempoRing extends Button<{ transport: API.Transport }> {
     onInit() {
         session.on('activateMode', mode => {
             if (mode === 'TEMPO') this.setState({ ...this.state, on: true });
@@ -33,5 +33,11 @@ export class TempoRing extends Button {
         session.on('deactivateMode', mode => {
             if (mode === 'TEMPO') this.setState({ ...this.state, on: false });
         });
+    }
+
+    onInput(control: Control, { value }: ControlState) {
+        console.log(value * 63);
+        const shift = session.modeIsActive('SHIFT');
+        this.props.transport.tempo().inc(value * 63 * (1 / (666 - 20)) * (shift ? 1 / 10 : 1));
     }
 }

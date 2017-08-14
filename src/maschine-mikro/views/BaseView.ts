@@ -9,7 +9,7 @@ export default class BaseView extends View {
     // arrangeLayoutButton = new components.LayoutButton(controls.ARRANGE, { layout: 'ARRANGE' });
     // mixLayoutButton = new components.LayoutButton(controls.MIX, { layout: 'MIX' });
     // editLayoutButton = new components.LayoutButton(controls.SAMPLING, { layout: 'EDIT' });
-    toggleBrowserButton = new components.BrowserToggle(controls.BROWSE);
+    toggleBrowserButton = new components.BrowserToggle(controls.BROWSE, {});
 
     // Performance
     tempoButton = new components.TempoButton(
