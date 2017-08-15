@@ -17,7 +17,7 @@ export default class MaschineButton extends SimpleControl<State> {
 
     getMidiOutput({ value, flashing, flashOn, disabled }): (MidiMessage | SysexMessage)[] {
         const { outPort: port, status, data1, minValue, maxValue } = this;
-        let data2 = !this.activeComponent || disabled ? minValue : maxValue;
+        let data2 = !this.activeComponent || disabled ? minValue : value;
         if (data2 === maxValue && flashing) data2 = flashOn ? maxValue : minValue;
         return [new MidiMessage({ port, status, data1, data2 })];
     }
