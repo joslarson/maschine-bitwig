@@ -2,7 +2,7 @@ import { Button, SimpleControl, Color } from 'taktil';
 
 import store from '../store';
 
-type Props = { index: number };
+type Options = { index: number };
 
 interface State {
     on: boolean;
@@ -12,12 +12,12 @@ interface State {
     noteOn: boolean;
 }
 
-export default class TrackButton extends Button<Props, State> {
+export default class TrackButton extends Button<Options, State> {
     state: State = { on: false, disabled: false, exists: false, noteOn: false };
     notes: API.PlayingNote[] = [];
     track: API.Track;
 
-    getOutput(control: SimpleControl) {
+    getOutput() {
         const { on, exists, color, noteOn } = this.state;
         return {
             value: on ? 1 : 0,
@@ -28,7 +28,7 @@ export default class TrackButton extends Button<Props, State> {
     }
 
     onInit() {
-        this.track = store.trackBank.getChannel(this.props.index) as API.Track;
+        this.track = store.trackBank.getChannel(this.options.index) as API.Track;
         this.track.isGroup().markInterested();
 
         this.track.color().addValueObserver((r, g, b) => {
@@ -68,8 +68,8 @@ export default class TrackButton extends Button<Props, State> {
     }
 
     onPress() {
-        if (this.props.index === store.trackBank.channelCount().get()) {
-            store.application.createInstrumentTrack(this.props.index);
+        if (this.options.index === store.trackBank.channelCount().get()) {
+            store.application.createInstrumentTrack(this.options.index);
             this.track.browseToInsertAtStartOfChain();
         }
         this.track.selectInEditor();

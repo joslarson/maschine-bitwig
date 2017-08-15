@@ -1,33 +1,33 @@
 import { Button } from 'taktil';
 
-interface Props {
+interface Options {
     mode: string;
     pinnable?: boolean;
 }
 
-export default class ModeButton extends Button<Props> {
+export default class ModeButton extends Button<Options> {
     DOUBLE_PRESS_DELAY = 100;
 
     onPress() {
-        if (this.props.pinnable && session.modeIsActive('SHIFT')) {
+        if (this.options.pinnable && session.modeIsActive('SHIFT')) {
             const on = !this.state.on;
             this.setState({ on });
             if (on) {
-                session.activateMode(this.props.mode);
+                session.activateMode(this.options.mode);
             } else {
-                session.deactivateMode(this.props.mode);
+                session.deactivateMode(this.options.mode);
             }
-            session.activateMode(this.props.mode);
+            session.activateMode(this.options.mode);
         } else {
             this.setState({ on: true });
-            session.activateMode(this.props.mode);
+            session.activateMode(this.options.mode);
         }
     }
 
     onRelease() {
-        if (!session.modeIsActive('SHIFT') || !this.props.pinnable) {
+        if (!session.modeIsActive('SHIFT') || !this.options.pinnable) {
             this.setState({ on: false });
-            session.deactivateMode(this.props.mode);
+            session.deactivateMode(this.options.mode);
         }
     }
 

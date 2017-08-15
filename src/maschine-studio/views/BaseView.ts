@@ -35,7 +35,7 @@ export default class BaseView extends View {
         ctrls.GROUP_F,
         ctrls.GROUP_G,
         ctrls.GROUP_H,
-    ].map((control, index) => new comps.TrackBankNavigationButton(control, { index }, 'SHIFT'));
+    ].map((control, index) => new comps.TrackBankNavigationButton(control, 'SHIFT', { index }));
 
     volumeKnobs = [
         ctrls.VOL_A,
@@ -68,14 +68,14 @@ export default class BaseView extends View {
 
     // Transport
     restartButton = new comps.RestartButton(ctrls.RESTART, { transport: store.transport });
-    loopToggle = new comps.LoopToggle(ctrls.RESTART, { transport: store.transport }, 'SHIFT');
+    loopToggle = new comps.LoopToggle(ctrls.RESTART, 'SHIFT', { transport: store.transport });
     metronomeToggle = new comps.MetronomeToggle(ctrls.METRO, {
         transport: store.transport,
     });
     shiftButton = new comps.ModeButton(ctrls.GRID, { mode: 'SHIFT' });
     playToggle = new comps.PlayToggle(ctrls.PLAY, { transport: store.transport });
     armToggle = new comps.ArmToggle(ctrls.REC, { track: store.cursorTrack });
-    preRollToggle = new comps.PreRollToggle(ctrls.REC, { transport: store.transport }, 'SHIFT');
+    preRollToggle = new comps.PreRollToggle(ctrls.REC, 'SHIFT', { transport: store.transport });
 
     // Pads
     sceneViewButton = new comps.ViewToggle(ctrls.SCENE, { view: 'SceneView' });
@@ -94,10 +94,7 @@ export default class BaseView extends View {
     pasteButton = new comps.ActionButton(ctrls.PASTE, { action: 'paste' });
     deleteButton = new comps.ActionButton(ctrls.CLEAR, { action: 'delete' });
     toggleBrowserRing = new comps.BrowserToggle(ctrls.JOG_RING, {});
-    tempoRing = new comps.TempoRing(
-        [ctrls.JOG_RING, ctrls.JOG_DIAL],
-        { transport: store.transport },
-        'TEMPO'
-    );
+    tempoDial = new comps.TempoRing(ctrls.JOG_DIAL, 'TEMPO', { transport: store.transport });
+    tempoRing = new comps.TempoRing(ctrls.JOG_RING, 'TEMPO', { transport: store.transport });
     browserExitButton = new comps.BrowserExitButton(ctrls.BACK, {});
 }

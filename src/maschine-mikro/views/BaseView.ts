@@ -12,11 +12,9 @@ export default class BaseView extends View {
     toggleBrowserButton = new components.BrowserToggle(controls.BROWSE, {});
 
     // Performance
-    tempoButton = new components.TempoButton(
-        controls.ENTER,
-        { transport: store.transport },
-        'SHIFT'
-    );
+    tempoButton = new components.TempoButton(controls.ENTER, 'SHIFT', {
+        transport: store.transport,
+    });
 
     // Groups
     groupButton = new components.ModeButton(controls.GROUP, { mode: 'GROUP', pinnable: true });
@@ -30,7 +28,7 @@ export default class BaseView extends View {
         controls.PAD_10,
         controls.PAD_11,
         controls.PAD_12,
-    ].map((control, index) => new components.TrackButton(control, { index }, 'GROUP'));
+    ].map((control, index) => new components.TrackButton(control, 'GROUP', { index }));
 
     // trackNavButtons = [
     //     controls.PAD_13,
@@ -42,29 +40,23 @@ export default class BaseView extends View {
     //     controls.PAD_11,
     //     controls.PAD_12,
     // ].map(
-    //     (control, index) => new components.TrackBankNavigationButton(control, { index }, 'SHIFT')
+    //     (control, index) => new components.TrackBankNavigationButton(control, 'SHIFT', { index })
     // );
 
     // Transport
     restartButton = new components.RestartButton(controls.RESTART, { transport: store.transport });
-    loopToggle = new components.LoopToggle(
-        controls.RESTART,
-        { transport: store.transport },
-        'SHIFT'
-    );
-    metronomeToggle = new components.MetronomeToggle(
-        controls.PLAY,
-        { transport: store.transport },
-        'SHIFT'
-    );
+    loopToggle = new components.LoopToggle(controls.RESTART, 'SHIFT', {
+        transport: store.transport,
+    });
+    metronomeToggle = new components.MetronomeToggle(controls.PLAY, 'SHIFT', {
+        transport: store.transport,
+    });
     shiftButton = new components.ModeButton(controls.GRID, { mode: 'SHIFT' });
     playToggle = new components.PlayToggle(controls.PLAY, { transport: store.transport });
     armToggle = new components.ArmToggle(controls.REC, { track: store.cursorTrack });
-    preRollToggle = new components.PreRollToggle(
-        controls.REC,
-        { transport: store.transport },
-        'SHIFT'
-    );
+    preRollToggle = new components.PreRollToggle(controls.REC, 'SHIFT', {
+        transport: store.transport,
+    });
 
     // Pads
     sceneViewButton = new components.ViewToggle(controls.SCENE, { view: 'SceneView' });
@@ -77,9 +69,9 @@ export default class BaseView extends View {
     muteModeGate = new components.ModeGate(controls.MUTE, { mode: 'MUTE' });
 
     // Edit
-    undoButton = new components.ActionButton(controls.PAD_1, { action: 'undo' }, 'SHIFT');
-    redoButton = new components.ActionButton(controls.PAD_2, { action: 'redo' }, 'SHIFT');
-    copyButton = new components.ActionButton(controls.PAD_11, { action: 'copy' }, 'SHIFT');
-    pasteButton = new components.ActionButton(controls.PAD_12, { action: 'paste' }, 'SHIFT');
-    deleteButton = new components.ActionButton(controls.PAD_9, { action: 'delete' }, 'SHIFT');
+    undoButton = new components.ActionButton(controls.PAD_1, 'SHIFT', { action: 'undo' });
+    redoButton = new components.ActionButton(controls.PAD_2, 'SHIFT', { action: 'redo' });
+    copyButton = new components.ActionButton(controls.PAD_11, 'SHIFT', { action: 'copy' });
+    pasteButton = new components.ActionButton(controls.PAD_12, 'SHIFT', { action: 'paste' });
+    deleteButton = new components.ActionButton(controls.PAD_9, 'SHIFT', { action: 'delete' });
 }

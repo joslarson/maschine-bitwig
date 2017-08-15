@@ -2,20 +2,20 @@ import { Button, Control, ControlState } from 'taktil';
 
 export class ArmToggle extends Button<{ track: API.Track }> {
     onInit() {
-        this.props.track.getArm().addValueObserver(isArmed => {
+        this.options.track.getArm().addValueObserver(isArmed => {
             this.setState({ ...this.state, on: isArmed });
         });
     }
 
     onPress() {
-        this.props.track.getArm().set(!this.props.track.getArm().get());
+        this.options.track.getArm().set(!this.options.track.getArm().get());
     }
 }
 
 export class TempoButton extends Button<{ transport: API.Transport }> {
     onPress() {
         this.setState({ ...this.state, on: true });
-        this.props.transport.tapTempo();
+        this.options.transport.tapTempo();
         session.activateMode('TEMPO');
     }
 
@@ -35,9 +35,8 @@ export class TempoRing extends Button<{ transport: API.Transport }> {
         });
     }
 
-    onInput(control: Control, { value }: ControlState) {
-        console.log(value * 63);
+    onInput({ value }: ControlState) {
         const shift = session.modeIsActive('SHIFT');
-        this.props.transport.tempo().inc(value * 63 * (1 / (666 - 20)) * (shift ? 1 / 10 : 1));
+        this.options.transport.tempo().inc(value * 63 * (1 / (666 - 20)) * (shift ? 1 / 10 : 1));
     }
 }
