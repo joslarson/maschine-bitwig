@@ -18,11 +18,14 @@ export default class VolumeRange extends Range<Options, State> {
     }
 
     onInit() {
+        const { minValue, maxValue, range } = this.control;
         this.options.track
             .getVolume()
-            .addValueObserver((value: number) => this.setState({ value }));
-        this.options.track.addVuMeterObserver(128, -1, false, meter => {
-            if (this.state.isPlaying) this.setState({ meter: Math.min(meter / 127, 1) });
+            .addValueObserver((value: number) =>
+                this.setState({ value: Math.round(value * range + minValue) })
+            );
+        this.options.track.addVuMeterObserver(range + 1, -1, false, meter => {
+            if (this.state.isPlaying) this.setState({ meter: Math.min(meter / range, maxValue) });
         });
         store.transport.isPlaying().addValueObserver((isPlaying: boolean) => {
             this.setState({ isPlaying });
@@ -30,15 +33,19 @@ export default class VolumeRange extends Range<Options, State> {
     }
 
     onInput({ value }) {
+        const { minValue, maxValue, range } = this.control;
+
         if (!this.options.track.exists().get()) return this.control.render();
 
-        if (Math.abs(this.state.value - value) < 0.1) this.memory.ready = true;
+        if (Math.abs(this.state.value - value) < 12) this.memory.ready = true;
         if (this.memory.input) clearTimeout(this.memory.input);
         this.memory.input = setTimeout(() => {
             delete this.memory.ready;
             delete this.memory.input;
         }, this.INPUT_DELAY);
 
-        if (this.memory.ready || !this.state.isPlaying) this.options.track.getVolume().set(value);
+        if (this.memory.ready || !this.state.isPlaying) {
+            this.options.track.getVolume().set((value - minValue) / range + minValue);
+        }
     }
 }

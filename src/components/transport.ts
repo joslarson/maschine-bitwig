@@ -36,7 +36,8 @@ export class TempoRing extends Button<{ transport: API.Transport }> {
     }
 
     onInput({ value }: ControlState) {
+        console.log(value);
         const shift = session.modeIsActive('SHIFT');
-        this.options.transport.tempo().inc(value * 63 * (1 / (666 - 20)) * (shift ? 1 / 10 : 1));
+        this.options.transport.tempo().inc(value * (shift ? 1 / 10 : 1), 666 - 19);
     }
 }
