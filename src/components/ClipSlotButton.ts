@@ -1,8 +1,9 @@
 import { Button, SimpleControl, Color } from 'taktil';
 
-import store from '../store';
-
 type Options = {
+    application: API.Application;
+    cursorTrack: API.CursorTrack;
+    sceneBank: API.SceneBank;
     index: number;
     binary?: boolean;
 };
@@ -17,7 +18,7 @@ interface State {
     hasContent: boolean;
 }
 
-export default class ClipSlotButton extends Button<Options, State> {
+export class ClipSlotButton extends Button<Options, State> {
     state: State = {
         on: false,
         color: undefined,
@@ -27,7 +28,7 @@ export default class ClipSlotButton extends Button<Options, State> {
         isRecordingQueued: false,
         hasContent: false,
     };
-    clipLauncherSlotBank = store.cursorTrack.clipLauncherSlotBank();
+    clipLauncherSlotBank = this.options.cursorTrack.clipLauncherSlotBank();
 
     getOutput() {
         const {
@@ -53,7 +54,7 @@ export default class ClipSlotButton extends Button<Options, State> {
     }
 
     onInit() {
-        store.sceneBank.getScene(this.options.index).exists().markInterested();
+        this.options.sceneBank.getScene(this.options.index).exists().markInterested();
 
         this.clipLauncherSlotBank.addIsPlayingObserver((index, isPlaying) => {
             if (index === this.options.index) this.setState({ isPlaying });
@@ -76,11 +77,11 @@ export default class ClipSlotButton extends Button<Options, State> {
     }
 
     onPress() {
-        const sceneExists = store.sceneBank.getScene(this.options.index).exists().get();
+        const sceneExists = this.options.sceneBank.getScene(this.options.index).exists().get();
         if (!sceneExists) {
             for (let i = 0; i <= this.options.index; i++) {
-                if (!store.sceneBank.getScene(i).exists().get()) {
-                    store.createScene.invoke();
+                if (!this.options.sceneBank.getScene(i).exists().get()) {
+                    this.options.application.getAction('Create Scene').invoke();
                 }
             }
         }

@@ -1,11 +1,11 @@
 import { ControlTemplate, SimpleControl } from 'taktil';
 
-import MaschineButton from '../controls/MaschineButton';
-import MaschineColorButton from '../controls/MaschineColorButton';
-import MaschinePanKnob from '../controls/MaschinePanKnob';
-import RelativeKnob from '../controls/RelativeKnob';
+import { MaschineButton } from '../controls/MaschineButton';
+import { MaschineColorButton } from '../controls/MaschineColorButton';
+import { MaschinePanKnob } from '../controls/MaschinePanKnob';
+import { RelativeKnob } from '../controls/RelativeKnob';
 
-export default new ControlTemplate({
+export const controls = new ControlTemplate({
     // TOP LEFT
     CHANNEL: new MaschineButton({ status: 0xb0, data1: 0x15 }),
     PLUGIN: new MaschineButton({ status: 0xb0, data1: 0x16 }),

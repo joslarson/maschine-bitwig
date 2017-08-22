@@ -5,7 +5,7 @@ interface Options {
     pinnable?: boolean;
 }
 
-export default class ModeButton extends Button<Options> {
+export class ModeButton extends Button<Options> {
     DOUBLE_PRESS_DELAY = 100;
 
     onPress() {

@@ -1,15 +1,18 @@
 import { Button } from 'taktil';
 
-import store from '../store';
+interface Options {
+    application: API.Application;
+    layout: 'ARRANGE' | 'MIX' | 'EDIT';
+}
 
-export default class LayoutButton extends Button<{ layout: 'ARRANGE' | 'MIX' | 'EDIT' }> {
+export class LayoutButton extends Button<Options> {
     onInit() {
-        store.application.panelLayout().addValueObserver((layout: string) => {
+        this.options.application.panelLayout().addValueObserver((layout: string) => {
             this.setState({ ...this.state, on: layout === this.options.layout });
         });
     }
 
     onPress() {
-        store.application.setPanelLayout(this.options.layout);
+        this.options.application.setPanelLayout(this.options.layout);
     }
 }

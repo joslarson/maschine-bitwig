@@ -1,10 +1,11 @@
 import { View } from 'taktil';
 
-import BaseView from './BaseView';
-import controls from '../controls';
-import * as components from 'components';
+import { BaseView } from './BaseView';
+import * as components from '../../components';
+import { controls } from '../controls';
+import { daw } from '../../daw';
 
-export default class SceneView extends View {
+export class SceneView extends View {
     static parent = BaseView;
 
     sceneButtons = [
@@ -24,5 +25,12 @@ export default class SceneView extends View {
         controls.PAD_14,
         controls.PAD_15,
         controls.PAD_16,
-    ].map((control, index) => new components.SceneButton(control, { index }));
+    ].map(
+        (control, index) =>
+            new components.SceneButton(control, {
+                index,
+                application: daw.application,
+                sceneBank: daw.sceneBank,
+            })
+    );
 }

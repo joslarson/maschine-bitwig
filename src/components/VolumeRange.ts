@@ -1,7 +1,10 @@
 import { Range, SimpleControl } from 'taktil';
-import store from '../store';
 
-type Options = { track: API.Track };
+interface Options {
+    track: API.Track;
+    transport: API.Transport;
+    meter?: boolean;
+}
 
 interface State {
     value: number;
@@ -9,13 +12,8 @@ interface State {
     isPlaying: boolean;
 }
 
-export default class VolumeRange extends Range<Options, State> {
+export class VolumeRange extends Range<Options, State> {
     state: State = { value: 0, meter: 0, isPlaying: false };
-
-    getOutput() {
-        const { value, meter, isPlaying } = this.state;
-        return { value: isPlaying && !this.memory.input && meter ? meter : value };
-    }
 
     onInit() {
         const { minValue, maxValue, range } = this.control;
@@ -24,12 +22,22 @@ export default class VolumeRange extends Range<Options, State> {
             .addValueObserver((value: number) =>
                 this.setState({ value: Math.round(value * range + minValue) })
             );
-        this.options.track.addVuMeterObserver(range + 1, -1, false, meter => {
-            if (this.state.isPlaying) this.setState({ meter: Math.min(meter / range, maxValue) });
-        });
-        store.transport.isPlaying().addValueObserver((isPlaying: boolean) => {
-            this.setState({ isPlaying });
-        });
+
+        if (this.options.meter) {
+            this.options.track.addVuMeterObserver(range, -1, false, meter => {
+                if (this.state.isPlaying) this.setState({ meter: Math.min(meter, maxValue) });
+            });
+        }
+
+        this.options.transport
+            .isPlaying()
+            .addValueObserver(isPlaying => this.setState({ isPlaying }));
+    }
+
+    getOutput() {
+        const { value, meter, isPlaying } = this.state;
+        return { value: isPlaying && !this.memory.input && meter ? meter : value };
+        // return { value: isPlaying && !this.memory.input && meter ? meter : value };
     }
 
     onInput({ value }) {

@@ -1,100 +1,162 @@
 import { View } from 'taktil';
 
-import ctrls from '../controls';
-import * as comps from '../../components';
-import store from '../../store';
+import * as components from '../../components';
+import { controls } from '../controls';
+import { daw } from '../../daw';
 
-export default class BaseView extends View {
+export class BaseView extends View {
     // Top Left
-    arrangeLayoutButton = new comps.LayoutButton(ctrls.ARRANGE, { layout: 'ARRANGE' });
-    mixLayoutButton = new comps.LayoutButton(ctrls.MIX, { layout: 'MIX' });
-    editLayoutButton = new comps.LayoutButton(ctrls.SAMPLING, { layout: 'EDIT' });
-    toggleBrowserButton = new comps.BrowserToggle(ctrls.BROWSE, {});
+    arrangeLayoutButton = new components.LayoutButton(controls.ARRANGE, {
+        application: daw.application,
+        layout: 'ARRANGE',
+    });
+    mixLayoutButton = new components.LayoutButton(controls.MIX, {
+        application: daw.application,
+        layout: 'MIX',
+    });
+    editLayoutButton = new components.LayoutButton(controls.SAMPLING, {
+        application: daw.application,
+        layout: 'EDIT',
+    });
+    toggleBrowserButton = new components.BrowserToggle(controls.BROWSE, {
+        cursorTrack: daw.cursorTrack,
+        popupBrowser: daw.popupBrowser,
+    });
 
     // Performance
-    tempoButton = new comps.TempoButton(ctrls.TAP, { transport: store.transport });
+    tempoButton = new components.TempoButton(controls.TAP, { transport: daw.transport });
 
     // Groups
     trackButtons = [
-        ctrls.GROUP_A,
-        ctrls.GROUP_B,
-        ctrls.GROUP_C,
-        ctrls.GROUP_D,
-        ctrls.GROUP_E,
-        ctrls.GROUP_F,
-        ctrls.GROUP_G,
-        ctrls.GROUP_H,
-    ].map((control, index) => new comps.TrackButton(control, { index }));
-
-    trackNavButtons = [
-        ctrls.GROUP_A,
-        ctrls.GROUP_B,
-        ctrls.GROUP_C,
-        ctrls.GROUP_D,
-        ctrls.GROUP_E,
-        ctrls.GROUP_F,
-        ctrls.GROUP_G,
-        ctrls.GROUP_H,
-    ].map((control, index) => new comps.TrackBankNavigationButton(control, 'SHIFT', { index }));
-
-    volumeKnobs = [
-        ctrls.VOL_A,
-        ctrls.VOL_B,
-        ctrls.VOL_C,
-        ctrls.VOL_D,
-        ctrls.VOL_E,
-        ctrls.VOL_F,
-        ctrls.VOL_G,
-        ctrls.VOL_H,
+        controls.GROUP_A,
+        controls.GROUP_B,
+        controls.GROUP_C,
+        controls.GROUP_D,
+        controls.GROUP_E,
+        controls.GROUP_F,
+        controls.GROUP_G,
+        controls.GROUP_H,
     ].map(
         (control, index) =>
-            new comps.VolumeRange(control, {
-                track: store.trackBank.getChannel(index) as API.Track,
+            new components.TrackButton(control, {
+                application: daw.application,
+                transport: daw.transport,
+                trackBank: daw.trackBank,
+                index,
+            })
+    );
+
+    trackNavButtons = [
+        controls.GROUP_A,
+        controls.GROUP_B,
+        controls.GROUP_C,
+        controls.GROUP_D,
+        controls.GROUP_E,
+        controls.GROUP_F,
+        controls.GROUP_G,
+        controls.GROUP_H,
+    ].map(
+        (control, index) =>
+            new components.TrackBankNavigationButton(control, 'SHIFT', {
+                trackBank: daw.trackBank,
+                index,
+            })
+    );
+
+    volumeKnobs = [
+        controls.VOL_A,
+        controls.VOL_B,
+        controls.VOL_C,
+        controls.VOL_D,
+        controls.VOL_E,
+        controls.VOL_F,
+        controls.VOL_G,
+        controls.VOL_H,
+    ].map(
+        (control, index) =>
+            new components.VolumeRange(control, {
+                transport: daw.transport,
+                track: daw.trackBank.getChannel(index) as API.Track,
             })
     );
 
     volumeKnobsTouch = [
-        ctrls.VOL_TOUCH_A,
-        ctrls.VOL_TOUCH_B,
-        ctrls.VOL_TOUCH_C,
-        ctrls.VOL_TOUCH_D,
-        ctrls.VOL_TOUCH_E,
-        ctrls.VOL_TOUCH_F,
-        ctrls.VOL_TOUCH_G,
-        ctrls.VOL_TOUCH_H,
-    ].map((control, index) => new comps.VolumeKnobTouch(control, { index }));
+        controls.VOL_TOUCH_A,
+        controls.VOL_TOUCH_B,
+        controls.VOL_TOUCH_C,
+        controls.VOL_TOUCH_D,
+        controls.VOL_TOUCH_E,
+        controls.VOL_TOUCH_F,
+        controls.VOL_TOUCH_G,
+        controls.VOL_TOUCH_H,
+    ].map(
+        (control, index) =>
+            new components.VolumeKnobTouch(control, { trackBank: daw.trackBank, index })
+    );
 
-    masterVolume = new comps.VolumeRange(ctrls.KNOB, { track: store.masterTrack });
+    masterVolume = new components.VolumeRange(controls.KNOB, {
+        transport: daw.transport,
+        track: daw.masterTrack,
+        meter: true,
+    });
 
     // Transport
-    restartButton = new comps.RestartButton(ctrls.RESTART, { transport: store.transport });
-    loopToggle = new comps.LoopToggle(ctrls.RESTART, 'SHIFT', { transport: store.transport });
-    metronomeToggle = new comps.MetronomeToggle(ctrls.METRO, {
-        transport: store.transport,
+    restartButton = new components.RestartButton(controls.RESTART, { transport: daw.transport });
+    loopToggle = new components.LoopToggle(controls.RESTART, 'SHIFT', {
+        transport: daw.transport,
     });
-    shiftButton = new comps.ModeButton(ctrls.GRID, { mode: 'SHIFT' });
-    playToggle = new comps.PlayToggle(ctrls.PLAY, { transport: store.transport });
-    armToggle = new comps.ArmToggle(ctrls.REC, { track: store.cursorTrack });
-    preRollToggle = new comps.PreRollToggle(ctrls.REC, 'SHIFT', { transport: store.transport });
+    metronomeToggle = new components.MetronomeToggle(controls.METRO, {
+        transport: daw.transport,
+    });
+    shiftButton = new components.ModeButton(controls.GRID, { mode: 'SHIFT' });
+    playToggle = new components.PlayToggle(controls.PLAY, { transport: daw.transport });
+    armToggle = new components.ArmToggle(controls.REC, { track: daw.cursorTrack });
+    preRollToggle = new components.PreRollToggle(controls.REC, 'SHIFT', {
+        transport: daw.transport,
+    });
 
     // Pads
-    sceneViewButton = new comps.ViewToggle(ctrls.SCENE, { view: 'SceneView' });
-    patternViewButton = new comps.ViewToggle(ctrls.PATTERN, { view: 'PatternView' });
-    padMidiViewButton = new comps.ViewToggle(ctrls.PAD_MODE, { view: 'PadMidiView' });
-    navigateViewButton = new comps.ViewToggle(ctrls.NAVIGATE, { view: 'NavigateView' });
-    duplicateModeGate = new comps.ModeGate(ctrls.DUPLICATE, { mode: 'DUPLICATE' });
-    selectModeGate = new comps.ModeGate(ctrls.SELECT, { mode: 'SELECT' });
-    soloModeGate = new comps.ModeGate(ctrls.SOLO, { mode: 'SOLO' });
-    muteModeGate = new comps.ModeGate(ctrls.MUTE, { mode: 'MUTE' });
+    sceneViewButton = new components.ViewToggle(controls.SCENE, { view: 'SceneView' });
+    patternViewButton = new components.ViewToggle(controls.PATTERN, { view: 'PatternView' });
+    padMidiViewButton = new components.ViewToggle(controls.PAD_MODE, { view: 'PadMidiView' });
+    navigateViewButton = new components.ViewToggle(controls.NAVIGATE, { view: 'NavigateView' });
+    duplicateModeGate = new components.ModeGate(controls.DUPLICATE, { mode: 'DUPLICATE' });
+    selectModeGate = new components.ModeGate(controls.SELECT, { mode: 'SELECT' });
+    soloModeGate = new components.ModeGate(controls.SOLO, { mode: 'SOLO' });
+    muteModeGate = new components.ModeGate(controls.MUTE, { mode: 'MUTE' });
 
     // Edit
-    undoButton = new comps.ActionButton(ctrls.UNDO, { action: 'undo' });
-    redoButton = new comps.ActionButton(ctrls.REDO, { action: 'redo' });
-    copyButton = new comps.ActionButton(ctrls.COPY, { action: 'copy' });
-    pasteButton = new comps.ActionButton(ctrls.PASTE, { action: 'paste' });
-    deleteButton = new comps.ActionButton(ctrls.CLEAR, { action: 'delete' });
-    toggleBrowserRing = new comps.BrowserToggle(ctrls.JOG_RING, {});
-    tempoDial = new comps.TempoRing(ctrls.JOG_DIAL, 'TEMPO', { transport: store.transport });
-    tempoRing = new comps.TempoRing(ctrls.JOG_RING, 'TEMPO', { transport: store.transport });
-    browserExitButton = new comps.BrowserExitButton(ctrls.BACK, {});
+    undoButton = new components.ActionButton(controls.UNDO, {
+        application: daw.application,
+        action: 'undo',
+    });
+    redoButton = new components.ActionButton(controls.REDO, {
+        application: daw.application,
+        action: 'redo',
+    });
+    copyButton = new components.ActionButton(controls.COPY, {
+        application: daw.application,
+        action: 'copy',
+    });
+    pasteButton = new components.ActionButton(controls.PASTE, {
+        application: daw.application,
+        action: 'paste',
+    });
+    deleteButton = new components.ActionButton(controls.CLEAR, {
+        application: daw.application,
+        action: 'delete',
+    });
+    toggleBrowserRing = new components.BrowserToggle(controls.JOG_RING, {
+        cursorTrack: daw.cursorTrack,
+        popupBrowser: daw.popupBrowser,
+    });
+    tempoDial = new components.TempoRing(controls.JOG_DIAL, 'TEMPO', {
+        transport: daw.transport,
+    });
+    tempoRing = new components.TempoRing(controls.JOG_RING, 'TEMPO', {
+        transport: daw.transport,
+    });
+    browserExitButton = new components.BrowserExitButton(controls.BACK, {
+        popupBrowser: daw.popupBrowser,
+    });
 }

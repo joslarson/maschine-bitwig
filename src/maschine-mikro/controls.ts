@@ -1,9 +1,9 @@
 import { ControlTemplate, SimpleControl } from 'taktil';
 
-import MaschineButton from 'controls/MaschineButton';
-import MaschinePanKnob from 'controls/MaschinePanKnob';
+import { MaschineButton } from 'controls/MaschineButton';
+import { MaschinePanKnob } from 'controls/MaschinePanKnob';
 
-export default new ControlTemplate({
+export const controls = new ControlTemplate({
     // MISC
     ENTER: new MaschineButton({ status: 0xb0, data1: 0x5d }),
 

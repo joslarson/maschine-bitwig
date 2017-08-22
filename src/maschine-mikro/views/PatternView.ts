@@ -1,10 +1,11 @@
 import { View } from 'taktil';
 
-import BaseView from './BaseView';
-import controls from '../controls';
-import * as components from 'components';
+import { BaseView } from './BaseView';
+import * as components from '../../components';
+import { controls } from '../controls';
+import { daw } from '../../daw';
 
-export default class PatternView extends View {
+export class PatternView extends View {
     static parent = BaseView;
 
     clipSlotButtons = [
@@ -24,5 +25,14 @@ export default class PatternView extends View {
         controls.PAD_14,
         controls.PAD_15,
         controls.PAD_16,
-    ].map((control, index) => new components.ClipSlotButton(control, { index, binary: true }));
+    ].map(
+        (control, index) =>
+            new components.ClipSlotButton(control, {
+                index,
+                application: daw.application,
+                cursorTrack: daw.cursorTrack,
+                sceneBank: daw.sceneBank,
+                binary: true,
+            })
+    );
 }

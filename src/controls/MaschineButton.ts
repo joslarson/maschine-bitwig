@@ -9,7 +9,7 @@ interface State {
     flashOn: boolean;
 }
 
-export default class MaschineButton extends SimpleControl<State> {
+export class MaschineButton extends SimpleControl<State> {
     state = { value: 0, flashing: false, flashOn: true, disabled: false };
 
     cacheOnMidiIn = false;

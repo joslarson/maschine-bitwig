@@ -4,7 +4,7 @@ interface State {
     value: number;
 }
 
-export default class RelativeKnob extends SimpleControl<State> {
+export class RelativeKnob extends SimpleControl<State> {
     enableMidiOut = false;
 
     minValue = -63;

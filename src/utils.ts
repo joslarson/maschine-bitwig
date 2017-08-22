@@ -1,5 +1,3 @@
-import store from 'store';
-
 export function rgb2hsb({ r, g, b }: { r: number; g: number; b: number }) {
     const result: { h: number; s: number; b: number } = {
         h: 0,
@@ -106,6 +104,7 @@ export class SyncedInterval {
     static MIN_BPM = 20;
     static MAX_BPM = 666;
     static CODE_LAG = 35;
+    static transport: API.Transport;
 
     callback: Function;
     beats: number;
@@ -119,12 +118,13 @@ export class SyncedInterval {
     }
 
     start() {
+        const transport = SyncedInterval.transport;
         const startTime = new Date().getTime();
-        const position = store.transport ? store.transport.getPosition().get() : 1;
-        const isPlaying = store.transport ? store.transport.isPlaying().get() : false;
+        const position = transport ? transport.getPosition().get() : 1;
+        const isPlaying = transport ? transport.isPlaying().get() : false;
 
-        const bpm = store.transport
-            ? store.transport.tempo().get() * (SyncedInterval.MAX_BPM - SyncedInterval.MIN_BPM) +
+        const bpm = transport
+            ? transport.tempo().get() * (SyncedInterval.MAX_BPM - SyncedInterval.MIN_BPM) +
               SyncedInterval.MIN_BPM
             : 120;
         const beatLength = 60000 / bpm;

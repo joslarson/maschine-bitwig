@@ -1,5 +1,5 @@
-export { default as BaseView } from './BaseView';
-export { default as SceneView } from './SceneView';
-export { default as PatternView } from './PatternView';
-export { default as PadMidiView } from './PadMidiView';
-export { default as NavigateView } from './NavigateView';
+export { BaseView } from './BaseView';
+export { SceneView } from './SceneView';
+export { PatternView } from './PatternView';
+export { PadMidiView } from './PadMidiView';
+export { NavigateView } from './NavigateView';

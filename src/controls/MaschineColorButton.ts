@@ -16,7 +16,7 @@ interface MaschineColorButtonState {
     accent: boolean;
 }
 
-export default class MaschineColorButton extends SimpleControl<MaschineColorButtonState> {
+export class MaschineColorButton extends SimpleControl<MaschineColorButtonState> {
     dimValue = 20;
 
     state = {

@@ -1,4 +1,6 @@
-class Store {
+import { SyncedInterval } from './utils';
+
+export class Daw {
     transport: API.Transport;
     application: API.Application;
     cursorTrack: API.CursorTrack;
@@ -10,15 +12,17 @@ class Store {
     [rest: string]: any;
 
     constructor() {
-        session.on('init', this.init.bind(this));
+        session.on('init', this.onInit.bind(this));
     }
 
-    init() {
+    onInit() {
         // transport
         this.transport = host.createTransport();
         this.transport.tempo().markInterested();
         this.transport.getPosition().markInterested();
         this.transport.isPlaying().markInterested();
+
+        SyncedInterval.transport = this.transport;
 
         // application
         this.application = host.createApplication();
@@ -50,4 +54,4 @@ class Store {
     }
 }
 
-export default new Store();
+export const daw = new Daw();

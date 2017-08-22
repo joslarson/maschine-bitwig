@@ -1,11 +1,9 @@
 import { Button } from 'taktil';
 
-import store from '../store';
-
-export default class ActionButton extends Button<{ action: string }> {
+export class ActionButton extends Button<{ application: API.Application; action: string }> {
     onPress() {
         this.setState({ on: true });
-        store.application[this.options.action]();
+        this.options.application[this.options.action]();
     }
 
     onRelease() {

@@ -1,9 +1,12 @@
 import { Button } from 'taktil';
 
-import store from '../store';
+interface Options {
+    popupBrowser: API.PopupBrowser;
+}
 
-export default class BrowserExitButton extends Button {
+export class BrowserExitButton extends Button<Options> {
     onPress() {
-        if (store.popupBrowser.exists().get()) store.popupBrowser.cancel();
+        const { popupBrowser } = this.options;
+        if (popupBrowser.exists().get()) popupBrowser.cancel();
     }
 }
