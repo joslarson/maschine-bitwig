@@ -1,5 +1,3 @@
-import { SyncedInterval } from './utils';
-
 export class Daw {
     transport: API.Transport;
     application: API.Application;
@@ -21,8 +19,6 @@ export class Daw {
         this.transport.tempo().markInterested();
         this.transport.getPosition().markInterested();
         this.transport.isPlaying().markInterested();
-
-        SyncedInterval.transport = this.transport;
 
         // application
         this.application = host.createApplication();

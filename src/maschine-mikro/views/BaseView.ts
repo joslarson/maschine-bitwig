@@ -1,26 +1,42 @@
 import { View } from 'taktil';
 
-import * as components from '../../components';
+import { ActionButton } from '../../components/ActionButton';
+import {
+    ArmToggle,
+    LoopToggle,
+    MetronomeToggle,
+    PlayToggle,
+    PreRollToggle,
+    RestartButton,
+    TempoButton,
+} from '../../components/transport';
+import { BrowserToggle } from '../../components/BrowserToggle';
+import { LayoutButton } from '../../components/LayoutButton';
+import { ModeButton } from '../../components/ModeButton';
+import { TrackBankNavigationButton } from '../../components/TrackBankNavigationButton';
+import { TrackButton } from '../../components/TrackButton';
+import { ViewToggle, ModeGate } from '../../components/views';
+
 import { controls } from '../controls';
 import { daw } from '../../daw';
 
 export class BaseView extends View {
     // Top Left
-    // arrangeLayoutButton = new components.LayoutButton(controls.ARRANGE, { layout: 'ARRANGE' });
-    // mixLayoutButton = new components.LayoutButton(controls.MIX, { layout: 'MIX' });
-    // editLayoutButton = new components.LayoutButton(controls.SAMPLING, { layout: 'EDIT' });
-    toggleBrowserButton = new components.BrowserToggle(controls.BROWSE, {
+    // arrangeLayoutButton = new LayoutButton(controls.ARRANGE, { layout: 'ARRANGE' });
+    // mixLayoutButton = new LayoutButton(controls.MIX, { layout: 'MIX' });
+    // editLayoutButton = new LayoutButton(controls.SAMPLING, { layout: 'EDIT' });
+    toggleBrowserButton = new BrowserToggle(controls.BROWSE, {
         cursorTrack: daw.cursorTrack,
         popupBrowser: daw.popupBrowser,
     });
 
     // Performance
-    tempoButton = new components.TempoButton(controls.ENTER, 'SHIFT', {
+    tempoButton = new TempoButton(controls.ENTER, 'SHIFT', {
         transport: daw.transport,
     });
 
     // Groups
-    groupButton = new components.ModeButton(controls.GROUP, { mode: 'GROUP', pinnable: true });
+    groupButton = new ModeButton(controls.GROUP, { mode: 'GROUP', pinnable: true });
 
     trackButtons = [
         controls.PAD_13,
@@ -33,7 +49,7 @@ export class BaseView extends View {
         controls.PAD_12,
     ].map(
         (control, index) =>
-            new components.TrackButton(control, 'GROUP', {
+            new TrackButton(control, 'GROUP', {
                 index,
                 application: daw.application,
                 transport: daw.transport,
@@ -52,55 +68,55 @@ export class BaseView extends View {
     //     controls.PAD_12,
     // ].map(
     //     (control, index) =>
-    //         new components.TrackBankNavigationButton(control, 'SHIFT', {
+    //         new TrackBankNavigationButton(control, 'SHIFT', {
     //             index,
-    //             trackBank: bitwig.trackBank,
+    //             trackBank: daw.trackBank,
     //         })
     // );
 
     // Transport
-    restartButton = new components.RestartButton(controls.RESTART, { transport: daw.transport });
-    loopToggle = new components.LoopToggle(controls.RESTART, 'SHIFT', {
+    restartButton = new RestartButton(controls.RESTART, { transport: daw.transport });
+    loopToggle = new LoopToggle(controls.RESTART, 'SHIFT', {
         transport: daw.transport,
     });
-    metronomeToggle = new components.MetronomeToggle(controls.PLAY, 'SHIFT', {
+    metronomeToggle = new MetronomeToggle(controls.PLAY, 'SHIFT', {
         transport: daw.transport,
     });
-    shiftButton = new components.ModeButton(controls.GRID, { mode: 'SHIFT' });
-    playToggle = new components.PlayToggle(controls.PLAY, { transport: daw.transport });
-    armToggle = new components.ArmToggle(controls.REC, { track: daw.cursorTrack });
-    preRollToggle = new components.PreRollToggle(controls.REC, 'SHIFT', {
+    shiftButton = new ModeButton(controls.GRID, { mode: 'SHIFT' });
+    playToggle = new PlayToggle(controls.PLAY, { transport: daw.transport });
+    armToggle = new ArmToggle(controls.REC, { track: daw.cursorTrack });
+    preRollToggle = new PreRollToggle(controls.REC, 'SHIFT', {
         transport: daw.transport,
     });
 
     // Pads
-    sceneViewButton = new components.ViewToggle(controls.SCENE, { view: 'SceneView' });
-    patternViewButton = new components.ViewToggle(controls.PATTERN, { view: 'PatternView' });
+    sceneViewButton = new ViewToggle(controls.SCENE, { view: 'SceneView' });
+    patternViewButton = new ViewToggle(controls.PATTERN, { view: 'PatternView' });
     // padMidiViewButton = new components.ViewToggle(controls.PAD_MODE, { view: 'PadMidiView' });
     // navigateViewButton = new components.ViewToggle(controls.NAVIGATE, { view: 'NavigateView' });
-    duplicateModeGate = new components.ModeGate(controls.DUPLICATE, { mode: 'DUPLICATE' });
-    selectModeGate = new components.ModeGate(controls.SELECT, { mode: 'SELECT' });
-    soloModeGate = new components.ModeGate(controls.SOLO, { mode: 'SOLO' });
-    muteModeGate = new components.ModeGate(controls.MUTE, { mode: 'MUTE' });
+    duplicateModeGate = new ModeGate(controls.DUPLICATE, { mode: 'DUPLICATE' });
+    selectModeGate = new ModeGate(controls.SELECT, { mode: 'SELECT' });
+    soloModeGate = new ModeGate(controls.SOLO, { mode: 'SOLO' });
+    muteModeGate = new ModeGate(controls.MUTE, { mode: 'MUTE' });
 
     // Edit
-    undoButton = new components.ActionButton(controls.PAD_1, 'SHIFT', {
+    undoButton = new ActionButton(controls.PAD_1, 'SHIFT', {
         application: daw.application,
         action: 'undo',
     });
-    redoButton = new components.ActionButton(controls.PAD_2, 'SHIFT', {
+    redoButton = new ActionButton(controls.PAD_2, 'SHIFT', {
         application: daw.application,
         action: 'redo',
     });
-    copyButton = new components.ActionButton(controls.PAD_11, 'SHIFT', {
+    copyButton = new ActionButton(controls.PAD_11, 'SHIFT', {
         application: daw.application,
         action: 'copy',
     });
-    pasteButton = new components.ActionButton(controls.PAD_12, 'SHIFT', {
+    pasteButton = new ActionButton(controls.PAD_12, 'SHIFT', {
         application: daw.application,
         action: 'paste',
     });
-    deleteButton = new components.ActionButton(controls.PAD_9, 'SHIFT', {
+    deleteButton = new ActionButton(controls.PAD_9, 'SHIFT', {
         application: daw.application,
         action: 'delete',
     });

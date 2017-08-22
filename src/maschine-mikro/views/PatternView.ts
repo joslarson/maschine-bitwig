@@ -1,7 +1,7 @@
 import { View } from 'taktil';
 
 import { BaseView } from './BaseView';
-import * as components from '../../components';
+import { ClipSlotButton } from '../../components/ClipSlotButton';
 import { controls } from '../controls';
 import { daw } from '../../daw';
 
@@ -27,7 +27,7 @@ export class PatternView extends View {
         controls.PAD_16,
     ].map(
         (control, index) =>
-            new components.ClipSlotButton(control, {
+            new ClipSlotButton(control, {
                 index,
                 application: daw.application,
                 cursorTrack: daw.cursorTrack,
