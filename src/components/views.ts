@@ -1,10 +1,8 @@
 import { Button, View } from 'taktil';
 
-export class ViewToggle extends Button<{ view: typeof View | string }> {
+export class ViewToggle extends Button<{ view: string }> {
     getView() {
-        let view = this.options.view;
-        if (typeof view === 'string') view = session.getView(view);
-        return view;
+        return session.views[this.options.view];
     }
 
     onInit() {
@@ -14,8 +12,7 @@ export class ViewToggle extends Button<{ view: typeof View | string }> {
     }
 
     onPress() {
-        let view = this.options.view;
-        if (typeof view === 'string') view = session.getView(view);
+        let view = this.getView();
         const parent = view.getParent();
         if (session.activeView === view && parent) {
             session.activateView(parent);

@@ -20,7 +20,7 @@ export class MetronomeToggle extends Button<{ transport: API.Transport }> {
     }
 
     onPress() {
-        this.options.transport.isMetronomeEnabled().set(!this.state.on);
+        this.options.transport.isMetronomeEnabled().toggle();
     }
 }
 

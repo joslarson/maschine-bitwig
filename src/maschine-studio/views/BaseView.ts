@@ -133,10 +133,10 @@ export class BaseView extends View {
     });
 
     // Pads
-    sceneViewButton = new ViewToggle(controls.SCENE, { view: 'SceneView' });
-    patternViewButton = new ViewToggle(controls.PATTERN, { view: 'PatternView' });
-    padMidiViewButton = new ViewToggle(controls.PAD_MODE, { view: 'PadMidiView' });
-    navigateViewButton = new ViewToggle(controls.NAVIGATE, { view: 'NavigateView' });
+    sceneViewButton = new ViewToggle(controls.SCENE, { view: 'SCENE' });
+    patternViewButton = new ViewToggle(controls.PATTERN, { view: 'PATTERN' });
+    padMidiViewButton = new ViewToggle(controls.PAD_MODE, { view: 'PAD_MIDI' });
+    navigateViewButton = new ViewToggle(controls.NAVIGATE, { view: 'NAVIGATE' });
     duplicateModeGate = new ModeGate(controls.DUPLICATE, { mode: 'DUPLICATE' });
     selectModeGate = new ModeGate(controls.SELECT, { mode: 'SELECT' });
     soloModeGate = new ModeGate(controls.SOLO, { mode: 'SOLO' });

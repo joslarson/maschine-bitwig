@@ -1,9 +1,9 @@
-import { ControlTemplate, SimpleControl } from 'taktil';
+import { SimpleControl } from 'taktil';
 
 import { MaschineButton } from 'controls/MaschineButton';
 import { MaschinePanKnob } from 'controls/MaschinePanKnob';
 
-export const controls = new ControlTemplate({
+export const controls = {
     // MISC
     ENTER: new MaschineButton({ status: 0xb0, data1: 0x5d }),
 
@@ -47,4 +47,4 @@ export const controls = new ControlTemplate({
     PAD_14: new MaschineButton({ status: 0x95, data1: 0x31 }),
     PAD_15: new MaschineButton({ status: 0x95, data1: 0x32 }),
     PAD_16: new MaschineButton({ status: 0x95, data1: 0x33 }),
-});
+};
