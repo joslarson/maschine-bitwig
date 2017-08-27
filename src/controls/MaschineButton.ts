@@ -1,5 +1,6 @@
 import { SimpleControl, MidiMessage, SysexMessage, MessagePattern, Color } from 'taktil';
 import { SyncedInterval } from '../utils';
+import { daw } from '../daw';
 
 interface State {
     value: number;
@@ -26,9 +27,13 @@ export class MaschineButton extends SimpleControl<State> {
         const { minValue, state: { value } } = this;
         if (value > minValue && this.state.flashing) {
             if (!this.flashInterval) {
-                this.flashInterval = new SyncedInterval(isOddInterval => {
-                    this.setState({ flashOn: isOddInterval });
-                }, 1 / 2).start();
+                this.flashInterval = new SyncedInterval(
+                    daw.transport,
+                    isOddInterval => {
+                        this.setState({ flashOn: isOddInterval });
+                    },
+                    1 / 2
+                ).start();
             }
         } else if (this.flashInterval) {
             this.flashInterval.cancel();

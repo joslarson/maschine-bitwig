@@ -1,6 +1,6 @@
 import { Button, SimpleControl, Color } from 'taktil';
 
-type Options = {
+type Params = {
     application: API.Application;
     cursorTrack: API.CursorTrack;
     sceneBank: API.SceneBank;
@@ -18,7 +18,7 @@ interface State {
     hasContent: boolean;
 }
 
-export class ClipSlotButton extends Button<Options, State> {
+export class ClipSlotButton extends Button<Params, State> {
     state: State = {
         on: false,
         color: undefined,
@@ -28,7 +28,7 @@ export class ClipSlotButton extends Button<Options, State> {
         isRecordingQueued: false,
         hasContent: false,
     };
-    clipLauncherSlotBank = this.options.cursorTrack.clipLauncherSlotBank();
+    clipLauncherSlotBank = this.params.cursorTrack.clipLauncherSlotBank();
 
     getOutput() {
         const {
@@ -44,7 +44,7 @@ export class ClipSlotButton extends Button<Options, State> {
         let flashing = isPlaybackQueued || isRecordingQueued;
         let color = isRecordingQueued || isRecording ? { r: 1, g: 0, b: 0 } : this.state.color;
 
-        if (this.options.binary) {
+        if (this.params.binary) {
             value = hasContent || isRecordingQueued ? 1 : 0;
             disabled = false;
             flashing = isPlaybackQueued || isRecordingQueued || isPlaying || isRecording;
@@ -54,37 +54,37 @@ export class ClipSlotButton extends Button<Options, State> {
     }
 
     onInit() {
-        this.options.sceneBank.getScene(this.options.index).exists().markInterested();
+        this.params.sceneBank.getScene(this.params.index).exists().markInterested();
 
         this.clipLauncherSlotBank.addIsPlayingObserver((index, isPlaying) => {
-            if (index === this.options.index) this.setState({ isPlaying });
+            if (index === this.params.index) this.setState({ isPlaying });
         });
         this.clipLauncherSlotBank.addIsPlaybackQueuedObserver((index, isPlaybackQueued) => {
-            if (index === this.options.index) this.setState({ isPlaybackQueued });
+            if (index === this.params.index) this.setState({ isPlaybackQueued });
         });
         this.clipLauncherSlotBank.addIsRecordingObserver((index, isRecording) => {
-            if (index === this.options.index) this.setState({ isRecording });
+            if (index === this.params.index) this.setState({ isRecording });
         });
         this.clipLauncherSlotBank.addIsRecordingQueuedObserver((index, isRecordingQueued) => {
-            if (index === this.options.index) this.setState({ isRecordingQueued });
+            if (index === this.params.index) this.setState({ isRecordingQueued });
         });
         this.clipLauncherSlotBank.addColorObserver((index, r, g, b) => {
-            if (index === this.options.index) this.setState({ color: { r, g, b } });
+            if (index === this.params.index) this.setState({ color: { r, g, b } });
         });
         this.clipLauncherSlotBank.addHasContentObserver((index, hasContent) => {
-            if (index === this.options.index) this.setState({ hasContent });
+            if (index === this.params.index) this.setState({ hasContent });
         });
     }
 
     onPress() {
-        const sceneExists = this.options.sceneBank.getScene(this.options.index).exists().get();
+        const sceneExists = this.params.sceneBank.getScene(this.params.index).exists().get();
         if (!sceneExists) {
-            for (let i = 0; i <= this.options.index; i++) {
-                if (!this.options.sceneBank.getScene(i).exists().get()) {
-                    this.options.application.getAction('Create Scene').invoke();
+            for (let i = 0; i <= this.params.index; i++) {
+                if (!this.params.sceneBank.getScene(i).exists().get()) {
+                    this.params.application.getAction('Create Scene').invoke();
                 }
             }
         }
-        this.clipLauncherSlotBank.launch(this.options.index);
+        this.clipLauncherSlotBank.launch(this.params.index);
     }
 }

@@ -1,11 +1,11 @@
-// 1. set bitwig api version
-loadAPI(3); // must come before env import
-
-// 2. setup taktil env
+// 1. inject taktil env
 import 'taktil/env'; // must be first import in entry file
 
 import { controls } from './controls';
 import { views } from './views';
+
+// 2. set bitwig api version
+host.loadAPI(3);
 
 // 3. define controller script
 host.defineController(

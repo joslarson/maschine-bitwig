@@ -1,19 +1,19 @@
 import { Button } from 'taktil';
 
-interface Options {
+interface Params {
     cursorTrack: API.CursorTrack;
     popupBrowser: API.PopupBrowser;
 }
 
-export class BrowserToggle extends Button<Options> {
+export class BrowserToggle extends Button<Params> {
     onInit() {
-        this.options.popupBrowser.exists().addValueObserver(browserExists => {
+        this.params.popupBrowser.exists().addValueObserver(browserExists => {
             this.setState({ on: browserExists });
         });
     }
 
     onPress() {
-        const { popupBrowser, cursorTrack } = this.options;
+        const { popupBrowser, cursorTrack } = this.params;
         if (popupBrowser.exists().get()) {
             popupBrowser.cancel();
         } else {

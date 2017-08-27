@@ -1,6 +1,8 @@
 import { SimpleControl, MidiMessage, SysexMessage, MessagePattern, Color } from 'taktil';
-import { rgb2hsv, SyncedInterval } from '../utils';
 import isEqual from 'lodash-es/isEqual';
+
+import { rgb2hsv, SyncedInterval } from '../utils';
+import { daw } from '../daw';
 
 const colors = {
     playGreen: { r: 0.02, g: 1.0, b: 0.06 }, // matches machine play button color
@@ -103,9 +105,13 @@ export class MaschineColorButton extends SimpleControl<MaschineColorButtonState>
         const { minValue, state: { value, flashing } } = this;
         if (value > minValue && flashing) {
             if (!this.flashInterval) {
-                this.flashInterval = new SyncedInterval(isOddInterval => {
-                    this.setState({ flashOn: isOddInterval });
-                }, 1 / 2).start();
+                this.flashInterval = new SyncedInterval(
+                    daw.transport,
+                    isOddInterval => {
+                        this.setState({ flashOn: isOddInterval });
+                    },
+                    1 / 2
+                ).start();
             }
         } else if (this.flashInterval) {
             this.flashInterval.cancel();

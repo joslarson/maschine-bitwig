@@ -1,11 +1,5 @@
-import { daw } from './daw';
-
 export function rgb2hsb({ r, g, b }: { r: number; g: number; b: number }) {
-    const result: { h: number; s: number; b: number } = {
-        h: 0,
-        s: 0,
-        b: 0,
-    };
+    const result: { h: number; s: number; b: number } = { h: 0, s: 0, b: 0 };
 
     const minVal = Math.min(r, g, b);
     const maxVal = Math.max(r, g, b);
@@ -107,19 +101,21 @@ export class SyncedInterval {
     static MAX_BPM = 666;
     static CODE_LAG = 35;
 
+    transport: API.Transport;
     callback: Function;
     beats: number;
     cancelled = false;
     target: number | null = null;
     isOddInterval = true;
 
-    constructor(callback: (...args: any[]) => void, beats: number) {
+    constructor(transport: API.Transport, callback: (...args: any[]) => void, beats: number) {
+        this.transport = transport;
         this.callback = callback;
         this.beats = beats;
     }
 
     start() {
-        const { transport } = daw;
+        const { transport } = this;
         const startTime = new Date().getTime();
         const position = transport ? transport.getPosition().get() : 1;
         const isPlaying = transport ? transport.isPlaying().get() : false;

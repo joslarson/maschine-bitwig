@@ -1,12 +1,12 @@
 import { Button, SimpleControl, Color } from 'taktil';
 
-interface Options {
+interface Params {
     trackBank: API.TrackBank;
     index: number;
 }
 type State = { on: boolean; color?: Color; exists: boolean };
 
-export class TrackBankNavigationButton extends Button<Options, State> {
+export class TrackBankNavigationButton extends Button<Params, State> {
     state: State = { on: false, exists: false };
 
     getOutput() {
@@ -19,23 +19,23 @@ export class TrackBankNavigationButton extends Button<Options, State> {
     }
 
     onInit() {
-        this.options.trackBank.channelCount().addValueObserver(channelCount => {
+        this.params.trackBank.channelCount().addValueObserver(channelCount => {
             const navBankCount = Math.round(channelCount / 8);
-            this.setState({ exists: this.options.index < navBankCount });
+            this.setState({ exists: this.params.index < navBankCount });
         });
-        this.options.trackBank.channelScrollPosition().addValueObserver(position => {
-            const channelCount = this.options.trackBank.channelCount().get();
+        this.params.trackBank.channelScrollPosition().addValueObserver(position => {
+            const channelCount = this.params.trackBank.channelCount().get();
             const lastStart = channelCount - 8;
-            const isLastGroup = this.options.index * 8 >= lastStart;
-            const target = this.options.index * 8;
+            const isLastGroup = this.params.index * 8 >= lastStart;
+            const target = this.params.index * 8;
             this.setState({ on: position === target || (isLastGroup && position === lastStart) });
         });
     }
 
     onPress() {
         if (this.state.exists && !this.state.on) {
-            // this.options.trackBank.channelScrollPosition().set(this.options.index * 8);
-            this.options.trackBank.getChannel(0).selectInEditor();
+            // this.params.trackBank.channelScrollPosition().set(this.params.index * 8);
+            this.params.trackBank.getChannel(0).selectInEditor();
         }
     }
 }

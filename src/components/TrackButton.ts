@@ -1,6 +1,6 @@
 import { Button, SimpleControl, Color } from 'taktil';
 
-interface Options {
+interface Params {
     application: API.Application;
     trackBank: API.TrackBank;
     transport: API.Transport;
@@ -15,7 +15,7 @@ interface State {
     noteOn: boolean;
 }
 
-export class TrackButton extends Button<Options, State> {
+export class TrackButton extends Button<Params, State> {
     state: State = { on: false, disabled: false, exists: false, noteOn: false };
     notes: API.PlayingNote[] = [];
     track: API.Track;
@@ -31,7 +31,7 @@ export class TrackButton extends Button<Options, State> {
     }
 
     onInit() {
-        this.track = this.options.trackBank.getChannel(this.options.index) as API.Track;
+        this.track = this.params.trackBank.getChannel(this.params.index) as API.Track;
         this.track.isGroup().markInterested();
 
         this.track.color().addValueObserver((r, g, b) => {
@@ -55,7 +55,7 @@ export class TrackButton extends Button<Options, State> {
                 }
             }
             this.notes = notes;
-            const delay = 60000 / (this.options.transport.tempo().get() * (666 - 20) + 20) / 8;
+            const delay = 60000 / (this.params.transport.tempo().get() * (666 - 20) + 20) / 8;
             if (noteOn) {
                 if (this.memory.noteOn) {
                     clearTimeout(this.memory.noteOn);
@@ -71,8 +71,8 @@ export class TrackButton extends Button<Options, State> {
     }
 
     onPress() {
-        if (this.options.index === this.options.trackBank.channelCount().get()) {
-            this.options.application.createInstrumentTrack(this.options.index);
+        if (this.params.index === this.params.trackBank.channelCount().get()) {
+            this.params.application.createInstrumentTrack(this.params.index);
             this.track.browseToInsertAtStartOfChain();
         }
         this.track.selectInEditor();
@@ -80,15 +80,15 @@ export class TrackButton extends Button<Options, State> {
 
     onLongPress() {
         if (this.track.isGroup().get() && !this.state.disabled) {
-            this.options.application.navigateIntoTrackGroup(this.track);
-            this.options.trackBank.getChannel(0).selectInEditor();
+            this.params.application.navigateIntoTrackGroup(this.track);
+            this.params.trackBank.getChannel(0).selectInEditor();
         }
     }
 
     onDoublePress() {
         if (!this.state.disabled) {
-            this.options.application.navigateToParentTrackGroup();
-            this.options.trackBank.getChannel(0).selectInEditor();
+            this.params.application.navigateToParentTrackGroup();
+            this.params.trackBank.getChannel(0).selectInEditor();
         }
     }
 }

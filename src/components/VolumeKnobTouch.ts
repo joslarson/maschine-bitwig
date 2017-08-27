@@ -1,12 +1,12 @@
 import { Button } from 'taktil';
 
-interface Options {
+interface Params {
     index: number;
     trackBank: API.TrackBank;
 }
 
-export class VolumeKnobTouch extends Button<Options> {
-    track = this.options.trackBank.getChannel(this.options.index);
+export class VolumeKnobTouch extends Button<Params> {
+    track = this.params.trackBank.getChannel(this.params.index);
 
     onDoublePress() {
         this.track.getVolume().reset();
