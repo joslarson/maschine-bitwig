@@ -11,15 +11,3 @@ export const views = {
     PAD: PadMidiView,
     NAVIGATE: NavigateView,
 };
-
-export const views2 = {
-    BASE: {
-        view: BaseView,
-        children: {
-            SCENE: SceneView,
-            PATTERN: PatternView,
-            PAD: PadMidiView,
-            NAVIGATE: NavigateView,
-        },
-    },
-};

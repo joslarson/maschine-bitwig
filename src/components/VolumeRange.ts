@@ -1,4 +1,4 @@
-import { Range, SimpleControl } from 'taktil';
+import taktil from 'taktil';
 
 interface Params {
     track: API.Track;
@@ -12,7 +12,7 @@ interface State {
     isPlaying: boolean;
 }
 
-export class VolumeRange extends Range<Params, State> {
+export class VolumeRange extends taktil.Range<Params, State> {
     state: State = { value: 0, meter: 0, isPlaying: false };
 
     onInit() {
@@ -40,7 +40,7 @@ export class VolumeRange extends Range<Params, State> {
         // return { value: isPlaying && !this.memory.input && meter ? meter : value };
     }
 
-    onInput({ value }) {
+    onInput({ value }: taktil.ControlState) {
         const { minValue, maxValue, range } = this.control;
 
         if (!this.params.track.exists().get()) return this.control.render();

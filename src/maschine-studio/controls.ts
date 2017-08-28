@@ -1,4 +1,4 @@
-import { SimpleControl } from 'taktil';
+import taktil from 'taktil';
 
 import { MaschineButton } from '../controls/MaschineButton';
 import { MaschineColorButton } from '../controls/MaschineColorButton';
@@ -27,7 +27,7 @@ export const controls = {
     GRP: new MaschineButton({ status: 0xb1, data1: 0x1a }),
     SND: new MaschineButton({ status: 0xb1, data1: 0x1b }),
     CUE: new MaschineButton({ status: 0xb1, data1: 0x1c }),
-    KNOB: new SimpleControl({ status: 0xb1, data1: 0x1d }),
+    KNOB: new taktil.SimpleControl({ status: 0xb1, data1: 0x1d }),
 
     // PERFORMANCE
     TAP: new MaschineButton({ status: 0xb2, data1: 0x15 }),
@@ -124,14 +124,14 @@ export const controls = {
     VOL_TOUCH_G: new MaschineButton({ status: 0xb7, data1: 0x72 }),
     VOL_TOUCH_H: new MaschineButton({ status: 0xb7, data1: 0x74 }),
 
-    VOL_A: new SimpleControl({ status: 0xb7, data1: 0x67 }),
-    VOL_B: new SimpleControl({ status: 0xb7, data1: 0x69 }),
-    VOL_C: new SimpleControl({ status: 0xb7, data1: 0x6b }),
-    VOL_D: new SimpleControl({ status: 0xb7, data1: 0x6d }),
-    VOL_E: new SimpleControl({ status: 0xb7, data1: 0x6f }),
-    VOL_F: new SimpleControl({ status: 0xb7, data1: 0x71 }),
-    VOL_G: new SimpleControl({ status: 0xb7, data1: 0x73 }),
-    VOL_H: new SimpleControl({ status: 0xb7, data1: 0x75 }),
+    VOL_A: new taktil.SimpleControl({ status: 0xb7, data1: 0x67 }),
+    VOL_B: new taktil.SimpleControl({ status: 0xb7, data1: 0x69 }),
+    VOL_C: new taktil.SimpleControl({ status: 0xb7, data1: 0x6b }),
+    VOL_D: new taktil.SimpleControl({ status: 0xb7, data1: 0x6d }),
+    VOL_E: new taktil.SimpleControl({ status: 0xb7, data1: 0x6f }),
+    VOL_F: new taktil.SimpleControl({ status: 0xb7, data1: 0x71 }),
+    VOL_G: new taktil.SimpleControl({ status: 0xb7, data1: 0x73 }),
+    VOL_H: new taktil.SimpleControl({ status: 0xb7, data1: 0x75 }),
 
     PAN_TOUCH_A: new MaschineButton({ status: 0xb8, data1: 0x66 }),
     PAN_TOUCH_B: new MaschineButton({ status: 0xb8, data1: 0x68 }),

@@ -1,4 +1,4 @@
-import { View } from 'taktil';
+import taktil from 'taktil';
 
 import { ActionButton } from '../../components/ActionButton';
 import {
@@ -24,7 +24,7 @@ import { VolumeRange } from '../../components/VolumeRange';
 import { controls } from '../controls';
 import { daw } from '../../daw';
 
-export class BaseView extends View {
+export class BaseView extends taktil.View {
     // Top Left
     arrangeLayoutButton = new LayoutButton(controls.ARRANGE, {
         application: daw.application,

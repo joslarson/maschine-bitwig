@@ -1,3 +1,5 @@
+import taktil from 'taktil';
+
 export class Daw {
     transport: API.Transport;
     application: API.Application;
@@ -10,7 +12,7 @@ export class Daw {
     [rest: string]: any;
 
     constructor() {
-        session.on('init', this.onInit.bind(this));
+        taktil.on('init', this.onInit.bind(this));
     }
 
     onInit() {

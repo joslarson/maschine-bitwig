@@ -1,4 +1,4 @@
-import { SimpleControl, MidiMessage, SysexMessage, MessagePattern, Color } from 'taktil';
+import taktil from 'taktil';
 import isEqual from 'lodash-es/isEqual';
 
 import { rgb2hsv, SyncedInterval } from '../utils';
@@ -11,14 +11,14 @@ const colors = {
 
 interface MaschineColorButtonState {
     value: number;
-    color: Color;
+    color: taktil.Color;
     disabled: boolean;
     flashing: boolean;
     flashOn: boolean;
     accent: boolean;
 }
 
-export class MaschineColorButton extends SimpleControl<MaschineColorButtonState> {
+export class MaschineColorButton extends taktil.SimpleControl<MaschineColorButtonState> {
     dimValue = 20;
 
     state = {
@@ -48,9 +48,9 @@ export class MaschineColorButton extends SimpleControl<MaschineColorButtonState>
         super({ port, inPort, outPort, status, data1 });
         this.patterns = [
             ...this.patterns,
-            new MessagePattern({ status: this.hueStatus, data1 }),
-            new MessagePattern({ status: this.saturationStatus, data1 }),
-            new MessagePattern({ status: this.brightnessStatus, data1 }),
+            new taktil.MessagePattern({ status: this.hueStatus, data1 }),
+            new taktil.MessagePattern({ status: this.saturationStatus, data1 }),
+            new taktil.MessagePattern({ status: this.brightnessStatus, data1 }),
         ];
     }
 
@@ -66,7 +66,7 @@ export class MaschineColorButton extends SimpleControl<MaschineColorButtonState>
         return this.hueStatus + 2;
     }
 
-    getMidiOutput(state): (MidiMessage | SysexMessage)[] {
+    getMidiOutput(state): (taktil.MidiMessage | taktil.SysexMessage)[] {
         const doNotSaturate = isEqual(state.color, colors.offWhite);
         const hsb = rgb2hsv(state.color);
         const { data1, minValue, maxValue, dimValue } = this;
@@ -87,13 +87,13 @@ export class MaschineColorButton extends SimpleControl<MaschineColorButtonState>
         if (state.accent) saturationData2 = Math.max(saturationData2 - 20, 0);
         return [
             ...super.getMidiOutput(state),
-            new MidiMessage({ status: this.hueStatus, data1, data2: hsb.h }),
-            new MidiMessage({
+            new taktil.MidiMessage({ status: this.hueStatus, data1, data2: hsb.h }),
+            new taktil.MidiMessage({
                 status: this.saturationStatus,
                 data1,
                 data2: saturationData2,
             }),
-            new MidiMessage({
+            new taktil.MidiMessage({
                 status: this.brightnessStatus,
                 data1,
                 data2: brightnessData2,

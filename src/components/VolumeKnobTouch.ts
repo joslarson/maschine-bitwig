@@ -1,11 +1,11 @@
-import { Button } from 'taktil';
+import taktil from 'taktil';
 
 interface Params {
     index: number;
     trackBank: API.TrackBank;
 }
 
-export class VolumeKnobTouch extends Button<Params> {
+export class VolumeKnobTouch extends taktil.Button<Params> {
     track = this.params.trackBank.getChannel(this.params.index);
 
     onDoublePress() {

@@ -1,4 +1,4 @@
-import { Button, SimpleControl, Color } from 'taktil';
+import taktil from 'taktil';
 
 type Params = {
     application: API.Application;
@@ -10,7 +10,7 @@ type Params = {
 
 interface State {
     on: boolean;
-    color: Color | undefined;
+    color: taktil.Color | undefined;
     isPlaying: boolean;
     isPlaybackQueued: boolean;
     isRecording: boolean;
@@ -18,7 +18,7 @@ interface State {
     hasContent: boolean;
 }
 
-export class ClipSlotButton extends Button<Params, State> {
+export class ClipSlotButton extends taktil.Button<Params, State> {
     state: State = {
         on: false,
         color: undefined,

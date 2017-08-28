@@ -1,12 +1,12 @@
-import { Button, SimpleControl, Color } from 'taktil';
+import taktil from 'taktil';
 
 interface Params {
     trackBank: API.TrackBank;
     index: number;
 }
-type State = { on: boolean; color?: Color; exists: boolean };
+type State = { on: boolean; color?: taktil.Color; exists: boolean };
 
-export class TrackBankNavigationButton extends Button<Params, State> {
+export class TrackBankNavigationButton extends taktil.Button<Params, State> {
     state: State = { on: false, exists: false };
 
     getOutput() {

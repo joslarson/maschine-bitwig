@@ -1,11 +1,11 @@
-import { Button } from 'taktil';
+import taktil from 'taktil';
 
 interface Params {
     cursorTrack: API.CursorTrack;
     popupBrowser: API.PopupBrowser;
 }
 
-export class BrowserToggle extends Button<Params> {
+export class BrowserToggle extends taktil.Button<Params> {
     onInit() {
         this.params.popupBrowser.exists().addValueObserver(browserExists => {
             this.setState({ on: browserExists });

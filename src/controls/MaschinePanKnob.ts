@@ -1,5 +1,5 @@
-import { SimpleControl } from 'taktil';
+import taktil from 'taktil';
 
-export class MaschinePanKnob extends SimpleControl {
+export class MaschinePanKnob extends taktil.SimpleControl {
     state = { value: 64 };
 }

@@ -1,10 +1,10 @@
-import { SimpleControl, MidiMessage, SysexMessage, MessagePattern, Color } from 'taktil';
+import taktil from 'taktil';
 
 interface State {
     value: number;
 }
 
-export class RelativeKnob extends SimpleControl<State> {
+export class RelativeKnob extends taktil.SimpleControl<State> {
     enableMidiOut = false;
 
     minValue = -63;
@@ -12,7 +12,7 @@ export class RelativeKnob extends SimpleControl<State> {
 
     state = { value: 0 };
 
-    getInput({ data2 }: MidiMessage): State {
+    getInput({ data2 }: taktil.MidiMessage): State {
         const value = data2 === 0 ? 0 : data2 < 64 ? -(64 - data2) : data2 - 64;
         return { value };
     }

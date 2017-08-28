@@ -1,4 +1,4 @@
-import { Button, SimpleControl, Color } from 'taktil';
+import taktil from 'taktil';
 
 interface Params {
     application: API.Application;
@@ -9,13 +9,13 @@ interface Params {
 
 interface State {
     on: boolean;
-    color?: Color;
+    color?: taktil.Color;
     exists: boolean;
     disabled: boolean;
     noteOn: boolean;
 }
 
-export class TrackButton extends Button<Params, State> {
+export class TrackButton extends taktil.Button<Params, State> {
     state: State = { on: false, disabled: false, exists: false, noteOn: false };
     notes: API.PlayingNote[] = [];
     track: API.Track;

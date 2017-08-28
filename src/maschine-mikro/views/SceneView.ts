@@ -1,11 +1,11 @@
-import { View } from 'taktil';
+import taktil from 'taktil';
 
 import { BaseView } from './BaseView';
 import { SceneButton } from '../../components/SceneButton';
 import { controls } from '../controls';
 import { daw } from '../../daw';
 
-export class SceneView extends View {
+export class SceneView extends taktil.View {
     static parent = BaseView;
 
     sceneButtons = [

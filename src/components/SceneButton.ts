@@ -1,4 +1,4 @@
-import { Button, SimpleControl, Color } from 'taktil';
+import taktil from 'taktil';
 
 interface Params {
     application: API.Application;
@@ -8,12 +8,12 @@ interface Params {
 
 interface State {
     on: boolean;
-    color: Color;
+    color: taktil.Color;
     exists: boolean;
     empty: boolean;
 }
 
-export class SceneButton extends Button<Params, State> {
+export class SceneButton extends taktil.Button<Params, State> {
     state: State = { on: false, exists: false, empty: true, color: { r: 0.5, g: 0, b: 1 } };
     scene: API.Scene;
 
@@ -39,7 +39,7 @@ export class SceneButton extends Button<Params, State> {
     }
 
     onPress() {
-        if (!session.modeIsActive('SELECT')) {
+        if (!taktil.modeIsActive('SELECT')) {
             if (!this.scene.exists().get()) {
                 for (let i = 0; i <= this.params.index; i++) {
                     if (!this.params.sceneBank.getScene(i).exists().get())

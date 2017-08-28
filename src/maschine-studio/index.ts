@@ -1,13 +1,12 @@
-// 1. inject taktil env
-import 'taktil/env'; // must be first import in entry file
+import taktil from 'taktil';
 
 import { controls } from './controls';
 import { views } from './views';
 
-// 2. set bitwig api version
+// 1. set bitwig api version
 host.loadAPI(3);
 
-// 3. define controller script
+// 2. define controller script
 host.defineController(
     'Native Instruments', // vendor
     'Maschine Studio', // name
@@ -16,18 +15,18 @@ host.defineController(
     'Joseph Larson' // author
 );
 
-// 4. setup and discover midi controllers
+// 3. setup and discover midi controllers
 host.defineMidiPorts(1, 1); // number of midi inputs, outputs
 host.addDeviceNameBasedDiscoveryPair(
     ['Maschine Studio Virtual Input'],
     ['Maschine Studio Virtual Output']
 );
 
-// 5. register controls to the session
-session.registerControls(controls);
+// 4. register controls to the session
+taktil.registerControls(controls);
 
-// 6. register views to the session
-session.registerViews(views);
+// 5. register views to the session
+taktil.registerViews(views);
 
-// 7. on init, activate view to trigger initial render
-session.on('init', () => session.activateView('BASE'));
+// 6. on init, activate view to trigger initial render
+taktil.on('init', () => taktil.activateView('BASE'));

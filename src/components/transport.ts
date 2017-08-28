@@ -1,6 +1,6 @@
-import { Button, Control, ControlState } from 'taktil';
+import taktil from 'taktil';
 
-export class PlayToggle extends Button<{ transport: API.Transport }> {
+export class PlayToggle extends taktil.Button<{ transport: API.Transport }> {
     onInit() {
         this.params.transport
             .isPlaying()
@@ -12,7 +12,7 @@ export class PlayToggle extends Button<{ transport: API.Transport }> {
     }
 }
 
-export class MetronomeToggle extends Button<{ transport: API.Transport }> {
+export class MetronomeToggle extends taktil.Button<{ transport: API.Transport }> {
     onInit() {
         this.params.transport.isMetronomeEnabled().addValueObserver(isOn => {
             this.setState({ on: isOn });
@@ -24,7 +24,7 @@ export class MetronomeToggle extends Button<{ transport: API.Transport }> {
     }
 }
 
-export class PreRollToggle extends Button<{ transport: API.Transport }> {
+export class PreRollToggle extends taktil.Button<{ transport: API.Transport }> {
     onInit() {
         this.params.transport.preRoll().addValueObserver(preRollState => {
             this.setState({ on: preRollState !== 'none' });
@@ -36,7 +36,7 @@ export class PreRollToggle extends Button<{ transport: API.Transport }> {
     }
 }
 
-export class RestartButton extends Button<
+export class RestartButton extends taktil.Button<
     { transport: API.Transport },
     { on: boolean; isPlaying: boolean }
 > {
@@ -56,7 +56,7 @@ export class RestartButton extends Button<
     }
 }
 
-export class OverwriteToggle extends Button<{ transport: API.Transport }> {
+export class OverwriteToggle extends taktil.Button<{ transport: API.Transport }> {
     onInit() {
         this.params.transport
             .isClipLauncherOverdubEnabled()
@@ -68,7 +68,7 @@ export class OverwriteToggle extends Button<{ transport: API.Transport }> {
     }
 }
 
-export class LoopToggle extends Button<{ transport: API.Transport }> {
+export class LoopToggle extends taktil.Button<{ transport: API.Transport }> {
     onInit() {
         this.params.transport
             .isArrangerLoopEnabled()
@@ -80,7 +80,7 @@ export class LoopToggle extends Button<{ transport: API.Transport }> {
     }
 }
 
-export class ArmToggle extends Button<{ track: API.Track }> {
+export class ArmToggle extends taktil.Button<{ track: API.Track }> {
     onInit() {
         this.params.track.getArm().addValueObserver(isArmed => {
             this.setState({ ...this.state, on: isArmed });
@@ -92,31 +92,31 @@ export class ArmToggle extends Button<{ track: API.Track }> {
     }
 }
 
-export class TempoButton extends Button<{ transport: API.Transport }> {
+export class TempoButton extends taktil.Button<{ transport: API.Transport }> {
     onPress() {
         this.setState({ ...this.state, on: true });
         this.params.transport.tapTempo();
-        session.activateMode('TEMPO');
+        taktil.activateMode('TEMPO');
     }
 
     onRelease() {
-        session.deactivateMode('TEMPO');
+        taktil.deactivateMode('TEMPO');
         this.setState({ ...this.state, on: false });
     }
 }
 
-export class TempoRing extends Button<{ transport: API.Transport }> {
+export class TempoRing extends taktil.Button<{ transport: API.Transport }> {
     onInit() {
-        session.on('activateMode', mode => {
+        taktil.on('activateMode', mode => {
             if (mode === 'TEMPO') this.setState({ ...this.state, on: true });
         });
-        session.on('deactivateMode', mode => {
+        taktil.on('deactivateMode', mode => {
             if (mode === 'TEMPO') this.setState({ ...this.state, on: false });
         });
     }
 
-    onInput({ value }: ControlState) {
-        const shift = session.modeIsActive('SHIFT');
+    onInput({ value }: taktil.ControlState) {
+        const shift = taktil.modeIsActive('SHIFT');
         this.params.transport.tempo().inc(value * (shift ? 1 / 10 : 1), 666 - 19);
     }
 }

@@ -1,6 +1,6 @@
-import { Button } from 'taktil';
+import taktil from 'taktil';
 
-export class ActionButton extends Button<{ application: API.Application; action: string }> {
+export class ActionButton extends taktil.Button<{ application: API.Application; action: string }> {
     onPress() {
         this.setState({ on: true });
         this.params.application[this.params.action]();
