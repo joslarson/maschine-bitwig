@@ -30,7 +30,7 @@ export class ClipSlotButton extends taktil.Button<Params, State> {
     };
     clipLauncherSlotBank = this.params.cursorTrack.clipLauncherSlotBank();
 
-    getOutput() {
+    getControlOutput() {
         const {
             isPlaying,
             isPlaybackQueued,
@@ -54,7 +54,10 @@ export class ClipSlotButton extends taktil.Button<Params, State> {
     }
 
     onInit() {
-        this.params.sceneBank.getScene(this.params.index).exists().markInterested();
+        this.params.sceneBank
+            .getScene(this.params.index)
+            .exists()
+            .markInterested();
 
         this.clipLauncherSlotBank.addIsPlayingObserver((index, isPlaying) => {
             if (index === this.params.index) this.setState({ isPlaying });
@@ -77,10 +80,18 @@ export class ClipSlotButton extends taktil.Button<Params, State> {
     }
 
     onPress() {
-        const sceneExists = this.params.sceneBank.getScene(this.params.index).exists().get();
+        const sceneExists = this.params.sceneBank
+            .getScene(this.params.index)
+            .exists()
+            .get();
         if (!sceneExists) {
             for (let i = 0; i <= this.params.index; i++) {
-                if (!this.params.sceneBank.getScene(i).exists().get()) {
+                if (
+                    !this.params.sceneBank
+                        .getScene(i)
+                        .exists()
+                        .get()
+                ) {
                     this.params.application.getAction('Create Scene').invoke();
                 }
             }

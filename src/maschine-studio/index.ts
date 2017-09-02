@@ -30,5 +30,3 @@ taktil.registerViews(views);
 
 // 6. on init, activate view to trigger initial render
 taktil.on('init', () => taktil.activateView('BASE'));
-
-console.log('test');

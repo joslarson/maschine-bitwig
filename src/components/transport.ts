@@ -115,7 +115,7 @@ export class TempoRing extends taktil.Button<{ transport: API.Transport }> {
         });
     }
 
-    onInput({ value }: taktil.ControlState) {
+    onControlInput({ value }: taktil.ControlState) {
         const shift = taktil.modeIsActive('SHIFT');
         this.params.transport.tempo().inc(value * (shift ? 1 / 10 : 1), 666 - 19);
     }

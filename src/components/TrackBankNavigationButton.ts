@@ -9,7 +9,7 @@ type State = { on: boolean; color?: taktil.Color; exists: boolean };
 export class TrackBankNavigationButton extends taktil.Button<Params, State> {
     state: State = { on: false, exists: false };
 
-    getOutput() {
+    getControlOutput() {
         const { on, exists, color } = this.state;
         return {
             value: on ? 1 : 0,

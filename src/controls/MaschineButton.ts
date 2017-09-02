@@ -11,25 +11,20 @@ interface State {
     flashOn: boolean;
 }
 
-export class MaschineButton extends taktil.SimpleControl<State> {
-    state = { value: 0, flashing: false, flashOn: true, disabled: false };
-
-    cacheOnMidiIn = false;
+export class MaschineButton extends taktil.Control<State> {
     flashInterval: SyncedInterval;
 
-    getMidiOutput({
-        value,
-        flashing,
-        flashOn,
-        disabled,
-    }): (taktil.MidiMessage | taktil.SysexMessage)[] {
-        const { outPort: port, status, data1, minValue, maxValue } = this;
+    cacheOnMidiIn = false;
+    state = { value: 0, flashing: false, flashOn: true, disabled: false };
+
+    getMidiOutput({ value, flashing, flashOn, disabled }): taktil.MidiMessage[] {
+        const { port, status, data1, minValue, maxValue } = this;
         let data2 = !this.activeComponent || disabled ? minValue : value;
         if (data2 === maxValue && flashing) data2 = flashOn ? maxValue : minValue;
         return [new taktil.MidiMessage({ port, status, data1, data2 })];
     }
 
-    postRender() {
+    controlDidRender() {
         const { minValue, state: { value } } = this;
         if (value > minValue && this.state.flashing) {
             if (!this.flashInterval) {

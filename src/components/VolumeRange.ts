@@ -1,30 +1,30 @@
 import taktil from 'taktil';
 
-interface Params {
+export interface VolumeRangeParams {
     track: API.Track;
     transport: API.Transport;
     meter?: boolean;
 }
 
-interface State {
+export interface VolumeRangeState {
     value: number;
     meter: number;
     isPlaying: boolean;
 }
 
-export class VolumeRange extends taktil.Range<Params, State> {
-    state: State = { value: 0, meter: 0, isPlaying: false };
+export class VolumeRange extends taktil.Range<VolumeRangeParams, VolumeRangeState> {
+    state: VolumeRangeState = { value: 0, meter: 0, isPlaying: false };
 
     onInit() {
-        const { minValue, maxValue, range } = this.control;
+        const { minValue, maxValue, valueRange } = this.control;
         this.params.track
             .getVolume()
             .addValueObserver((value: number) =>
-                this.setState({ value: Math.round(value * range + minValue) })
+                this.setState({ value: Math.round(value * valueRange + minValue) })
             );
 
         if (this.params.meter) {
-            this.params.track.addVuMeterObserver(range, -1, false, meter => {
+            this.params.track.addVuMeterObserver(valueRange, -1, false, meter => {
                 if (this.state.isPlaying) this.setState({ meter: Math.min(meter, maxValue) });
             });
         }
@@ -34,14 +34,14 @@ export class VolumeRange extends taktil.Range<Params, State> {
             .addValueObserver(isPlaying => this.setState({ isPlaying }));
     }
 
-    getOutput() {
+    getControlOutput() {
         const { value, meter, isPlaying } = this.state;
         return { value: isPlaying && !this.memory.input && meter ? meter : value };
         // return { value: isPlaying && !this.memory.input && meter ? meter : value };
     }
 
-    onInput({ value }: taktil.ControlState) {
-        const { minValue, maxValue, range } = this.control;
+    onControlInput({ value }: taktil.ControlState) {
+        const { minValue, maxValue, valueRange } = this.control;
 
         if (!this.params.track.exists().get()) return this.control.render();
 
@@ -53,7 +53,7 @@ export class VolumeRange extends taktil.Range<Params, State> {
         }, this.INPUT_DELAY);
 
         if (this.memory.ready || !this.state.isPlaying) {
-            this.params.track.getVolume().set((value - minValue) / range + minValue);
+            this.params.track.getVolume().set((value - minValue) / valueRange + minValue);
         }
     }
 }

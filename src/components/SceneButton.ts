@@ -17,7 +17,7 @@ export class SceneButton extends taktil.Button<Params, State> {
     state: State = { on: false, exists: false, empty: true, color: { r: 0.5, g: 0, b: 1 } };
     scene: API.Scene;
 
-    getOutput() {
+    getControlOutput() {
         const { on, empty, color } = this.state;
         return { value: on ? 1 : 0, disabled: empty, color: color };
     }
@@ -42,7 +42,12 @@ export class SceneButton extends taktil.Button<Params, State> {
         if (!taktil.modeIsActive('SELECT')) {
             if (!this.scene.exists().get()) {
                 for (let i = 0; i <= this.params.index; i++) {
-                    if (!this.params.sceneBank.getScene(i).exists().get())
+                    if (
+                        !this.params.sceneBank
+                            .getScene(i)
+                            .exists()
+                            .get()
+                    )
                         this.params.application.getAction('Create Scene').invoke();
                 }
             } else {

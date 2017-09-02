@@ -13,14 +13,15 @@ interface State {
     exists: boolean;
     disabled: boolean;
     noteOn: boolean;
+    tempo: number;
 }
 
 export class TrackButton extends taktil.Button<Params, State> {
-    state: State = { on: false, disabled: false, exists: false, noteOn: false };
+    state: State = { tempo: 120, on: false, disabled: false, exists: false, noteOn: false };
     notes: API.PlayingNote[] = [];
     track: API.Track;
 
-    getOutput() {
+    getControlOutput() {
         const { on, exists, color, noteOn } = this.state;
         return {
             value: on ? 1 : 0,
@@ -31,6 +32,9 @@ export class TrackButton extends taktil.Button<Params, State> {
     }
 
     onInit() {
+        this.params.transport.tempo().addRawValueObserver(value => {
+            this.setState({ tempo: value });
+        });
         this.track = this.params.trackBank.getChannel(this.params.index) as API.Track;
         this.track.isGroup().markInterested();
 
@@ -55,7 +59,7 @@ export class TrackButton extends taktil.Button<Params, State> {
                 }
             }
             this.notes = notes;
-            const delay = 60000 / (this.params.transport.tempo().get() * (666 - 20) + 20) / 8;
+            const delay = 60000 / this.state.tempo / 4;
             if (noteOn) {
                 if (this.memory.noteOn) {
                     clearTimeout(this.memory.noteOn);

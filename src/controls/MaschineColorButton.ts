@@ -18,7 +18,7 @@ interface MaschineColorButtonState {
     accent: boolean;
 }
 
-export class MaschineColorButton extends taktil.SimpleControl<MaschineColorButtonState> {
+export class MaschineColorButton extends taktil.Control<MaschineColorButtonState> {
     dimValue = 20;
 
     state = {
@@ -33,7 +33,7 @@ export class MaschineColorButton extends taktil.SimpleControl<MaschineColorButto
     flashInterval: SyncedInterval;
 
     constructor({
-        port,
+        port = 0,
         inPort,
         outPort,
         status,
@@ -45,7 +45,7 @@ export class MaschineColorButton extends taktil.SimpleControl<MaschineColorButto
         status: number;
         data1: number;
     }) {
-        super({ port, inPort, outPort, status, data1 });
+        super({ port, status, data1 });
         this.patterns = [
             ...this.patterns,
             new taktil.MessagePattern({ status: this.hueStatus, data1 }),
@@ -66,7 +66,7 @@ export class MaschineColorButton extends taktil.SimpleControl<MaschineColorButto
         return this.hueStatus + 2;
     }
 
-    getMidiOutput(state): (taktil.MidiMessage | taktil.SysexMessage)[] {
+    getMidiOutput(state: MaschineColorButtonState): (taktil.MidiMessage | taktil.SysexMessage)[] {
         const doNotSaturate = isEqual(state.color, colors.offWhite);
         const hsb = rgb2hsv(state.color);
         const { data1, minValue, maxValue, dimValue } = this;
@@ -87,21 +87,23 @@ export class MaschineColorButton extends taktil.SimpleControl<MaschineColorButto
         if (state.accent) saturationData2 = Math.max(saturationData2 - 20, 0);
         return [
             ...super.getMidiOutput(state),
-            new taktil.MidiMessage({ status: this.hueStatus, data1, data2: hsb.h }),
+            new taktil.MidiMessage({ status: this.hueStatus, data1, data2: hsb.h, urgent: true }),
             new taktil.MidiMessage({
                 status: this.saturationStatus,
                 data1,
                 data2: saturationData2,
+                urgent: true,
             }),
             new taktil.MidiMessage({
                 status: this.brightnessStatus,
                 data1,
                 data2: brightnessData2,
+                urgent: true,
             }),
         ];
     }
 
-    postRender() {
+    controlDidRender() {
         const { minValue, state: { value, flashing } } = this;
         if (value > minValue && flashing) {
             if (!this.flashInterval) {

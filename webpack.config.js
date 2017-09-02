@@ -18,7 +18,9 @@ module.exports = {
         modules: [tsconfig.compilerOptions.baseUrl, 'node_modules'],
     },
     // setup typescript loader for ts and js files
-    module: { rules: [{ test: /\.[tj]s$/, use: 'ts-loader', exclude: /node_modules/ }] },
+    module: {
+        rules: [{ test: /\.[tj]s$/, use: 'awesome-typescript-loader', exclude: /node_modules/ }],
+    },
     plugins: [
         new BitwigWebpackPlugin(), // enables synchronous code splitting
         new CopyWebpackPlugin([{ from: 'README.md' }]), // non JS things to copy
@@ -40,5 +42,8 @@ module.exports = {
         hash: false,
         timings: false,
         modules: false,
+    },
+    watchOptions: {
+        ignored: [/node_modules([\\]+|\/)+(?!taktil([\\]+|\/)+lib)/],
     },
 };

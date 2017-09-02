@@ -8,6 +8,6 @@ export const views = {
     BASE: BaseView,
     SCENE: SceneView,
     PATTERN: PatternView,
-    PAD: PadMidiView,
+    PAD_MIDI: PadMidiView,
     NAVIGATE: NavigateView,
 };
