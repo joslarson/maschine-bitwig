@@ -14,8 +14,11 @@ interface State {
 export class MaschineButton extends taktil.Control<State> {
     flashInterval: SyncedInterval;
 
-    cacheOnMidiIn = false;
     state = { value: 0, flashing: false, flashOn: true, disabled: false };
+
+    constructor({ port = 0, status, data1 }: { port?: number; status: number; data1: number }) {
+        super({ patterns: [{ port, status, data1 }], cacheOnMidiIn: false });
+    }
 
     getMidiOutput({ value, flashing, flashOn, disabled }): taktil.MidiMessage[] {
         const { port, status, data1, minValue, maxValue } = this;

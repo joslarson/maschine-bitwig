@@ -31,12 +31,13 @@ export class BaseView extends taktil.View {
     });
 
     // Performance
-    tempoButton = new TempoButton(controls.ENTER, 'SHIFT', {
+    tempoButton = new TempoButton(controls.ENTER, {
+        mode: 'SHIFT',
         transport: daw.transport,
     });
 
     // Groups
-    groupButton = new ModeButton(controls.GROUP, { mode: 'GROUP', pinnable: true });
+    groupButton = new ModeButton(controls.GROUP, { targetMode: 'GROUP', pinnable: true });
 
     trackButtons = [
         controls.PAD_13,
@@ -49,8 +50,9 @@ export class BaseView extends taktil.View {
         controls.PAD_12,
     ].map(
         (control, index) =>
-            new TrackButton(control, 'GROUP', {
+            new TrackButton(control, {
                 index,
+                mode: 'GROUP',
                 application: daw.application,
                 transport: daw.transport,
                 trackBank: daw.trackBank,
@@ -68,24 +70,28 @@ export class BaseView extends taktil.View {
     //     controls.PAD_12,
     // ].map(
     //     (control, index) =>
-    //         new TrackBankNavigationButton(control, 'SHIFT', {
+    //         new TrackBankNavigationButton(control, {
     //             index,
+    //             mode: 'SHIFT',
     //             trackBank: daw.trackBank,
     //         })
     // );
 
     // Transport
     restartButton = new RestartButton(controls.RESTART, { transport: daw.transport });
-    loopToggle = new LoopToggle(controls.RESTART, 'SHIFT', {
+    loopToggle = new LoopToggle(controls.RESTART, {
+        mode: 'SHIFT',
         transport: daw.transport,
     });
-    metronomeToggle = new MetronomeToggle(controls.PLAY, 'SHIFT', {
+    metronomeToggle = new MetronomeToggle(controls.PLAY, {
+        mode: 'SHIFT',
         transport: daw.transport,
     });
-    shiftButton = new ModeButton(controls.GRID, { mode: 'SHIFT' });
+    shiftButton = new ModeButton(controls.GRID, { targetMode: 'SHIFT' });
     playToggle = new PlayToggle(controls.PLAY, { transport: daw.transport });
     armToggle = new ArmToggle(controls.REC, { track: daw.cursorTrack });
-    preRollToggle = new PreRollToggle(controls.REC, 'SHIFT', {
+    preRollToggle = new PreRollToggle(controls.REC, {
+        mode: 'SHIFT',
         transport: daw.transport,
     });
 
@@ -94,29 +100,34 @@ export class BaseView extends taktil.View {
     patternViewButton = new ViewToggle(controls.PATTERN, { view: 'PATTERN' });
     // padMidiViewButton = new components.ViewToggle(controls.PAD_MODE, { view: 'PAD_MIDI' });
     // navigateViewButton = new components.ViewToggle(controls.NAVIGATE, { view: 'NAVIGATE' });
-    duplicateModeGate = new ModeGate(controls.DUPLICATE, { mode: 'DUPLICATE' });
-    selectModeGate = new ModeGate(controls.SELECT, { mode: 'SELECT' });
-    soloModeGate = new ModeGate(controls.SOLO, { mode: 'SOLO' });
-    muteModeGate = new ModeGate(controls.MUTE, { mode: 'MUTE' });
+    duplicateModeGate = new ModeGate(controls.DUPLICATE, { targetMode: 'DUPLICATE' });
+    selectModeGate = new ModeGate(controls.SELECT, { targetMode: 'SELECT' });
+    soloModeGate = new ModeGate(controls.SOLO, { targetMode: 'SOLO' });
+    muteModeGate = new ModeGate(controls.MUTE, { targetMode: 'MUTE' });
 
     // Edit
-    undoButton = new ActionButton(controls.PAD_1, 'SHIFT', {
+    undoButton = new ActionButton(controls.PAD_1, {
+        mode: 'SHIFT',
         application: daw.application,
         action: 'undo',
     });
-    redoButton = new ActionButton(controls.PAD_2, 'SHIFT', {
+    redoButton = new ActionButton(controls.PAD_2, {
+        mode: 'SHIFT',
         application: daw.application,
         action: 'redo',
     });
-    copyButton = new ActionButton(controls.PAD_11, 'SHIFT', {
+    copyButton = new ActionButton(controls.PAD_11, {
+        mode: 'SHIFT',
         application: daw.application,
         action: 'copy',
     });
-    pasteButton = new ActionButton(controls.PAD_12, 'SHIFT', {
+    pasteButton = new ActionButton(controls.PAD_12, {
+        mode: 'SHIFT',
         application: daw.application,
         action: 'paste',
     });
-    deleteButton = new ActionButton(controls.PAD_9, 'SHIFT', {
+    deleteButton = new ActionButton(controls.PAD_9, {
+        mode: 'SHIFT',
         application: daw.application,
         action: 'delete',
     });

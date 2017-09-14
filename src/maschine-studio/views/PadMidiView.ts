@@ -1,7 +1,5 @@
-import taktil from 'taktil';
+import { ViewStack } from 'taktil';
 
 import { BaseView } from './BaseView';
 
-export class PadMidiView extends taktil.View {
-    static parent = BaseView;
-}
+export class PadMidiView extends ViewStack(BaseView) {}

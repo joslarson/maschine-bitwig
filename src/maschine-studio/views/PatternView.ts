@@ -1,4 +1,4 @@
-import taktil from 'taktil';
+import { ViewStack } from 'taktil';
 import { BaseView } from './BaseView';
 
 import { ClipSlotButton } from 'components/ClipSlotButton';
@@ -6,9 +6,7 @@ import { ClipSlotButton } from 'components/ClipSlotButton';
 import { controls } from '../controls';
 import { daw } from '../../daw';
 
-export class PatternView extends taktil.View {
-    static parent = BaseView;
-
+export class PatternView extends ViewStack(BaseView) {
     clipSlotButtons = [
         controls.PAD_1,
         controls.PAD_2,

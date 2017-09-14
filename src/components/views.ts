@@ -13,7 +13,7 @@ export class ViewToggle extends taktil.Button<{ view: string }> {
 
     onPress() {
         let view = this.getView();
-        const parent = view.parent;
+        const parent = view.extends[0];
         if (taktil.getActiveView() === view && parent) {
             taktil.activateView(parent.viewName);
         } else {
@@ -22,14 +22,14 @@ export class ViewToggle extends taktil.Button<{ view: string }> {
     }
 }
 
-export class ModeGate extends taktil.Button<{ mode: string }> {
+export class ModeGate extends taktil.Button<{ targetMode: string }> {
     onPress() {
         this.setState({ on: true });
-        taktil.activateMode(this.params.mode);
+        taktil.activateMode(this.params.targetMode);
     }
 
     onRelease() {
         this.setState({ on: false });
-        taktil.deactivateMode(this.params.mode);
+        taktil.deactivateMode(this.params.targetMode);
     }
 }

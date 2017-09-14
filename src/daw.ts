@@ -38,6 +38,11 @@ export class Daw {
 
         // popupBrowser
         this.popupBrowser = host.createPopupBrowser();
+        this.popupBrowser
+            .exists()
+            .addValueObserver(
+                exists => (exists ? taktil.activateMode('BROWSE') : taktil.deactivateMode('BROWSE'))
+            );
 
         // sceneBank
         this.sceneBank = host.createSceneBank(16);

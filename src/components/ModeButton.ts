@@ -1,7 +1,7 @@
 import taktil from 'taktil';
 
 interface Params {
-    mode: string;
+    targetMode: string;
     pinnable?: boolean;
 }
 
@@ -13,21 +13,21 @@ export class ModeButton extends taktil.Button<Params> {
             const on = !this.state.on;
             this.setState({ on });
             if (on) {
-                taktil.activateMode(this.params.mode);
+                taktil.activateMode(this.params.targetMode);
             } else {
-                taktil.deactivateMode(this.params.mode);
+                taktil.deactivateMode(this.params.targetMode);
             }
-            taktil.activateMode(this.params.mode);
+            taktil.activateMode(this.params.targetMode);
         } else {
             this.setState({ on: true });
-            taktil.activateMode(this.params.mode);
+            taktil.activateMode(this.params.targetMode);
         }
     }
 
     onRelease() {
         if (!taktil.modeIsActive('SHIFT') || !this.params.pinnable) {
             this.setState({ on: false });
-            taktil.deactivateMode(this.params.mode);
+            taktil.deactivateMode(this.params.targetMode);
         }
     }
 

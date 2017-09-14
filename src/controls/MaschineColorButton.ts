@@ -32,20 +32,8 @@ export class MaschineColorButton extends taktil.Control<MaschineColorButtonState
 
     flashInterval: SyncedInterval;
 
-    constructor({
-        port = 0,
-        inPort,
-        outPort,
-        status,
-        data1,
-    }: {
-        port?: number;
-        inPort?: number;
-        outPort?: number;
-        status: number;
-        data1: number;
-    }) {
-        super({ port, status, data1 });
+    constructor({ port = 0, status, data1 }: { port?: number; status: number; data1: number }) {
+        super({ patterns: [{ port, status, data1 }], cacheOnMidiIn: false });
         this.patterns = [
             ...this.patterns,
             new taktil.MessagePattern({ status: this.hueStatus, data1 }),

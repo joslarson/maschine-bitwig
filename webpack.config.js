@@ -31,7 +31,11 @@ module.exports = {
         new webpack.optimize.CommonsChunkPlugin({
             name: 'libs.bundle',
             minChunks: function(module) {
-                return module.context && module.context.indexOf('node_modules') !== -1;
+                return (
+                    module.context &&
+                    (module.context.indexOf('node_modules') !== -1 ||
+                        module.context.indexOf('taktiljs/taktil/') !== -1)
+                );
             },
         }),
     ],
@@ -43,7 +47,7 @@ module.exports = {
         timings: false,
         modules: false,
     },
-    watchOptions: {
-        ignored: [/node_modules([\\]+|\/)+(?!taktil([\\]+|\/)+lib)/],
-    },
+    // watchOptions: {
+    //     ignored: [/node_modules([\\]+|\/)+(?!taktil([\\]+|\/)+lib)/],
+    // },
 };
