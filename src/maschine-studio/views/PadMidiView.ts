@@ -1,5 +1,5 @@
-import { ViewStack } from 'taktil';
+import { View } from 'taktil';
 
 import { BaseView } from './BaseView';
 
-export class PadMidiView extends ViewStack(BaseView) {}
+export class PadMidiView extends View {}

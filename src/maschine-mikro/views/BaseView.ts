@@ -96,8 +96,8 @@ export class BaseView extends taktil.View {
     });
 
     // Pads
-    sceneViewButton = new ViewToggle(controls.SCENE, { view: 'SCENE' });
-    patternViewButton = new ViewToggle(controls.PATTERN, { view: 'PATTERN' });
+    sceneViewButton = new ViewToggle(controls.SCENE, { onView: 'SCENE', offView: 'BASE' });
+    patternViewButton = new ViewToggle(controls.PATTERN, { onView: 'PATTERN', offView: 'BASE' });
     // padMidiViewButton = new components.ViewToggle(controls.PAD_MODE, { view: 'PAD_MIDI' });
     // navigateViewButton = new components.ViewToggle(controls.NAVIGATE, { view: 'NAVIGATE' });
     duplicateModeGate = new ModeGate(controls.DUPLICATE, { targetMode: 'DUPLICATE' });

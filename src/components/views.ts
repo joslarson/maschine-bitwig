@@ -1,23 +1,18 @@
 import taktil from 'taktil';
 
-export class ViewToggle extends taktil.Button<{ view: string }> {
-    getView() {
-        return taktil.getViews()[this.params.view];
-    }
-
+export class ViewToggle extends taktil.Button<{ onView: string; offView: string }> {
     onInit() {
         taktil.on('activateView', (view: typeof taktil.View) => {
-            this.setState({ on: view === this.getView() });
+            this.setState({ on: view === taktil.getViews()[this.params.onView] });
         });
     }
 
     onPress() {
-        let view = this.getView();
-        const parent = view.extends[0];
-        if (taktil.getActiveView() === view && parent) {
-            taktil.activateView(parent.viewName);
+        let view = taktil.getViews()[this.params.onView];
+        if (taktil.getActiveView() === view) {
+            taktil.activateView(this.params.offView);
         } else {
-            taktil.activateView(view.viewName);
+            taktil.activateView(this.params.onView);
         }
     }
 }

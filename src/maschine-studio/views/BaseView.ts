@@ -1,12 +1,22 @@
-import { ViewStack } from 'taktil';
+import taktil from 'taktil';
 
 import { ActionButton } from '../../components/ActionButton';
-import { TempoButton, TempoRing } from '../../components/transport';
+import {
+    ArmToggle,
+    LoopToggle,
+    MetronomeToggle,
+    PlayToggle,
+    PreRollToggle,
+    RestartButton,
+    TempoButton,
+    TempoRing,
+} from '../../components/transport';
 import { BrowserExitButton } from '../../components/BrowserExitButton';
 import { BrowserToggle } from '../../components/BrowserToggle';
-import { BrowseWheel } from '../../components/browser';
 import { LayoutButton } from '../../components/LayoutButton';
 import { ModeButton } from '../../components/ModeButton';
+import { TrackBankNavigationButton } from '../../components/TrackBankNavigationButton';
+import { TrackButton } from '../../components/TrackButton';
 import { ViewToggle, ModeGate } from '../../components/views';
 import { VolumeKnobTouch } from '../../components/VolumeKnobTouch';
 import { VolumeRange } from '../../components/VolumeRange';
@@ -14,10 +24,7 @@ import { VolumeRange } from '../../components/VolumeRange';
 import { controls } from '../controls';
 import { daw } from '../../daw';
 
-import { TransportView } from './TransportView';
-import { GroupsView } from './GroupsView';
-
-export class BaseView extends ViewStack(TransportView, GroupsView) {
+export class BaseView extends taktil.View {
     // Top Left
     arrangeLayoutButton = new LayoutButton(controls.ARRANGE, {
         application: daw.application,
@@ -38,6 +45,44 @@ export class BaseView extends ViewStack(TransportView, GroupsView) {
 
     // Performance
     tempoButton = new TempoButton(controls.TAP, { transport: daw.transport });
+
+    // Groups
+    trackButtons = [
+        controls.GROUP_A,
+        controls.GROUP_B,
+        controls.GROUP_C,
+        controls.GROUP_D,
+        controls.GROUP_E,
+        controls.GROUP_F,
+        controls.GROUP_G,
+        controls.GROUP_H,
+    ].map(
+        (control, index) =>
+            new TrackButton(control, {
+                application: daw.application,
+                transport: daw.transport,
+                trackBank: daw.trackBank,
+                index,
+            })
+    );
+
+    trackNavButtons = [
+        controls.GROUP_A,
+        controls.GROUP_B,
+        controls.GROUP_C,
+        controls.GROUP_D,
+        controls.GROUP_E,
+        controls.GROUP_F,
+        controls.GROUP_G,
+        controls.GROUP_H,
+    ].map(
+        (control, index) =>
+            new TrackBankNavigationButton(control, {
+                mode: 'SHIFT',
+                trackBank: daw.trackBank,
+                index,
+            })
+    );
 
     volumeKnobs = [
         controls.VOL_A,
@@ -73,15 +118,32 @@ export class BaseView extends ViewStack(TransportView, GroupsView) {
         meter: true,
     });
 
+    // Transport
+    restartButton = new RestartButton(controls.RESTART, { transport: daw.transport });
+    loopToggle = new LoopToggle(controls.RESTART, {
+        mode: 'SHIFT',
+        transport: daw.transport,
+    });
+    metronomeToggle = new MetronomeToggle(controls.METRO, {
+        transport: daw.transport,
+    });
+    shiftButton = new ModeButton(controls.GRID, { targetMode: 'SHIFT' });
+    playToggle = new PlayToggle(controls.PLAY, { transport: daw.transport });
+    armToggle = new ArmToggle(controls.REC, { track: daw.cursorTrack });
+    preRollToggle = new PreRollToggle(controls.REC, {
+        mode: 'SHIFT',
+        transport: daw.transport,
+    });
+
     // Pads
-    sceneViewButton = new ViewToggle(controls.SCENE, { view: 'SCENE' });
-    patternViewButton = new ViewToggle(controls.PATTERN, { view: 'PATTERN' });
-    padMidiViewButton = new ViewToggle(controls.PAD_MODE, { view: 'PAD_MIDI' });
-    navigateViewButton = new ViewToggle(controls.NAVIGATE, { view: 'NAVIGATE' });
-    duplicateModeButton = new ModeButton(controls.DUPLICATE, { targetMode: 'DUPLICATE' });
-    selectModeButton = new ModeButton(controls.SELECT, { targetMode: 'SELECT' });
-    soloModeButton = new ModeButton(controls.SOLO, { targetMode: 'SOLO' });
-    muteModeButton = new ModeButton(controls.MUTE, { targetMode: 'MUTE' });
+    sceneViewButton = new ViewToggle(controls.SCENE, { onView: 'SCENE', offView: 'BASE' });
+    patternViewButton = new ViewToggle(controls.PATTERN, { onView: 'PATTERN', offView: 'BASE' });
+    padMidiViewButton = new ViewToggle(controls.PAD_MODE, { onView: 'PAD_MIDI', offView: 'BASE' });
+    navigateViewButton = new ViewToggle(controls.NAVIGATE, { onView: 'NAVIGATE', offView: 'BASE' });
+    duplicateModeGate = new ModeGate(controls.DUPLICATE, { targetMode: 'DUPLICATE' });
+    selectModeGate = new ModeGate(controls.SELECT, { targetMode: 'SELECT' });
+    soloModeGate = new ModeGate(controls.SOLO, { targetMode: 'SOLO' });
+    muteModeGate = new ModeGate(controls.MUTE, { targetMode: 'MUTE' });
 
     // Edit
     undoButton = new ActionButton(controls.UNDO, {
@@ -105,7 +167,6 @@ export class BaseView extends ViewStack(TransportView, GroupsView) {
         action: 'delete',
     });
     toggleBrowserRing = new BrowserToggle(controls.JOG_RING, {
-        mode: 'BROWSE',
         cursorTrack: daw.cursorTrack,
         popupBrowser: daw.popupBrowser,
     });
@@ -118,11 +179,6 @@ export class BaseView extends ViewStack(TransportView, GroupsView) {
         transport: daw.transport,
     });
     browserExitButton = new BrowserExitButton(controls.BACK, {
-        mode: 'BROWSE',
-        popupBrowser: daw.popupBrowser,
-    });
-    browseWheel = new BrowseWheel(controls.JOG_DIAL, {
-        mode: 'BROWSE',
         popupBrowser: daw.popupBrowser,
     });
 }

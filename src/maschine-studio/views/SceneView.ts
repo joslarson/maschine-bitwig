@@ -1,4 +1,4 @@
-import { ViewStack } from 'taktil';
+import { View } from 'taktil';
 
 import { BaseView } from './BaseView';
 import { SceneButton } from 'components/SceneButton';
@@ -6,7 +6,7 @@ import { SceneButton } from 'components/SceneButton';
 import { controls } from '../controls';
 import { daw } from '../../daw';
 
-export class SceneView extends ViewStack(BaseView) {
+export class SceneView extends View {
     sceneButtons = [
         controls.PAD_1,
         controls.PAD_2,
