@@ -5,6 +5,14 @@ const BitwigWebpackPlugin = require('bitwig-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const tsconfig = require('./tsconfig.json');
+// const glob = require('glob').sync;
+
+// const entries = glob('src/**/*.ts').reduce((result, entry) => {
+//     result[entry.slice(4, -3)] = `./${entry}`;
+//     return result;
+// }, {});
+
+// console.log(entries);
 
 module.exports = {
     entry: {
@@ -29,14 +37,14 @@ module.exports = {
         // new webpack.optimize.ModuleConcatenationPlugin(), // makes webpack output smaller and more readable
         // bundle everything coming from the node_modules folder separately
         new webpack.optimize.CommonsChunkPlugin({
-            name: 'libs.bundle',
+            name: 'vendor.bundle',
             minChunks: function(module) {
-                return (
-                    module.context &&
-                    (module.context.indexOf('node_modules') !== -1 ||
-                        module.context.indexOf('taktiljs/taktil/') !== -1)
-                );
+                return module.context && module.context.indexOf('node_modules') !== -1;
             },
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'manifest.bundle',
+            minChunks: Infinity,
         }),
     ],
     stats: {
