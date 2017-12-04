@@ -74,6 +74,14 @@ export class TrackButton extends taktil.Button<Params, State> {
         });
     }
 
+    onActivate() {
+        console.log('Activate TrackButton:', this.control.status, this.control.data1);
+    }
+
+    onDeactivate() {
+        console.log('Deactivate TrackButton:', this.control.status, this.control.data1);
+    }
+
     onPress() {
         if (this.params.index === this.params.trackBank.channelCount().get()) {
             this.params.application.createInstrumentTrack(this.params.index);

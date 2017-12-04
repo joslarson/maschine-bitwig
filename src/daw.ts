@@ -1,4 +1,5 @@
 import taktil from 'taktil';
+import { ValueProxy } from './ValueProxy';
 
 export class Daw {
     transport: API.Transport;
