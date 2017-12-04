@@ -55,7 +55,7 @@ module.exports = {
         timings: false,
         modules: false,
     },
-    // watchOptions: {
-    //     ignored: [/node_modules([\\]+|\/)+(?!taktil([\\]+|\/)+lib)/],
-    // },
+    watchOptions: {
+        ignored: [/node_modules([\\]+|\/)+(?!taktil([\\]+|\/)+lib)/],
+    },
 };
