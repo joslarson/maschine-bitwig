@@ -9,6 +9,8 @@ interface Params {
 
 interface State {
     on: boolean;
+    mute: boolean;
+    solo: boolean;
     color?: taktil.Color;
     exists: boolean;
     disabled: boolean;
@@ -17,14 +19,27 @@ interface State {
 }
 
 export class TrackButton extends taktil.Button<Params, State> {
-    state: State = { tempo: 120, on: false, disabled: false, exists: false, noteOn: false };
+    state: State = {
+        tempo: 120,
+        on: false,
+        mute: false,
+        solo: false,
+        disabled: false,
+        exists: false,
+        noteOn: false,
+    };
     notes: API.PlayingNote[] = [];
     track: API.Track;
 
     getControlOutput() {
-        const { on, exists, color, noteOn } = this.state;
+        const { on, mute, solo, exists, color, noteOn } = this.state;
+
+        let value = on ? 1 : 0;
+        if (taktil.modeIsActive('MUTE')) value = mute ? 1 : 0;
+        if (taktil.modeIsActive('SOLO')) value = solo ? 1 : 0;
+
         return {
-            value: on ? 1 : 0,
+            value: value,
             disabled: !exists,
             accent: noteOn,
             ...color === undefined ? {} : { color },
@@ -44,6 +59,14 @@ export class TrackButton extends taktil.Button<Params, State> {
 
         this.track.addIsSelectedInEditorObserver(isSelected => {
             this.setState({ ...this.state, on: isSelected });
+        });
+
+        this.track.getMute().addValueObserver(isMuted => {
+            this.setState({ ...this.state, mute: isMuted });
+        });
+
+        this.track.getSolo().addValueObserver(isSoloed => {
+            this.setState({ ...this.state, solo: isSoloed });
         });
 
         this.track.exists().addValueObserver(trackExists => {
@@ -72,9 +95,29 @@ export class TrackButton extends taktil.Button<Params, State> {
                 }, Math.max(delay, 40));
             }
         });
+
+        taktil.on(
+            'activateMode',
+            mode => (mode === 'MUTE' || mode === 'SOLO') && this.setState({})
+        );
+
+        taktil.on(
+            'deactivateMode',
+            mode => (mode === 'MUTE' || mode === 'SOLO') && this.setState({})
+        );
     }
 
     onPress() {
+        if (taktil.modeIsActive('MUTE')) {
+            this.track.getMute().toggle();
+            return;
+        }
+
+        if (taktil.modeIsActive('SOLO')) {
+            this.track.getSolo().toggle();
+            return;
+        }
+
         if (this.params.index === this.params.trackBank.channelCount().get()) {
             this.params.application.createInstrumentTrack(this.params.index);
             this.track.browseToInsertAtStartOfChain();
@@ -83,6 +126,9 @@ export class TrackButton extends taktil.Button<Params, State> {
     }
 
     onLongPress() {
+        if (taktil.modeIsActive('MUTE') || taktil.modeIsActive('SOLO')) {
+            return;
+        }
         if (this.track.isGroup().get() && !this.state.disabled) {
             this.params.application.navigateIntoTrackGroup(this.track);
             this.params.trackBank.getChannel(0).selectInEditor();
@@ -90,6 +136,9 @@ export class TrackButton extends taktil.Button<Params, State> {
     }
 
     onDoublePress() {
+        if (taktil.modeIsActive('MUTE') || taktil.modeIsActive('SOLO')) {
+            return this.onPress();
+        }
         if (!this.state.disabled) {
             this.params.application.navigateToParentTrackGroup();
             this.params.trackBank.getChannel(0).selectInEditor();

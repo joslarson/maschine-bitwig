@@ -145,6 +145,8 @@ export class BaseView extends taktil.View {
     soloModeGate = new ModeGate(controls.SOLO, { targetMode: 'SOLO' });
     muteModeGate = new ModeGate(controls.MUTE, { targetMode: 'MUTE' });
 
+    // Track Mute
+
     // Edit
     undoButton = new ActionButton(controls.UNDO, {
         application: daw.application,

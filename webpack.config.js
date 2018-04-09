@@ -2,19 +2,31 @@ const path = require('path');
 
 const webpack = require('webpack');
 const BitwigWebpackPlugin = require('bitwig-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const tsconfig = require('./tsconfig.json');
-// const glob = require('glob').sync;
+const crypto = require('crypto');
 
-// const entries = glob('src/**/*.ts').reduce((result, entry) => {
-//     result[entry.slice(4, -3)] = `./${entry}`;
-//     return result;
-// }, {});
+const glob = require('glob');
 
-// console.log(entries);
+const paths = Array.from(new Set([].concat(...tsconfig.include.map(p => glob.sync(p)))));
 
-module.exports = {
+const perFileCacheGroups = paths.reduce((result, p, i) => {
+    const name = p
+        .slice(0, -3)
+        .replace(new RegExp(`^${path.join(tsconfig.compilerOptions.rootDir)}`), 'project-files');
+    result[`file${i + 1}`] = {
+        name,
+        test: RegExp(path.join(__dirname, p)),
+        chunks: 'initial',
+        enforce: true,
+    };
+    return result;
+}, {});
+
+module.exports = (_, { mode }) => ({
+    mode,
     entry: {
         'maschine-studio.control': './src/maschine-studio',
         'maschine-mikro.control': './src/maschine-mikro',
@@ -27,26 +39,41 @@ module.exports = {
     },
     // setup typescript loader for ts and js files
     module: {
-        rules: [{ test: /\.[tj]s$/, use: 'awesome-typescript-loader', exclude: /node_modules/ }],
+        rules: [
+            {
+                test: /\.[tj]s$/,
+                loader: 'ts-loader',
+                options: {
+                    compilerOptions: { checkJs: false }, // don't have build process type check js files
+                },
+                exclude: /node_modules/,
+            },
+        ],
     },
     plugins: [
         new BitwigWebpackPlugin(), // enables synchronous code splitting
+        new CleanWebpackPlugin(['dist/*'], { verbose: false }),
         new CopyWebpackPlugin([{ from: 'README.md' }]), // non JS things to copy
-        new CaseSensitivePathsPlugin(), // protects against case sensitive file systems
-        new webpack.NamedModulesPlugin(), // makes it easier to debug webpack output
-        // new webpack.optimize.ModuleConcatenationPlugin(), // makes webpack output smaller and more readable
-        // bundle everything coming from the node_modules folder separately
-        new webpack.optimize.CommonsChunkPlugin({
-            name: 'vendor.bundle',
-            minChunks: function(module) {
-                return module.context && module.context.indexOf('node_modules') !== -1;
-            },
-        }),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: 'manifest.bundle',
-            minChunks: Infinity,
-        }),
+        new CaseSensitivePathsPlugin(), // catch case sensitivity errors on case insensitive systems
     ],
+    optimization: {
+        // separate webpack manifest and vendor libs from project code
+        splitChunks: {
+            cacheGroups: {
+                // in dev mode output a chunk per src file to make debugging easier
+                ...(mode === 'development' ? perFileCacheGroups : {}),
+                vendor: {
+                    name: 'vendor.bundle',
+                    test: /node_modules/,
+                    chunks: 'initial',
+                    enforce: true,
+                },
+            },
+        },
+        // makes output easy to read for debugging
+        concatenateModules: true,
+    },
+    devtool: false, // sourcemaps not supported in Bitwig's JavaScript engine
     stats: {
         colors: true,
         chunks: false,
@@ -54,8 +81,8 @@ module.exports = {
         hash: false,
         timings: false,
         modules: false,
+        builtAt: false,
+        cached: false,
+        entrypoints: false,
     },
-    watchOptions: {
-        ignored: [/node_modules([\\]+|\/)+(?!taktil([\\]+|\/)+lib)/],
-    },
-};
+});
