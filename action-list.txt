@@ -1,0 +1,496 @@
+New
+Open
+Save
+Save as
+Close
+Preferences
+Quit
+Undo
+Redo
+Cut
+Cut Special
+Copy
+Copy Special
+Paste
+Paste Special
+Duplicate
+Duplicate Special
+Group
+Ungroup
+Enter Group
+Exit Group
+Toggle Active
+Activate
+Deactivate
+Delete
+Delete Special
+Select All
+Unselect All
+Rename
+Click button
+Activate item
+increase_gui_scaling
+decrease_gui_scaling
+Cancel Dialog
+Dialog: Yes
+Dialog: No
+Dialog: OK
+Delete character to left of cursor
+Delete character to right of cursor
+Insert new line
+Commit text
+Reload
+Previous history entry
+Next history entry
+Move cursor left
+Move cursor right
+Move cursor up
+Move cursor down
+Move cursor to start of document
+Move cursor to end of document
+Move cursor to start of line
+Move cursor to end of line
+Move cursor word left
+Move cursor word right
+Move cursor and extend selection left
+Move cursor and extend selection right
+Move cursor and extend selection up
+Move cursor and extend selection down
+Move cursor and extend selection to start of document
+Move cursor and extend selection to end of document
+Move cursor and extend selection to start of line
+Move cursor and extend selection to end of line
+Move cursor and extend selection word left
+Move cursor and extend selection word right
+select_next_auto_complete_item
+select_prev_auto_complete_item
+Select first item
+Select last item
+move_selection_cursor_to_first_item
+move_selection_cursor_to_last_item
+move_selection_cursor_to_next_item
+move_selection_cursor_to_previous_item
+Extend selection range to first item
+Extend selection range to last item
+Extend selection range to next item
+Extend selection range to previous item
+Extend selection to first item
+Extend selection to last item
+Select previous item
+Select next item
+Extend selection to next item
+Extend selection to previous item
+Toggle selection of item at cursor
+Select item in next lane
+Select item in previous lane
+Select item in first lane
+Select item in last lane
+Move cursor to next lane
+Move cursor to previous lane
+Move cursor to first lane
+Move cursor to last lane
+Extend selection to next lane
+Extend selection to previous lane
+Extend selection to first lane
+Extend selection to last lane
+Extend selection range to next lane
+Extend selection range to previous lane
+Extend selection range to first lane
+Extend selection range to last lane
+Select item to left
+Select item to right
+Select item above
+Select item below
+Move selection cursor left
+Move selection cursor right
+Move selection cursor up
+Move selection cursor down
+Extend selection range to item to left
+Extend selection range to item to right
+Extend selection range to item above
+Extend selection range to item below
+Extend selection to item to left
+Extend selection to item to right
+Extend selection to item above
+Extend selection to item below
+Focus panel to the left
+Focus panel to the right
+Focus panel above
+Focus panel below
+Focus next panel
+Focus previous panel
+Focus next field
+Focus previous field
+Focus widget to the left
+Focus widget to the right
+Focus widget above
+Focus widget below
+Toggle expanded state
+Zoom In
+Zoom Out
+Zoom to Fit
+Maximize window
+Minimize window
+Restore window
+Full screen
+Select Next Project
+Select Previous Project
+select_next_tab
+select_previous_tab
+new_from_template
+save_as_template
+add_to_library
+show_dashboard
+show_controller_script_console
+help_user_guide
+help_user_guide_jp
+help_user_guide_de
+show_online_learning
+create_new_control_surface_project
+check_for_updates
+toggle_performance_profiler
+toggle_computer_keyboard_note_input
+install_package_file
+invoke_action
+open_test_runner
+Collect and Save
+Activate Engine For Project
+Create Instrument Track
+Create Audio Track
+Create Effect Track
+Create Group Track
+Create Scene
+Create Scene From Playing Launcher Clips
+Select previous track
+Select next track
+focus_track_header_area
+toggle_clip_launcher
+focus_or_toggle_clip_launcher
+Play Transport
+Continue Play Transport
+Play Transport From Start
+Stop Transport
+Play or Stop Transport
+Play or Pause Transport
+Continue Playback or Stop
+Play From Start or Stop Transport
+toggle_arranger_loop
+toggle_punch_in
+toggle_punch_out
+toggle_playhead_follow
+toggle_automation_follow
+toggle_metronome
+toggle_groove
+Toggle Record
+Tap Tempo
+Export Audio
+export_midi
+select_object_selection_tool
+select_time_selection_tool
+select_create_tool
+select_erase_tool
+select_cut_tool
+toggle_browser_panel
+toggle_device_panel
+toggle_arranger
+toggle_detail_editor
+toggle_automation_editor
+toggle_mixer
+focus_or_toggle_onscreen_keyboard_panel
+toggle_inspector
+toggle_studio_io
+toggle_song_panel
+toggle_mappings_browser_panel
+toggle_deactivated_chains_visibility
+toggle_automation_shown_for_all_tracks
+toggle_meter_section
+toggle_double_row_clip_height
+focus_or_toggle_browser_panel
+focus_or_toggle_device_panel
+focus_or_toggle_arranger
+focus_or_toggle_detail_editor
+focus_or_toggle_automation_editor
+focus_or_toggle_mixer
+focus_or_toggle_inspector
+focus_or_toggle_studio_io
+focus_or_toggle_song_panel
+Switch to Mode 1
+Switch to Mode 2
+Switch to Mode 3
+Switch to Mode 4
+Select Next Mode
+Select Previous Mode
+Toggle maximized editing mode
+Select sub panel 1
+Select sub panel 2
+Select sub panel 3
+Select sub panel 4
+Select next sub panel
+Select previous sub panel
+Show Track Inputs and Outputs
+Show Sends
+Show Crossfades
+Show Effect Tracks
+Split
+select_track1
+select_track2
+select_track3
+select_track4
+select_track5
+select_track6
+select_track7
+select_track8
+select_track9
+select_track10
+select_track11
+select_track12
+select_track13
+select_track14
+select_track15
+select_track16
+select_track17
+select_track18
+select_track19
+select_track20
+select_track21
+select_track22
+select_track23
+select_track24
+select_track25
+select_track26
+select_track27
+select_track28
+select_track29
+select_track30
+select_track31
+select_track32
+select_track33
+select_track34
+select_track35
+select_track36
+select_track37
+select_track38
+select_track39
+select_track40
+launch_scene1
+launch_scene2
+launch_scene3
+launch_scene4
+launch_scene5
+launch_scene6
+launch_scene7
+launch_scene8
+launch_scene9
+launch_scene10
+launch_scene11
+launch_scene12
+launch_scene13
+launch_scene14
+launch_scene15
+launch_scene16
+launch_scene17
+launch_scene18
+launch_scene19
+launch_scene20
+launch_scene21
+launch_scene22
+launch_scene23
+launch_scene24
+launch_scene25
+launch_scene26
+launch_scene27
+launch_scene28
+launch_scene29
+launch_scene30
+launch_scene31
+launch_scene32
+launch_scene33
+launch_scene34
+launch_scene35
+launch_scene36
+launch_scene37
+launch_scene38
+launch_scene39
+launch_scene40
+launch_slot1
+launch_slot2
+launch_slot3
+launch_slot4
+launch_slot5
+launch_slot6
+launch_slot7
+launch_slot8
+launch_slot9
+launch_slot10
+launch_slot11
+launch_slot12
+launch_slot13
+launch_slot14
+launch_slot15
+launch_slot16
+launch_slot17
+launch_slot18
+launch_slot19
+launch_slot20
+launch_slot21
+launch_slot22
+launch_slot23
+launch_slot24
+launch_slot25
+launch_slot26
+launch_slot27
+launch_slot28
+launch_slot29
+launch_slot30
+launch_slot31
+launch_slot32
+launch_slot33
+launch_slot34
+launch_slot35
+launch_slot36
+launch_slot37
+launch_slot38
+launch_slot39
+launch_slot40
+launch_arranger_cue_marker1
+launch_arranger_cue_marker2
+launch_arranger_cue_marker3
+launch_arranger_cue_marker4
+launch_arranger_cue_marker5
+launch_arranger_cue_marker6
+launch_arranger_cue_marker7
+launch_arranger_cue_marker8
+launch_arranger_cue_marker9
+launch_arranger_cue_marker10
+launch_arranger_cue_marker11
+launch_arranger_cue_marker12
+launch_arranger_cue_marker13
+launch_arranger_cue_marker14
+launch_arranger_cue_marker15
+launch_arranger_cue_marker16
+launch_arranger_cue_marker17
+launch_arranger_cue_marker18
+launch_arranger_cue_marker19
+launch_arranger_cue_marker20
+launch_arranger_cue_marker21
+launch_arranger_cue_marker22
+launch_arranger_cue_marker23
+launch_arranger_cue_marker24
+launch_arranger_cue_marker25
+launch_arranger_cue_marker26
+launch_arranger_cue_marker27
+launch_arranger_cue_marker28
+launch_arranger_cue_marker29
+launch_arranger_cue_marker30
+launch_arranger_cue_marker31
+launch_arranger_cue_marker32
+launch_arranger_cue_marker33
+launch_arranger_cue_marker34
+launch_arranger_cue_marker35
+launch_arranger_cue_marker36
+launch_arranger_cue_marker37
+launch_arranger_cue_marker38
+launch_arranger_cue_marker39
+launch_arranger_cue_marker40
+launch_next_scene
+launch_prev_scene
+launch_next_slot
+launch_prev_slot
+toggle_track_mute
+toggle_track_solo
+toggle_track_arm
+clear_mute
+clear_solo
+clear_arm
+convert_event_to_time_selection
+Consolidate
+reverse
+reverse_pattern
+scale_time_double
+scale_time_half
+bounce_in_place
+bounce
+double_content
+transpose_semitone_down
+transpose_semitone_up
+transpose_octave_down
+transpose_octave_up
+quantize
+quantize_again
+legato
+fixed_length
+Loop Selection
+Toggle Track Timeline vs. Clip Content Editing
+Toggle Arranger Cue Marker Visibility
+toggle_time_signature_marker_visibility
+nudge_events_one_bar_earlier
+nudge_events_one_step_earlier
+nudge_events_one_bar_later
+nudge_events_one_step_later
+make_events_one_bar_shorter
+make_events_one_step_shorter
+make_events_one_bar_longer
+make_events_one_step_longer
+reset_fades
+auto_fade
+unstretch
+split_at_onsets
+slide_to_previous_onset
+slide_to_next_onset
+double_grid_size
+half_grid_size
+toggle_object_snapping
+toggle_absolute_grid_snapping
+toggle_relative_grid_snapping
+toggle_adaptive_grid
+prev_grid_subdivision
+next_grid_subdivision
+adjust_event_value_step_up
+adjust_event_value_step_down
+adjust_event_value_fine_step_up
+adjust_event_value_fine_step_down
+load_default_preset
+save_default_preset
+Nudge Left
+Nudge Right
+Nudge Up
+Nudge Down
+Nudge Left (coarse)
+Nudge Right (coarse)
+Nudge Up (coarse)
+Nudge Down (coarse)
+Increase Width
+Decrease Width
+Increase Height
+Decrease Height
+focus_browser_search_field
+select_next_search_result
+select_prev_search_result
+focus_file_overview
+focus_file_list
+toggle_preview_playback_of_selected_file
+reveal_file
+edit_file_meta_data
+show_insert_popup_browser
+launch_current_slot
+slice_to_drum_track
+slice_to_multi_sampler_track
+insert_silence
+cut_and_pull
+paste_and_push
+duplicate_and_push
+delete_and_pull
+toggle_folded_note_lanes
+toggle_layer_list_visibility
+toggle_expression_visibility
+toggle_automation_visibility
+toggle_micro_pitch_editing
+toggle_double_or_single_row_track_height
+unlock_all_layers
+toggle_layer_lock
+toggle_layer_visibility
+toggle_plugin_device_window
+convert_to_instrument_track
+convert_to_audio_track
+convert_to_hybrid_track
+toggle_has_stop_button
