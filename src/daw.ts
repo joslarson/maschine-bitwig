@@ -1,3 +1,4 @@
+import { NoteInputProxy } from 'NoteInput';
 import taktil from 'taktil';
 
 export class Daw {
@@ -5,6 +6,7 @@ export class Daw {
     transport: API.Transport;
     application: API.Application;
     cursorTrack: API.CursorTrack;
+    cursorDevice: API.CursorDevice;
     trackBank: API.TrackBank;
     popupBrowser: API.PopupBrowser;
     sceneBank: API.SceneBank;
@@ -46,6 +48,12 @@ export class Daw {
         this.trackBank.channelCount().markInterested();
         this.trackBank.setChannelScrollStepSize(8);
         this.trackBank.followCursorTrack(this.cursorTrack);
+        // keep bank scrolled to pages only
+        this.trackBank.scrollPosition().addValueObserver(position => {
+            if (position % 8 !== 0) {
+                this.trackBank.scrollPosition().set(Math.ceil(position / 8) * 8);
+            }
+        });
 
         // popupBrowser
         this.popupBrowser = host.createPopupBrowser();
@@ -91,8 +99,10 @@ export class Daw {
             this.noteInput.enable();
         } else {
             this.noteInput.disable();
-    }
+        }
     };
 }
 
 export const daw = new Daw();
+
+taktil.on('init', () => {});

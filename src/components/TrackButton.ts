@@ -1,7 +1,9 @@
 import taktil from 'taktil';
+import { getNextColor } from 'utils';
 
 interface Params {
     application: API.Application;
+    cursorTrack: API.CursorTrack;
     trackBank: API.TrackBank;
     transport: API.Transport;
     index: number;
@@ -42,7 +44,7 @@ export class TrackButton extends taktil.Button<Params, State> {
             value: value,
             disabled: !exists,
             accent: noteOn,
-            ...color === undefined ? {} : { color },
+            ...(color === undefined ? {} : { color }),
         };
     }
 
@@ -50,7 +52,7 @@ export class TrackButton extends taktil.Button<Params, State> {
         this.params.transport.tempo().addRawValueObserver(value => {
             this.setState({ tempo: value });
         });
-        this.track = this.params.trackBank.getChannel(this.params.index) as API.Track;
+        this.track = this.params.trackBank.getItemAt(this.params.index) as API.Track;
         this.track.isGroup().markInterested();
 
         this.track.color().addValueObserver((r, g, b) => {
@@ -117,12 +119,16 @@ export class TrackButton extends taktil.Button<Params, State> {
             this.track.getSolo().toggle();
             return;
         }
-
-        if (this.params.index === this.params.trackBank.channelCount().get()) {
-            this.params.application.createInstrumentTrack(this.params.index);
+        const channelCount = this.params.trackBank.channelCount().get();
+        const scrollPosition = this.params.trackBank.scrollPosition().get();
+        if (this.params.index === channelCount - scrollPosition) {
+            this.params.cursorTrack.selectLast();
+            this.params.application.getAction('Create Instrument Track').invoke();
             this.track.browseToInsertAtStartOfChain();
+            this.params.cursorTrack.selectLast();
+        } else {
+            this.params.trackBank.getItemAt(this.params.index).select();
         }
-        this.track.selectInEditor();
     }
 
     onLongPress() {
@@ -140,8 +146,8 @@ export class TrackButton extends taktil.Button<Params, State> {
             return this.onPress();
         }
         if (!this.state.disabled) {
+            this.params.cursorTrack.selectParent();
             this.params.application.navigateToParentTrackGroup();
-            this.params.trackBank.getChannel(0).selectInEditor();
         }
     }
 }

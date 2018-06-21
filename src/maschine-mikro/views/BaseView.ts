@@ -53,6 +53,7 @@ export class BaseView extends taktil.View {
             new TrackButton(control, {
                 index,
                 mode: 'GROUP',
+                cursorTrack: daw.cursorTrack,
                 application: daw.application,
                 transport: daw.transport,
                 trackBank: daw.trackBank,

@@ -1,6 +1,13 @@
+import { DrumPad } from 'components/DrumPad';
+import { Transpose } from 'components/Transpose';
 import taktil from 'taktil';
-
 import { ActionButton } from '../../components/ActionButton';
+import { BrowserExitButton } from '../../components/BrowserExitButton';
+import { BrowserToggle } from '../../components/BrowserToggle';
+import { LayoutButton } from '../../components/LayoutButton';
+import { ModeButton } from '../../components/ModeButton';
+import { TrackBankNavigationButton } from '../../components/TrackBankNavigationButton';
+import { TrackButton } from '../../components/TrackButton';
 import {
     ArmToggle,
     LoopToggle,
@@ -11,18 +18,11 @@ import {
     TempoButton,
     TempoRing,
 } from '../../components/transport';
-import { BrowserExitButton } from '../../components/BrowserExitButton';
-import { BrowserToggle } from '../../components/BrowserToggle';
-import { LayoutButton } from '../../components/LayoutButton';
-import { ModeButton } from '../../components/ModeButton';
-import { TrackBankNavigationButton } from '../../components/TrackBankNavigationButton';
-import { TrackButton } from '../../components/TrackButton';
-import { ViewToggle, ModeGate } from '../../components/views';
+import { ModeGate, ViewToggle } from '../../components/views';
 import { VolumeKnobTouch } from '../../components/VolumeKnobTouch';
 import { VolumeRange } from '../../components/VolumeRange';
-
-import { controls } from '../controls';
 import { daw } from '../../daw';
+import { controls } from '../controls';
 
 export class BaseView extends taktil.View {
     // Top Left
@@ -60,6 +60,7 @@ export class BaseView extends taktil.View {
         (control, index) =>
             new TrackButton(control, {
                 application: daw.application,
+                cursorTrack: daw.cursorTrack,
                 transport: daw.transport,
                 trackBank: daw.trackBank,
                 index,
@@ -80,6 +81,8 @@ export class BaseView extends taktil.View {
             new TrackBankNavigationButton(control, {
                 mode: 'SHIFT',
                 trackBank: daw.trackBank,
+                cursorTrack: daw.cursorTrack,
+                application: daw.application,
                 index,
             })
     );
@@ -138,8 +141,8 @@ export class BaseView extends taktil.View {
     // Pads
     sceneViewButton = new ViewToggle(controls.SCENE, { onView: 'SCENE', offView: 'BASE' });
     patternViewButton = new ViewToggle(controls.PATTERN, { onView: 'PATTERN', offView: 'BASE' });
-    padMidiViewButton = new ViewToggle(controls.PAD_MODE, { onView: 'PAD_MIDI', offView: 'BASE' });
-    navigateViewButton = new ViewToggle(controls.NAVIGATE, { onView: 'NAVIGATE', offView: 'BASE' });
+    padMidiViewButton = new ModeGate(controls.PAD_MODE, { targetMode: 'PAD_MODE' });
+    navigateViewButton = new ModeGate(controls.NAVIGATE, { targetMode: 'NAVIGATE' });
     duplicateModeGate = new ModeGate(controls.DUPLICATE, { targetMode: 'DUPLICATE' });
     selectModeGate = new ModeGate(controls.SELECT, { targetMode: 'SELECT' });
     soloModeGate = new ModeGate(controls.SOLO, { targetMode: 'SOLO' });
@@ -182,5 +185,49 @@ export class BaseView extends taktil.View {
     });
     browserExitButton = new BrowserExitButton(controls.BACK, {
         popupBrowser: daw.popupBrowser,
+    });
+
+    // DrumPad
+
+    drumPads = [
+        controls.PAD_1,
+        controls.PAD_2,
+        controls.PAD_3,
+        controls.PAD_4,
+        controls.PAD_5,
+        controls.PAD_6,
+        controls.PAD_7,
+        controls.PAD_8,
+        controls.PAD_9,
+        controls.PAD_10,
+        controls.PAD_11,
+        controls.PAD_12,
+        controls.PAD_13,
+        controls.PAD_14,
+        controls.PAD_15,
+        controls.PAD_16,
+    ].map(
+        (control, index) =>
+            new DrumPad(control, {
+                transport: daw.transport,
+                cursorTrack: daw.cursorTrack,
+                drumPadBank: daw.drumPadBank,
+                noteInput: daw.noteInput,
+                index,
+            })
+    );
+
+    transposeUp = new Transpose(controls.RIGHT_ARROW, {
+        mode: 'PAD_MODE',
+        noteInput: daw.noteInput,
+        drumPadBank: daw.drumPadBank,
+        direction: 'UP',
+    });
+
+    transposeDown = new Transpose(controls.LEFT_ARROW, {
+        mode: 'PAD_MODE',
+        noteInput: daw.noteInput,
+        drumPadBank: daw.drumPadBank,
+        direction: 'DOWN',
     });
 }
