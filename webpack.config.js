@@ -29,6 +29,7 @@ module.exports = (_, { mode }) => ({
     mode,
     entry: {
         'maschine-studio.control': './src/maschine-studio',
+        'maschine-mk2.control': './src/maschine-mk2',
         'maschine-mikro.control': './src/maschine-mikro',
     },
     output: { path: path.resolve(__dirname, 'dist'), filename: '[name].js' },
@@ -75,6 +76,7 @@ module.exports = (_, { mode }) => ({
     },
     devtool: false, // sourcemaps not supported in Bitwig's JavaScript engine
     stats: {
+        assets: false,
         colors: true,
         chunks: false,
         version: false,
@@ -83,6 +85,7 @@ module.exports = (_, { mode }) => ({
         modules: false,
         builtAt: false,
         cached: false,
-        entrypoints: false,
+        entrypoints: true,
+        reasons: false,
     },
 });
