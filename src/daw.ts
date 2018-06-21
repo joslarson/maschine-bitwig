@@ -1,6 +1,7 @@
 import taktil from 'taktil';
 
 export class Daw {
+    noteInput: NoteInputProxy;
     transport: API.Transport;
     application: API.Application;
     cursorTrack: API.CursorTrack;
@@ -9,6 +10,7 @@ export class Daw {
     sceneBank: API.SceneBank;
     createScene: API.Action;
     masterTrack: API.MasterTrack;
+    drumPadBank: API.DrumPadBank;
     [rest: string]: any;
 
     constructor() {
@@ -16,6 +18,15 @@ export class Daw {
     }
 
     onInit() {
+        this.noteInput = new NoteInputProxy(
+            host.getMidiInPort(0).createNoteInput('PADS', '95????')
+        );
+        this.noteInput.shouldConsumeEvents = false;
+
+        taktil.on('activateView', this.enableDisableNoteInput);
+        taktil.on('activateMode', this.enableDisableNoteInput);
+        taktil.on('deactivateMode', this.enableDisableNoteInput);
+
         // transport
         this.transport = host.createTransport();
         this.transport.tempo().markInterested();
@@ -54,7 +65,34 @@ export class Daw {
         // masterTrack
         this.masterTrack = host.createMasterTrack(0);
         this.masterTrack.exists().markInterested();
+
+        // cursorDevice
+        this.cursorDevice = this.cursorTrack.createCursorDevice();
+        this.drumPadBank = this.cursorDevice.createDrumPadBank(16);
+        this.drumPadBank.exists().markInterested();
+        this.drumPadBank.channelCount().markInterested();
+        this.drumPadBank.scrollPosition().markInterested();
+        // keep drum pad bank scroll position in sync with note input
+        this.drumPadBank.exists().addValueObserver(exists => {
+            if (exists) {
+                const position = this.noteInput.keyTranslationTable[36];
+                this.drumPadBank.scrollPosition().set(position);
+            }
+        });
     }
+
+    enableDisableNoteInput = () => {
+        const baseView = taktil.getActiveView() === 'BASE';
+        const selectMode = taktil.modeIsActive('SELECT');
+        const soloMode = taktil.modeIsActive('SOLO');
+        const muteMode = taktil.modeIsActive('MUTE');
+
+        if (baseView && !selectMode && !soloMode && !muteMode) {
+            this.noteInput.enable();
+        } else {
+            this.noteInput.disable();
+    }
+    };
 }
 
 export const daw = new Daw();
