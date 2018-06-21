@@ -1,3 +1,5 @@
+import '../polyfills';
+
 import taktil from 'taktil';
 
 import { controls } from './controls';
