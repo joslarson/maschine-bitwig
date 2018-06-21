@@ -16,6 +16,7 @@ interface State {
     isRecording: boolean;
     isRecordingQueued: boolean;
     hasContent: boolean;
+    isSelected: boolean;
 }
 
 export class ClipSlotButton extends taktil.Button<Params, State> {
@@ -27,6 +28,7 @@ export class ClipSlotButton extends taktil.Button<Params, State> {
         isRecording: false,
         isRecordingQueued: false,
         hasContent: false,
+        isSelected: false,
     };
     clipLauncherSlotBank = this.params.cursorTrack.clipLauncherSlotBank();
 
@@ -37,12 +39,27 @@ export class ClipSlotButton extends taktil.Button<Params, State> {
             isRecording,
             isRecordingQueued,
             hasContent,
+            isSelected,
         } = this.state;
 
         let value = isPlaying || isPlaybackQueued || isRecording || isRecordingQueued ? 1 : 0;
+
         let disabled = !hasContent && !isRecordingQueued;
         let flashing = isPlaybackQueued || isRecordingQueued;
         let color = isRecordingQueued || isRecording ? { r: 1, g: 0, b: 0 } : this.state.color;
+
+        if (taktil.modeIsActive('SELECT')) {
+            value = isSelected ? 1 : 0;
+            if (isSelected && disabled) {
+                const cursorTrack = this.params.cursorTrack;
+                color = {
+                    r: cursorTrack.color().red(),
+                    g: cursorTrack.color().green(),
+                    b: cursorTrack.color().blue(),
+                };
+            }
+            disabled = isSelected ? false : disabled;
+        }
 
         if (this.params.binary) {
             value = hasContent || isRecordingQueued ? 1 : 0;
@@ -50,7 +67,7 @@ export class ClipSlotButton extends taktil.Button<Params, State> {
             flashing = isPlaybackQueued || isRecordingQueued || isPlaying || isRecording;
         }
 
-        return { value, ...color === undefined ? {} : { color }, disabled, flashing };
+        return { value, ...(color === undefined ? {} : { color }), disabled, flashing };
     }
 
     onInit() {
@@ -77,6 +94,11 @@ export class ClipSlotButton extends taktil.Button<Params, State> {
         this.clipLauncherSlotBank.addHasContentObserver((index, hasContent) => {
             if (index === this.params.index) this.setState({ hasContent });
         });
+        this.clipLauncherSlotBank.addIsSelectedObserver((index, isSelected) => {
+            if (index === this.params.index) this.setState({ isSelected });
+        });
+        taktil.on('activateMode', mode => mode === 'SELECT' && this.setState({}));
+        taktil.on('deactivateMode', mode => mode === 'SELECT' && this.setState({}));
     }
 
     onPress() {
@@ -96,6 +118,10 @@ export class ClipSlotButton extends taktil.Button<Params, State> {
                 }
             }
         }
-        this.clipLauncherSlotBank.launch(this.params.index);
+        if (taktil.modeIsActive('SELECT')) {
+            this.clipLauncherSlotBank.select(this.params.index);
+        } else {
+            this.clipLauncherSlotBank.launch(this.params.index);
+        }
     }
 }

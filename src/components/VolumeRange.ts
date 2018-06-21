@@ -37,7 +37,6 @@ export class VolumeRange extends taktil.Range<VolumeRangeParams, VolumeRangeStat
     getControlOutput() {
         const { value, meter, isPlaying } = this.state;
         return { value: isPlaying && !this.memory.input && meter ? meter : value };
-        // return { value: isPlaying && !this.memory.input && meter ? meter : value };
     }
 
     onControlInput({ value }: taktil.ControlState) {
