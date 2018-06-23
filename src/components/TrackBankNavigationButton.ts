@@ -43,7 +43,6 @@ export class TrackBankNavigationButton extends taktil.Button<Params, State> {
             this.params.application.getAction('Create Instrument Track').invoke();
             this.params.trackBank.scrollToChannel(channelCount);
             this.params.cursorTrack.selectLast();
-            this.params.cursorTrack.browseToInsertAtStartOfChain();
         } else if (this.state.exists && !this.state.on) {
             this.params.trackBank.scrollPosition().set(this.params.index * 8);
             this.params.trackBank.getChannel(0).selectInEditor();

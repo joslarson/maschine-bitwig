@@ -121,11 +121,17 @@ export class TrackButton extends taktil.Button<Params, State> {
         }
         const channelCount = this.params.trackBank.channelCount().get();
         const scrollPosition = this.params.trackBank.scrollPosition().get();
+        console.log(
+            this.params.index,
+            channelCount,
+            scrollPosition,
+            this.params.index === channelCount - scrollPosition
+        );
         if (this.params.index === channelCount - scrollPosition) {
-            this.params.cursorTrack.selectLast();
-            this.params.application.getAction('Create Instrument Track').invoke();
-            this.track.browseToInsertAtStartOfChain();
-            this.params.cursorTrack.selectLast();
+            // if the index corresponds to the first back slot without a track, create one
+            this.params.cursorTrack.selectLast(); // make sure new track is inserted after last track
+            this.params.application.getAction('Create Instrument Track').invoke(); // auto assigns next color
+            this.params.cursorTrack.selectLast(); // selects new track
         } else {
             this.params.trackBank.getItemAt(this.params.index).select();
         }

@@ -39,17 +39,17 @@ export class DrumPad extends taktil.Button<Params, State> {
     drumPad: API.DrumPad;
 
     getControlOutput() {
-        const { on, mute, solo, selected, exists, color, noteOn, bankExists } = this.state;
-        let value = on ? 1 : 0;
+        const { mute, solo, selected, exists, color, noteOn, bankExists } = this.state;
+        let value = noteOn ? 1 : 0;
         if (taktil.modeIsActive('MUTE') && bankExists) value = mute ? 1 : 0;
         else if (taktil.modeIsActive('SOLO') && bankExists) value = solo ? 1 : 0;
         else if (taktil.modeIsActive('SELECT') && bankExists) value = selected ? 1 : 0;
-        else if (exists || !bankExists) value = 1;
+        // else if ((exists && noteOn) || !bankExists) value = 1;
 
         return {
             value: value,
             disabled: bankExists ? !exists : false,
-            accent: noteOn,
+            // accent: noteOn,
             color: bankExists ? color || this.state.trackColor : this.state.trackColor,
         };
     }

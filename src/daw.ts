@@ -104,5 +104,3 @@ export class Daw {
 }
 
 export const daw = new Daw();
-
-taktil.on('init', () => {});
