@@ -12,7 +12,7 @@ interface State extends taktil.ButtonState {
 }
 
 export class Transpose extends taktil.Button<Params, State> {
-    state = { on: true, drumBankActive: true };
+    state = { on: false, drumBankActive: true };
 
     onInit() {
         this.params.drumPadBank.exists().addValueObserver(exists => {
@@ -21,6 +21,7 @@ export class Transpose extends taktil.Button<Params, State> {
     }
 
     onPress() {
+        this.setState({ on: true });
         const { noteInput, drumPadBank, direction } = this.params;
         const { drumBankActive } = this.state;
 
@@ -34,5 +35,9 @@ export class Transpose extends taktil.Button<Params, State> {
             noteInput.transpose(steps);
             drumPadBank.scrollBy(steps);
         }
+    }
+
+    onRelease() {
+        this.setState({ on: false });
     }
 }

@@ -43,8 +43,11 @@ export class Daw {
         this.cursorTrack.isGroup().markInterested();
         this.cursorTrack.color().markInterested();
 
+        // this.cursorTrack.setCursorNavigationMode(0);
+
         // trackBank
         this.trackBank = host.createMainTrackBank(8, 0, 0);
+        // this.trackBank = host.createTrackBank(8, 0, 0, false);
         this.trackBank.channelCount().markInterested();
         this.trackBank.setChannelScrollStepSize(8);
         this.trackBank.followCursorTrack(this.cursorTrack);

@@ -1,5 +1,4 @@
 import taktil from 'taktil';
-import { getNextColor } from 'utils';
 
 interface Params {
     application: API.Application;
@@ -121,12 +120,6 @@ export class TrackButton extends taktil.Button<Params, State> {
         }
         const channelCount = this.params.trackBank.channelCount().get();
         const scrollPosition = this.params.trackBank.scrollPosition().get();
-        console.log(
-            this.params.index,
-            channelCount,
-            scrollPosition,
-            this.params.index === channelCount - scrollPosition
-        );
         if (this.params.index === channelCount - scrollPosition) {
             // if the index corresponds to the first back slot without a track, create one
             this.params.cursorTrack.selectLast(); // make sure new track is inserted after last track

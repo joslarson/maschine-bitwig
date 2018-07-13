@@ -41,15 +41,19 @@ export class DrumPad extends taktil.Button<Params, State> {
     getControlOutput() {
         const { mute, solo, selected, exists, color, noteOn, bankExists } = this.state;
         let value = noteOn ? 1 : 0;
+        let accent = false;
+
         if (taktil.modeIsActive('MUTE') && bankExists) value = mute ? 1 : 0;
         else if (taktil.modeIsActive('SOLO') && bankExists) value = solo ? 1 : 0;
         else if (taktil.modeIsActive('SELECT') && bankExists) value = selected ? 1 : 0;
-        // else if ((exists && noteOn) || !bankExists) value = 1;
-
+        else if (!bankExists) {
+            const note = this.params.noteInput.keyTranslationTable[this.params.index + 36];
+            accent = note % 12 === 0;
+        }
         return {
+            accent,
             value: value,
             disabled: bankExists ? !exists : false,
-            // accent: noteOn,
             color: bankExists ? color || this.state.trackColor : this.state.trackColor,
         };
     }
@@ -106,6 +110,7 @@ export class DrumPad extends taktil.Button<Params, State> {
             'deactivateMode',
             mode => (mode === 'SELECT' || mode === 'MUTE' || mode === 'SOLO') && this.setState({})
         );
+        this.params.noteInput.onChange(() => this.setState({}));
     }
 
     onPress() {

@@ -9,6 +9,7 @@ export class NoteInputProxy {
     private _disabled = false;
     private _keyTranslationTable: (number | null)[] = tables.DEFAULT;
     private _shouldConsumeEvents: boolean = true;
+    private _changeCallbacks: ((...any) => void)[] = [];
 
     constructor(noteInput: API.NoteInput) {
         this.noteInput = noteInput;
@@ -34,7 +35,11 @@ export class NoteInputProxy {
         }
 
         this._keyTranslationTable = keyTranslationTable;
-        if (!this._disabled) this.noteInput.setKeyTranslationTable(apiKeyTranslationTable);
+        if (!this._disabled) {
+            this.noteInput.setKeyTranslationTable(apiKeyTranslationTable);
+            // call the registered change callbacks
+            this._changeCallbacks.forEach(callback => callback());
+        }
     }
 
     get shouldConsumeEvents() {
@@ -56,9 +61,15 @@ export class NoteInputProxy {
         if (this._disabled) return;
         this._disabled = true;
         this.noteInput.setKeyTranslationTable(tables.DISABLED);
+        // call the registered change callbacks
+        this._changeCallbacks.forEach(callback => callback());
     }
 
     transpose(steps: number) {
         this.keyTranslationTable = this.keyTranslationTable.map(note => note + steps);
+    }
+
+    onChange(callback: (...any) => void) {
+        this._changeCallbacks.push(callback);
     }
 }

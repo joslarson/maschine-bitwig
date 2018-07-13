@@ -23,6 +23,7 @@ import { VolumeKnobTouch } from '../../components/VolumeKnobTouch';
 import { VolumeRange } from '../../components/VolumeRange';
 import { daw } from '../../daw';
 import { controls } from '../controls';
+import { PanRange } from 'components/PanRange';
 
 export class BaseView extends taktil.View {
     // Top Left
@@ -84,6 +85,22 @@ export class BaseView extends taktil.View {
                 cursorTrack: daw.cursorTrack,
                 application: daw.application,
                 index,
+            })
+    );
+
+    panKnobs = [
+        controls.PAN_A,
+        controls.PAN_B,
+        controls.PAN_C,
+        controls.PAN_D,
+        controls.PAN_E,
+        controls.PAN_F,
+        controls.PAN_G,
+        controls.PAN_H,
+    ].map(
+        (control, index) =>
+            new PanRange(control, {
+                track: daw.trackBank.getChannel(index) as API.Track,
             })
     );
 
@@ -218,14 +235,14 @@ export class BaseView extends taktil.View {
     );
 
     transposeUp = new Transpose(controls.RIGHT_ARROW, {
-        mode: 'PAD_MODE',
+        // mode: 'PAD_MODE',
         noteInput: daw.noteInput,
         drumPadBank: daw.drumPadBank,
         direction: 'UP',
     });
 
     transposeDown = new Transpose(controls.LEFT_ARROW, {
-        mode: 'PAD_MODE',
+        // mode: 'PAD_MODE',
         noteInput: daw.noteInput,
         drumPadBank: daw.drumPadBank,
         direction: 'DOWN',

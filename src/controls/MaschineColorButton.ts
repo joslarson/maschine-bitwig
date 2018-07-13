@@ -61,17 +61,21 @@ export class MaschineColorButton extends taktil.Control<MaschineColorButtonState
         let brightnessData2 =
             !this.activeComponent || state.disabled
                 ? minValue
-                : state.value === minValue ? dimValue : maxValue;
+                : state.value === minValue
+                    ? dimValue
+                    : maxValue;
         if (brightnessData2 === maxValue && state.flashing) {
             brightnessData2 = state.flashOn ? maxValue : dimValue;
         }
         if (state.accent) {
             brightnessData2 =
-                brightnessData2 === maxValue ? maxValue : Math.min(brightnessData2 + 15, maxValue);
+                brightnessData2 === maxValue ? maxValue : Math.min(brightnessData2 + 50, maxValue);
         }
         let saturationData2 = doNotSaturate
             ? hsb.s
-            : hsb.s === 0 ? 0 : 100 + Math.round(hsb.s / 127 * 27);
+            : hsb.s === 0
+                ? 0
+                : 100 + Math.round((hsb.s / 127) * 27);
         if (state.accent) saturationData2 = Math.max(saturationData2 - 20, 0);
         return [
             ...super.getMidiOutput(state),
@@ -92,7 +96,10 @@ export class MaschineColorButton extends taktil.Control<MaschineColorButtonState
     }
 
     controlDidRender() {
-        const { minValue, state: { value, flashing } } = this;
+        const {
+            minValue,
+            state: { value, flashing },
+        } = this;
         if (value > minValue && flashing) {
             if (!this.flashInterval) {
                 this.flashInterval = new SyncedInterval(
